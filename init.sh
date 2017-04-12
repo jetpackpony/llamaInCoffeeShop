@@ -138,29 +138,32 @@ if [[ $init = 1 ]] ; then
   # 'cordova platforms'
 
   message_info "Adding Android platform..."
-  cordova platform add android
+  cordova platform add android@6.2.1
 
   #message_info "Adding iOS platform..."
   #cordova platform add ios
 fi
 
+# Patch android emulator
+sed -i "s/'android', \['list', 'avds'\]/'android', ['list', 'avd']/" "./platforms/android/cordova/lib/emulator.js"
+
 # ----
 # Merge platform overrides.
 
-if [[ $init = 1 ]] || [[ $merge = 1 ]] ; then
-fi
+#if [[ $init = 1 ]] || [[ $merge = 1 ]] ; then
+#fi
 
 # ----
 # Copy App Icons and Splash Screen Images
 
-if [[ $init = 1 ]] || [[ $icons = 1 ]] ; then
-fi
+#if [[ $init = 1 ]] || [[ $icons = 1 ]] ; then
+#fi
 
 # ----
 # Add Plugins
 
-if [[ $init = 1 ]] || [[ $plugins = 1 ]] ; then
-fi
+#if [[ $init = 1 ]] || [[ $plugins = 1 ]] ; then
+#fi
 
 # ----
 # Prepare Platforms
