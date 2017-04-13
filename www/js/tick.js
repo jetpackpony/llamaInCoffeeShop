@@ -14,16 +14,26 @@ const getFPSCount = function getFPSCount(timestamp) {
 
 const tick = function tick(canvas, store, timestamp) {
   let frameRate = getFPSCount(timestamp);
+  let { width, height } = canvas;
+  const dpr = window.devicePixelRatio;
 
   let ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, width, height);
 
-  ctx.font = "15px Arial";
-  ctx.fillText(`FPS: ${frameRate}`,10,30);
+  ctx.fillStyle = '#9e9ee8';
+  ctx.fillRect(0, 0, width, height);
+
+  ctx.fillStyle = 'black';
+  ctx.font = "40px Arial";
+  ctx.fillText(`FPS: ${frameRate}`, 10, 40);
+  ctx.fillText(`width: ${width}`, 10, 90);
+  ctx.fillText(`height: ${height}`, 10, 140);
+  ctx.fillText(`dpr: ${dpr}`, 10, 190);
 
   store.pos = (store.pos + 1) % 50;
   ctx.beginPath();
-  ctx.arc(store.pos + store.initPos, 50, 40, 0, 2*Math.PI);
+  ctx.lineWidth = Math.ceil(dpr);
+  ctx.arc(store.pos + width / 2, height / 2, height / 5, 0, 2*Math.PI);
   ctx.stroke();
 };
 
