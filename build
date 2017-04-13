@@ -1,0 +1,3 @@
+#!/bin/sh
+webpack
+cordova build android
