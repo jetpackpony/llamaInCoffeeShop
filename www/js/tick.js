@@ -23,12 +23,15 @@ const tick = function tick(canvas, store, timestamp) {
   ctx.fillStyle = '#9e9ee8';
   ctx.fillRect(0, 0, width, height);
 
+  let fontSize = Math.min(height, width) * 0.05;
+  let lineHeight = fontSize * 1.1;
+
   ctx.fillStyle = 'black';
-  ctx.font = "40px Arial";
-  ctx.fillText(`FPS: ${frameRate}`, 10, 40);
-  ctx.fillText(`width: ${width}`, 10, 90);
-  ctx.fillText(`height: ${height}`, 10, 140);
-  ctx.fillText(`dpr: ${dpr}`, 10, 190);
+  ctx.font = `${fontSize}px Arial`;
+  ctx.fillText(`fps: ${frameRate}`, 10, lineHeight);
+  ctx.fillText(`width: ${width}`, 10, lineHeight * 2);
+  ctx.fillText(`height: ${height}`, 10, lineHeight * 3);
+  ctx.fillText(`dpr: ${dpr}`, 10, lineHeight * 4);
 
   store.pos = (store.pos + 1) % 50;
   ctx.beginPath();
