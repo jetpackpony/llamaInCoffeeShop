@@ -12,7 +12,7 @@ const getFPSCount = function getFPSCount(timestamp) {
   return frameRate;
 };
 
-const tick = function tick(canvas, store, timestamp) {
+const updateFrame = function updateFrame(canvas, store, timestamp) {
   let frameRate = getFPSCount(timestamp);
   let { width, height } = canvas;
   const dpr = window.devicePixelRatio;
@@ -40,4 +40,4 @@ const tick = function tick(canvas, store, timestamp) {
   ctx.stroke();
 };
 
-export default tick;
+export default updateFrame;
