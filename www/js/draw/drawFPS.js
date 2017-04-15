@@ -1,7 +1,7 @@
 import unpackCanvas from './unpackCanvas';
-const addLine = function addLine(ctx, offset, text) {
+const addLine = function addLine(ctx, offset, text, title) {
   ctx.translate(0, offset);
-  ctx.fillText(`fps: ${text}`, 0, 0);
+  ctx.fillText(`${title}: ${text}`, 0, 0);
 };
 
 export default function drawFPS(canvas, metrics) {
@@ -16,10 +16,10 @@ export default function drawFPS(canvas, metrics) {
   ctx.font = `${fontSize}px Arial`;
   ctx.translate(10, 0);
 
-  addLine(ctx, lineHeight, metrics.frameRate);
-  addLine(ctx, lineHeight, width);
-  addLine(ctx, lineHeight, height);
-  addLine(ctx, lineHeight, dpr);
+  addLine(ctx, lineHeight, metrics.frameRate, 'fps');
+  addLine(ctx, lineHeight, width, 'width');
+  addLine(ctx, lineHeight, height, 'height');
+  addLine(ctx, lineHeight, dpr, 'dpr');
 
   ctx.restore();
 };
