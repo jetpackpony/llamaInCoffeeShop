@@ -3,7 +3,8 @@ import initStore from './store/initStore';
 import loadImages from './loadImages';
 
 const imgUrls = {
-  groundTile: 'img/groundTile.png'
+  groundTile: 'img/groundTile.png',
+  player: 'img/llama.png'
 };
 
 const createGame = async function createGame(canvas) {
