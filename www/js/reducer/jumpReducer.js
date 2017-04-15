@@ -1,4 +1,9 @@
 export default (state, action) => {
+  // If the player is on the ground, don't allow another touch
+  if (state.player.displayObject.coords.y > state.statics.groundHeight) {
+    return state;
+  }
+
   return {
     ...state,
     player: {

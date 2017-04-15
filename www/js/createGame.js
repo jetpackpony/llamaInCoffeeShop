@@ -1,7 +1,7 @@
 import updateFrame from './updateFrame';
 import initStore from './store/initStore';
 import loadImages from './loadImages';
-import { resizeCanvas } from './actions';
+import { resizeCanvas, jump } from './actions';
 
 const imgUrls = {
   groundTile: 'img/groundTile.png',
@@ -30,6 +30,10 @@ const createGame = async function createGame(canvas) {
 
     resize: function resized(scale) {
       store.dispatch(resizeCanvas(scale));
+    },
+
+    touch: function touch() {
+      store.dispatch(jump());
     }
   };
 };

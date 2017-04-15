@@ -14,6 +14,11 @@ var app = {
         game.resize(window.devicePixelRatio);
       }, false);
 
+      canvas.addEventListener('touchstart', (event) => {
+        event.preventDefault();
+        game.touch();
+      }, false);
+
       // Start the game
       game.resize(window.devicePixelRatio);
       game.start();
