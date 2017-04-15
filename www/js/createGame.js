@@ -1,16 +1,15 @@
 import updateFrame from './updateFrame';
-import initStore from './initStore';
+import initStore from './store/initStore';
 import loadImages from './loadImages';
 
-const createGame = async function createGame(canvasEl) {
+const createGame = async function createGame(canvas) {
   let rafId = null;
-  const canvas = canvasEl;
 
   const images = await loadImages();
   const store = await initStore({ canvas, images });
 
   const loop = function loop(timestamp) {
-    updateFrame(canvasEl, store, timestamp);
+    updateFrame(store, timestamp);
     rafId = requestAnimationFrame(loop);
   };
 
