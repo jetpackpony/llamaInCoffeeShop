@@ -6,5 +6,5 @@ export default function draw(state) {
   const canvas = state.statics.canvas;
   clear(canvas);
   drawFPS(canvas, state.metrics);
-  drawGround(canvas, state.ground);
+  drawGround(canvas, state);
 };

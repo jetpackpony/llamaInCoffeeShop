@@ -15,7 +15,8 @@ export default function initStore({ canvas, images }) {
   const initValue = {
     ...initialState,
     statics: {
-      canvas
+      canvas,
+      images
     }
   };
   return createStore(
