@@ -3,7 +3,10 @@ import { GRAVITY, GROUND_Y, WORLD_SPEED } from '../constants';
 export default {
   statics: {
     canvas: null,
-    images: {}
+    images: {},
+    gravity: GRAVITY,
+    groundHeight: GROUND_Y,
+    worldSpeed: WORLD_SPEED
   },
   metrics: {
     frameRate: 0,
