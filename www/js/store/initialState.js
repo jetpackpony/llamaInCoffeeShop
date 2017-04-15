@@ -4,6 +4,7 @@ export default {
   statics: {
     canvas: null,
     images: {},
+    scale: 1,
     gravity: GRAVITY,
     groundHeight: GROUND_Y,
     worldSpeed: WORLD_SPEED

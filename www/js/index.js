@@ -5,12 +5,19 @@ var app = {
     document.addEventListener('deviceready', () => { }, false);
 
     const canvas = document.querySelector('#root canvas');
-    window.addEventListener('resize', () => {
-      this.resizeCanvas(canvas);
-    }, false);
-
     this.resizeCanvas(canvas);
-    createGame(canvas).then((game) => game.start());
+    createGame(canvas).then((game) => {
+
+      // Add event listener for resize
+      window.addEventListener('resize', () => {
+        this.resizeCanvas(canvas);
+        game.resize(window.devicePixelRatio);
+      }, false);
+
+      // Start the game
+      game.resize(window.devicePixelRatio);
+      game.start();
+    });
   },
 
   resizeCanvas: function resizeCanvas(canvas ) {

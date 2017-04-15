@@ -1,8 +1,8 @@
 import { updateDisplayObject } from '../physics';
 
-export default (player, timestamp) => {
+export default (player, statics, timestamp) => {
   return {
     ...player,
-    displayObject: updateDisplayObject(player.displayObject, timestamp)
+    displayObject: updateDisplayObject(player.displayObject, statics, timestamp)
   };
 };

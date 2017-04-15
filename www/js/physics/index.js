@@ -28,7 +28,7 @@ const calcCoordinates = (oldCoords, velocity, ground, t) => {
   return newCoords;
 };
 
-export const updateDisplayObject = (body, timestamp) => {
+export const updateDisplayObject = (body, statics, timestamp) => {
   // If the first frame, just set the new timestamp
   if (body.lastTick === 0) {
     return {
@@ -39,7 +39,7 @@ export const updateDisplayObject = (body, timestamp) => {
 
   const timeDiff = (timestamp - body.lastTick) / 1000;
   const newVelocity = calcVelocity(body.velocity, body.acceleration, timeDiff);
-  const newCoords = calcCoordinates(body.coords, newVelocity, GROUND_Y, timeDiff);
+  const newCoords = calcCoordinates(body.coords, newVelocity, statics.groundHeight, timeDiff);
 
   return {
     ...body,

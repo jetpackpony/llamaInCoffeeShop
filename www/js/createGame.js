@@ -1,6 +1,7 @@
 import updateFrame from './updateFrame';
 import initStore from './store/initStore';
 import loadImages from './loadImages';
+import { resizeCanvas } from './actions';
 
 const imgUrls = {
   groundTile: 'img/groundTile.png',
@@ -25,6 +26,10 @@ const createGame = async function createGame(canvas) {
 
     stop: function stop() {
       cancelAnimationFrame(rafId);
+    },
+
+    resize: function resized(scale) {
+      store.dispatch(resizeCanvas(scale));
     }
   };
 };
