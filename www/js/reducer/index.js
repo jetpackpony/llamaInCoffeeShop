@@ -7,6 +7,11 @@ import { ActionTypes } from '../actions';
 const { JUMP, TICK, SET_DIMENSIONS } = ActionTypes;
 
 const initialState = {
+  metrics: {
+    frameRate: 0,
+    frameCounter: 0,
+    lastFrameRateTime: 0
+  },
   scene: {
     width: 0,
     height: 0
