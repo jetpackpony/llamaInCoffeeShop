@@ -1,9 +1,6 @@
 import updateFrame from './updateFrame';
 import initStore from './initStore';
-
-const loadImages = function loadImages() {
-  return Promise.resolve({});
-};
+import loadImages from './loadImages';
 
 const createGame = function createGame(canvasEl) {
   let rafId = null;
