@@ -2,35 +2,27 @@ import updateFrame from './updateFrame';
 import initStore from './initStore';
 import loadImages from './loadImages';
 
-const createGame = function createGame(canvasEl) {
+const createGame = async function createGame(canvasEl) {
   let rafId = null;
   const canvas = canvasEl;
 
-  return loadImages()
-    .then((images) => {
-      return initStore({
-        canvas,
-        images
-      });
-    })
-    .then((store) => {
-      const loop = function loop(timestamp) {
-        updateFrame(canvasEl, store, timestamp);
-        rafId = requestAnimationFrame(loop);
-      };
+  const images = await loadImages();
+  const store = await initStore({ canvas, images });
 
-      return {
-        store,
+  const loop = function loop(timestamp) {
+    updateFrame(canvasEl, store, timestamp);
+    rafId = requestAnimationFrame(loop);
+  };
 
-        start: function start() {
-          rafId = requestAnimationFrame(loop);
-        },
+  return {
+    start: function start() {
+      rafId = requestAnimationFrame(loop);
+    },
 
-        stop: function stop() {
-          cancelAnimationFrame(rafId);
-        }
-      };
-    });
+    stop: function stop() {
+      cancelAnimationFrame(rafId);
+    }
+  };
 };
 
 export default createGame;

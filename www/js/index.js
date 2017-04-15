@@ -10,8 +10,7 @@ var app = {
     }, false);
 
     this.resizeCanvas(canvas);
-    createGame(canvas)
-      .then((game) => game.start());
+    createGame(canvas).then((game) => game.start());
   },
 
   resizeCanvas: function resizeCanvas(canvas ) {
