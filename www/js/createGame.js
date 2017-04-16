@@ -5,7 +5,8 @@ import { resizeCanvas, jump } from './actions';
 
 const imgUrls = {
   groundTile: 'img/groundTile.png',
-  player: 'img/llama.png'
+  player: 'img/llama.png',
+  obstacle: 'img/table.png'
 };
 
 const createGame = async function createGame(canvas) {

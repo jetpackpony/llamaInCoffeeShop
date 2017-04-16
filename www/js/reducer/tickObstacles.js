@@ -1,44 +1,43 @@
-import { updateDisplayObject } from '../physics';
-import { GRAVITY, GROUND_Y, WORLD_SPEED } from '../constants';
-
-const cleanUpObstacles = (objs) => {
-  return objs.filter((obj) => obj.displayObject.coords.x > 0 - obstacleWidth);
+const cleanUpObstacles = (objs, obstacleWidth) => {
+  return objs.filter((obj) => {
+    return obj.type !== 'obstacle' || obj.body.position.x > 0 - obstacleWidth;
+  });
 };
 
-const obstacleWidth = 50;
-
-const generateObj = (timestamp, sceneWidth) => {
+const generateObj = (timestamp, worldWidth, worldSpeed, groundHeight) => {
   return {
-    id: `${timestamp}`,
+    id: `obstacle-${timestamp}`,
     generated: timestamp,
-    displayObject: {
+    type: 'obstacle',
+    body: {
       acceleration: { x: 0, y: 0 },
-      velocity: { x: WORLD_SPEED, y: 0 },
-      coords: { x: sceneWidth + 1, y: GROUND_Y },
-      lastTick: 0
+      velocity: { x: worldSpeed, y: 0 },
+      position: { x: worldWidth + 1, y: groundHeight },
+      lastTick: timestamp
     }
   };
 };
 
-const generateObstacles = (objs, sceneWidth, timestamp) => {
-  const lastObjectTime = objs
-    .map((el) => el.generated)
+const generateObstacles = (world, timestamp) => {
+  const lastObjectTime = world.objects
+    .filter((el) => el.type === 'obstacle')
+    .map((el) => el.generated || 0)
     .sort((a, b) => a - b)
-    .pop();
+    .pop() || 0;
 
   if (timestamp - lastObjectTime > 1000) {
-    return [ generateObj(timestamp, sceneWidth) ];
+    return [ generateObj(timestamp, world.width, world.worldSpeed, world.groundHeight) ];
   }
   return [];
 };
 
-export default (obstacles, scene, timestamp) => {
-  return [
-    ...cleanUpObstacles(obstacles),
-    ...generateObstacles(obstacles, scene.width, timestamp)
-  ].map((obj) => ({
-    ...obj,
-    displayObject: updateDisplayObject(obj.displayObject, timestamp)
-  }));
+export default (world, timestamp) => {
+  return {
+    ...world,
+    objects: cleanUpObstacles([
+      ...world.objects,
+      ...generateObstacles(world, timestamp)
+    ], world.obstacle.obstacleWidth)
+  };
 };
 

@@ -13,7 +13,7 @@ export default function drawPlayer(canvas, state) {
 
   ctx.save();
 
-  ctx.translate(x, y);
+  ctx.translate(x, y - playerHeight);
   ctx.drawImage(img, 0, 0, playerWidth, playerHeight);
 
   ctx.restore();

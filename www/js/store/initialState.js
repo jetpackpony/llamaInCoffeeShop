@@ -10,6 +10,11 @@ export default {
     scale: 1,
     dpr: 1
   },
+  metrics: {
+    frameRate: 0,
+    frameCounter: 0,
+    lastFrameRateTime: 0
+  },
   world: {
     gravity: GRAVITY,
     width: 0,
@@ -35,7 +40,20 @@ export default {
           position: { x: 0, y: GROUND_HEIGHT },
           lastTick: 0
         }
+      },
+      /*
+      {
+        id: `obstacle-${timestamp}`,
+        generated: timestamp,
+        type: 'obstacle',
+        body: {
+          acceleration: { x: 0, y: 0 },
+          velocity: { x: worldSpeed, y: 0 },
+          position: { x: worldWidth + 1, y: groundHeight },
+          lastTick: timestamp
+        }
       }
+      */
     ],
     ground: {
       tileWidth: 100,
@@ -43,32 +61,9 @@ export default {
     },
     player: {
       height: 100
+    },
+    obstacle: {
+      obstacleWidth: 50
     }
-  },
-  metrics: {
-    frameRate: 0,
-    frameCounter: 0,
-    lastFrameRateTime: 0
-  },
-  /*
-  player: {
-    inJump: false
-  },
-  ground: {
-    tileWidth: 100,
   }
-  ,
-  obstacles: [
-    {
-      id: 'first',
-      generated: 0,
-      displayObject: {
-        acceleration: { x: 0, y: GRAVITY },
-        velocity: { x: WORLD_SPEED, y: 0 },
-        coords: { x: 500, y: 100 },
-        lastTick: 0
-      }
-    }
-  ]
-  */
 };
