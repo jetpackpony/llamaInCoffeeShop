@@ -1,7 +1,14 @@
-import {
-  GRAVITY, GROUND_HEIGHT,
-  GROUND_SPEED, WORLD_HEIGHT
-} from '../constants';
+const GRAVITY = -5000;
+
+const GROUND_HEIGHT = 150;
+const GROUND_SPEED = -300;
+const JUMP_VELOCITY_Y = 1500;
+
+const WORLD_HEIGHT = 500;
+const PLAYER_HEIGHT = 100;
+const PLAYER_POSITION_X = 50;
+const OBSTACLE_WIDTH = 50;
+const GROUND_TILE_WIDTH = 100;
 
 export default {
   assets: {
@@ -21,14 +28,14 @@ export default {
     height: WORLD_HEIGHT,
     groundHeight: GROUND_HEIGHT,
     worldSpeed: GROUND_SPEED,
-    jumpVelocity: { x: 0, y: 1500 },
+    jumpVelocity: { x: 0, y: JUMP_VELOCITY_Y },
     objects: [
       {
         id: 'player',
         body: {
           acceleration: { x: 0, y: GRAVITY },
           velocity: { x: 0, y: 0 },
-          position: { x: 30, y: WORLD_HEIGHT },
+          position: { x: PLAYER_POSITION_X, y: WORLD_HEIGHT },
           lastTick: 0
         }
       },
@@ -56,14 +63,14 @@ export default {
       */
     ],
     ground: {
-      tileWidth: 100,
+      tileWidth: GROUND_TILE_WIDTH,
       tileHeight: GROUND_HEIGHT
     },
     player: {
-      height: 100
+      height: PLAYER_HEIGHT
     },
     obstacle: {
-      obstacleWidth: 50
+      obstacleWidth: OBSTACLE_WIDTH
     }
   }
 };
