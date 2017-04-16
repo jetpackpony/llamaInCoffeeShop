@@ -1,7 +1,6 @@
 export const ActionTypes = {
   JUMP: 'JUMP',
   TICK: 'TICK',
-  SET_DIMENSIONS: 'SET_DIMENSIONS',
   RESIZE_CANVAS: 'RESIZE_CANVAS'
 };
 
@@ -11,10 +10,6 @@ export function jump() {
 
 export function tick(timestamp) {
   return { type: ActionTypes.TICK, payload: { timestamp } };
-}
-
-export function setDimensions(width, height) {
-  return { type: ActionTypes.SET_DIMENSIONS, payload: { width, height } };
 }
 
 export function resizeCanvas(scale) {

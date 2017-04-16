@@ -3,7 +3,7 @@ import { createLogger } from 'redux-logger';
 import initialState from './initialState';
 
 import reducer from '../reducer';
-import { tick, ActionTypes, setDimensions } from '../actions';
+import { tick, ActionTypes } from '../actions';
 
 const middlewares = [];
 const logger = createLogger({
