@@ -1,15 +1,11 @@
-import tickPlayer from './tickPlayer';
-import tickGround from './tickGround';
-import tickObstacles from './tickObstacles';
 import tickMetrics from './tickMetrics';
+import tickWorld from './tickWorld';
 
 export default function tickReducer(state, action) {
   const timestamp = action.payload.timestamp;
   return {
     ...state,
     metrics: tickMetrics(state.metrics, timestamp),
-    player: tickPlayer(state.player, state.statics, timestamp),
-    ground: tickGround(state.ground, timestamp),
-    //obstacles: tickObstacles(state.obstacles, state.scene, timestamp)
+    world: tickWorld(state.world, timestamp),
   };
 };

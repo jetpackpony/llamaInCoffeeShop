@@ -1,15 +1,21 @@
-import { GRAVITY, GROUND_Y, WORLD_SPEED } from '../constants';
+import { WORLD_HEIGHT } from '../constants';
 
 export default function resizeCanvasReducer(state, action) {
-  const scale = action.payload.scale;
+  const canvasW = state.assets.canvas.width;
+  const canvasH = state.assets.canvas.height;
+  const scale = canvasH / WORLD_HEIGHT;
+  const width = Math.ceil(canvasW / scale);
+
   return {
     ...state,
-    statics: {
-      ...state.statics,
+    assets: {
+      ...state.assets,
       scale,
-      gravity: GRAVITY * scale,
-      groundHeight: GROUND_Y * scale,
-      worldSpeed: WORLD_SPEED * scale
+      dpr: action.payload.dpr
+    },
+    world: {
+      ...state.world,
+      width
     }
   };
 };

@@ -12,6 +12,6 @@ export function tick(timestamp) {
   return { type: ActionTypes.TICK, payload: { timestamp } };
 }
 
-export function resizeCanvas(scale) {
-  return { type: ActionTypes.RESIZE_CANVAS, payload: { scale } };
+export function resizeCanvas(dpr) {
+  return { type: ActionTypes.RESIZE_CANVAS, payload: { dpr } };
 }

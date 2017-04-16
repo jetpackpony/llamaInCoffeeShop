@@ -4,9 +4,11 @@ const addLine = function addLine(ctx, offset, text, title) {
   ctx.fillText(`${title}: ${text}`, 0, 0);
 };
 
-export default function drawFPS(canvas, metrics) {
+export default function drawFPS(canvas, state) {
+  const metrics = state.metrics;
   const { width, height, ctx, cssWidth, cssHeight } = unpackCanvas(canvas);
-  const dpr = window.devicePixelRatio;
+  const dpr = state.assets.dpr;
+  const scale = state.assets.scale;
   const fontSize = Math.min(height, width) * 0.05;
   const lineHeight = fontSize * 1.1;
 
@@ -22,6 +24,7 @@ export default function drawFPS(canvas, metrics) {
   addLine(ctx, lineHeight, cssWidth, 'css width');
   addLine(ctx, lineHeight, cssHeight, 'css height');
   addLine(ctx, lineHeight, dpr, 'dpr');
+  addLine(ctx, lineHeight, scale, 'scale');
 
   ctx.restore();
 };

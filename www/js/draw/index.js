@@ -4,9 +4,9 @@ import drawGround from './drawGround';
 import drawPlayer from './drawPlayer';
 
 export default function draw(state) {
-  const canvas = state.statics.canvas;
+  const canvas = state.assets.canvas;
   clear(canvas);
-  drawFPS(canvas, state.metrics);
+  drawFPS(canvas, state);
   drawGround(canvas, state);
   drawPlayer(canvas, state);
 };

@@ -14,8 +14,8 @@ middlewares.push(logger);
 export default function initStore({ canvas, images }) {
   const initValue = {
     ...initialState,
-    statics: {
-      ...initialState.statics,
+    assets: {
+      ...initialState.assets,
       canvas,
       images
     }

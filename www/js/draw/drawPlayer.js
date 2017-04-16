@@ -1,17 +1,20 @@
 import unpackCanvas from './unpackCanvas';
 
 export default function drawPlayer(canvas, state) {
-  const { width, height, ctx } = unpackCanvas(canvas);
-  const { x, y } = state.player.displayObject.coords;
-  const img = state.statics.images.player.imgObject;
-  const coeff = (height * 0.2) / img.height;
-  const newH = img.height * coeff;
-  const newW = img.width * coeff;
+  const { ctx } = unpackCanvas(canvas);
+  const playerBody = state.world.objects.find((obj) => obj.id === 'player').body;
+  const img = state.assets.images.player.imgObject;
+
+  const scale = state.assets.scale;
+  const x = playerBody.position.x * scale;
+  const y = (state.world.height - playerBody.position.y) * scale;
+  const playerHeight = state.world.player.height * scale;
+  const playerWidth = img.width * (playerHeight / img.height);
 
   ctx.save();
 
-  ctx.translate(x, height - y);
-  ctx.drawImage(img, 0, 0, newW, newH);
+  ctx.translate(x, y);
+  ctx.drawImage(img, 0, 0, playerWidth, playerHeight);
 
   ctx.restore();
 }

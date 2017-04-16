@@ -28,8 +28,8 @@ const createGame = async function createGame(canvas) {
       cancelAnimationFrame(rafId);
     },
 
-    resize: function resized(scale) {
-      store.dispatch(resizeCanvas(scale));
+    resize: function resized(dpr) {
+      store.dispatch(resizeCanvas(dpr));
     },
 
     touch: function touch() {

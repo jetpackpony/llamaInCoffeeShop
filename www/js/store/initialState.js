@@ -1,38 +1,63 @@
-import { GRAVITY, GROUND_Y, WORLD_SPEED } from '../constants';
+import {
+  GRAVITY, GROUND_HEIGHT,
+  GROUND_SPEED, WORLD_HEIGHT
+} from '../constants';
 
 export default {
-  statics: {
+  assets: {
     canvas: null,
     images: {},
     scale: 1,
+    dpr: 1
+  },
+  world: {
     gravity: GRAVITY,
-    groundHeight: GROUND_Y,
-    worldSpeed: WORLD_SPEED
+    width: 0,
+    height: WORLD_HEIGHT,
+    groundHeight: GROUND_HEIGHT,
+    worldSpeed: GROUND_SPEED,
+    jumpVelocity: { x: 0, y: 1500 },
+    objects: [
+      {
+        id: 'player',
+        body: {
+          acceleration: { x: 0, y: GRAVITY },
+          velocity: { x: 0, y: 0 },
+          position: { x: 30, y: WORLD_HEIGHT },
+          lastTick: 0
+        }
+      },
+      {
+        id: 'ground',
+        body: {
+          acceleration: { x: 0, y: 0 },
+          velocity: { x: GROUND_SPEED, y: 0 },
+          position: { x: 0, y: GROUND_HEIGHT },
+          lastTick: 0
+        }
+      }
+    ],
+    ground: {
+      tileWidth: 100,
+      tileHeight: GROUND_HEIGHT
+    },
+    player: {
+      height: 100
+    }
   },
   metrics: {
     frameRate: 0,
     frameCounter: 0,
     lastFrameRateTime: 0
   },
-  scene: {
-    width: 0,
-    height: 0
-  },
+  /*
   player: {
-    inJump: false,
-    displayObject: {
-      acceleration: { x: 0, y: GRAVITY },
-      velocity: { x: 0, y: 0 },
-      coords: { x: 30, y: 30 },
-      lastTick: 0
-    }
+    inJump: false
   },
   ground: {
     tileWidth: 100,
-    position: 0,
-    velocity: { x: WORLD_SPEED, y: 0 },
-    lastTick: 0
-  },
+  }
+  ,
   obstacles: [
     {
       id: 'first',
@@ -45,4 +70,5 @@ export default {
       }
     }
   ]
+  */
 };
