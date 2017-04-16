@@ -5,13 +5,24 @@ var app = {
     document.addEventListener('deviceready', () => { }, false);
 
     const canvas = document.querySelector('#root canvas');
-    window.addEventListener('resize', () => {
-      this.resizeCanvas(canvas);
-    }, false);
-
     this.resizeCanvas(canvas);
-    const Game = createGame(canvas);
-    Game.start();
+    createGame(canvas).then((game) => {
+
+      // Add event listener for resize
+      window.addEventListener('resize', () => {
+        this.resizeCanvas(canvas);
+        game.resize(window.devicePixelRatio);
+      }, false);
+
+      canvas.addEventListener('touchstart', (event) => {
+        event.preventDefault();
+        game.touch();
+      }, false);
+
+      // Start the game
+      game.resize(window.devicePixelRatio);
+      game.start();
+    });
   },
 
   resizeCanvas: function resizeCanvas(canvas ) {
