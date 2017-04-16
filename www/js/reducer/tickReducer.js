@@ -1,11 +1,16 @@
 import tickMetrics from './tickMetrics';
 import tickWorld from './tickWorld';
+import tickGround from './tickGround';
 
 export default function tickReducer(state, action) {
   const timestamp = action.payload.timestamp;
+  let newWorld = tickWorld(state.world, timestamp);
+
+  newWorld = tickGround(newWorld, timestamp);
+
   return {
     ...state,
     metrics: tickMetrics(state.metrics, timestamp),
-    world: tickWorld(state.world, timestamp),
+    world: newWorld
   };
 };

@@ -42,11 +42,6 @@ export default function tickWorld(world, timestamp) {
       newBody.position.y = world.groundHeight;
     }
 
-    // If this is the ground, clip the x position
-    if (obj.id === 'ground') {
-      newBody.position.x = newBody.position.x % world.ground.tileWidth;
-    }
-
     return {
       ...obj,
       body: {
