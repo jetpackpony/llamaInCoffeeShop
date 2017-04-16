@@ -1,0 +1,1 @@
+cordova run android --release -- --keystore=platforms/android/my-release-key.keystore --alias=my-key-alias
