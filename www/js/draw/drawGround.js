@@ -9,12 +9,12 @@ export default function drawGround(canvas, state) {
 
   const scale = state.assets.scale;
   const tileWidth = state.world.ground.tileWidth * scale;
-  const tileHeight = state.world.ground.tileHeight * scale;
+  const tileHeight = (state.world.ground.tileHeight + state.world.groundOffset) * scale;
   const x = groundBody.position.x * scale;
   const y = (state.world.height - groundBody.position.y) * scale;
 
   ctx.save();
-  ctx.translate(x, y);
+  ctx.translate(x, y - state.world.groundOffset * scale);
   for(let i = 0; i < numTiles; i++) {
     ctx.drawImage(tileImg, 0, 0, tileWidth, tileHeight);
     ctx.translate(tileWidth, 0);

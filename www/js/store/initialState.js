@@ -1,14 +1,16 @@
 const GRAVITY = -5000;
 
-const GROUND_HEIGHT = 150;
 const GROUND_SPEED = -300;
 const JUMP_VELOCITY_Y = 1500;
 
 const WORLD_HEIGHT = 500;
+const GROUND_HEIGHT = 100;
+const GROUND_TILE_WIDTH = 100;
+
 const PLAYER_HEIGHT = 100;
 const PLAYER_POSITION_X = 50;
+
 const OBSTACLE_WIDTH = 50;
-const GROUND_TILE_WIDTH = 100;
 
 export default {
   assets: {
@@ -27,6 +29,7 @@ export default {
     width: 0,
     height: WORLD_HEIGHT,
     groundHeight: GROUND_HEIGHT,
+    groundOffset: 30,
     worldSpeed: GROUND_SPEED,
     jumpVelocity: { x: 0, y: JUMP_VELOCITY_Y },
     objects: [
