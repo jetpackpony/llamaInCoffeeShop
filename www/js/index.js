@@ -1,39 +1,39 @@
-import createGame from './createGame';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { Layer, Rect, Stage, Text } from 'react-konva';
 
-var app = {
-  initialize: function() {
-    document.addEventListener('deviceready', () => { }, false);
+import Player from './components/Player';
 
-    const canvas = document.querySelector('#root canvas');
-    this.resizeCanvas(canvas);
-    createGame(canvas).then((game) => {
+class GameContainer extends Component {
+  constructor(...args) {
+    super(...args);
+    this.state = { width: 100, height: 100 };
+  }
 
-      // Add event listener for resize
-      window.addEventListener('resize', () => {
-        this.resizeCanvas(canvas);
-        game.resize(window.devicePixelRatio);
-      }, false);
-
-      canvas.addEventListener('touchstart', (event) => {
-        event.preventDefault();
-        game.touch();
-      }, false);
-
-      // Start the game
-      game.resize(window.devicePixelRatio);
-      game.start();
-    });
-  },
-
-  resizeCanvas: function resizeCanvas(canvas ) {
-    const dpr = window.devicePixelRatio;
+  componentDidMount() {
+    // resize the canvas and things
+   // init the store and load the images, then set loading = false and start the game loop
     const width = window.innerWidth;
     const height = window.innerHeight;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-  }
-};
 
-app.initialize();
+    this.setState({
+      width, height
+    });
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this.timer);
+  }
+
+  render() {
+    return (
+      <Stage width={this.state.width} height={this.state.height}>
+        <Layer ref="layer">
+          <Player/>
+        </Layer>
+      </Stage>
+    );
+  }
+}
+
+ReactDOM.render(<GameContainer/>, document.getElementById('root'));
