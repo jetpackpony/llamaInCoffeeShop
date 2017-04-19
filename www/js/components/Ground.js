@@ -5,8 +5,7 @@ import { times } from '../utils';
 
 import GroundTile from './GroundTile';
 
-const Ground = ({ x, y, tileWidth, worldWidth }) => {
-  const numTiles = Math.ceil(worldWidth / tileWidth) + 1;
+const Ground = ({ x, y, tileWidth, numTiles }) => {
   const tiles = times(numTiles).map((i) => (
     <GroundTile key={i} index={i} />
   ));
@@ -19,15 +18,19 @@ const Ground = ({ x, y, tileWidth, worldWidth }) => {
 };
 
 const mapStateToProps = (state) => {
+  const scale = state.assets.scale;
   const { x, y } = state.world.objects
     .find((obj) => obj.id === 'ground')
     .body.position;
+
+  const tileWidth = state.world.ground.tileWidth;
+  const worldWidth = state.world.width;
+  const numTiles = Math.ceil(worldWidth / tileWidth) + 1;
   return {
-    x,
-    y: state.assets.sceneHeight - y,
-    tileWidth: state.world.ground.tileWidth,
-    //worldWidth: state.world.width
-    worldWidth: state.assets.sceneWidth
+    x: x * scale,
+    y: (state.world.height - y) * scale,
+    tileWidth: tileWidth * scale,
+    numTiles
   };
 };
 

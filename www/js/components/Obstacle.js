@@ -15,8 +15,9 @@ const Obstacle = ({ x, y, width, height, image }) => {
 };
 
 const mapStateToProps = (state) => {
+  const scale = state.assets.scale;
   const image = state.assets.images.obstacle.imgObject;
-  const width = state.world.obstacle.obstacleWidth;
+  const width = state.world.obstacle.obstacleWidth * scale;
   const height = image.height * (width / image.width);
   return {
     width, height, image
