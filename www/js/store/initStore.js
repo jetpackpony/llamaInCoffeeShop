@@ -11,12 +11,11 @@ const logger = createLogger({
 });
 middlewares.push(logger);
 
-export default function initStore({ canvas, images }) {
+export default function initStore({ images }) {
   const initValue = {
     ...initialState,
     assets: {
       ...initialState.assets,
-      canvas,
       images
     }
   };

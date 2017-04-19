@@ -15,6 +15,8 @@ const OBSTACLE_WIDTH = 50;
 export default {
   assets: {
     canvas: null,
+    sceneWidth: 700,
+    sceneHeight: 400,
     images: {},
     scale: 1,
     dpr: 1

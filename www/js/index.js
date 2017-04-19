@@ -1,40 +1,42 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Layer, Rect, Stage, Text } from 'react-konva';
+import { Provider } from 'react-redux';
 
-import Player from './components/Player';
-import Ground from './components/Ground';
+import Game from './components/Game';
+import { resizeCanvas } from './actions';
+import initGame from './initGame';
 
 class GameContainer extends Component {
   constructor(...args) {
     super(...args);
-    this.state = { width: 100, height: 100 };
+    this.state = { isLoading: true };
   }
 
   componentDidMount() {
-    // resize the canvas and things
-   // init the store and load the images, then set loading = false and start the game loop
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    initGame().then((store) => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const dpr = window.devicePixelRatio;
+      store.dispatch(resizeCanvas(width, height, dpr));
 
-    this.setState({
-      width, height
+      this.setState({
+        store,
+        isLoading: false
+      });
     });
   }
 
-  componentWillUnmount() {
-    cancelAnimationFrame(this.timer);
-  }
-
   render() {
-    return (
-      <Stage width={this.state.width} height={this.state.height}>
-        <Layer ref="layer">
-          <Player/>
-          <Ground/>
-        </Layer>
-      </Stage>
-    );
+    if (this.state.isLoading) {
+      return <div>Loading...</div>;
+    } else {
+      return (
+        <Provider store={this.state.store}>
+          <Game/>
+        </Provider>
+      );
+    }
   }
 }
 
