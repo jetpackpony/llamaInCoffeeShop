@@ -1,6 +1,6 @@
 export default function resizeCanvasReducer(state, action) {
-  const canvasW = state.assets.canvas.width;
-  const canvasH = state.assets.canvas.height;
+  const canvasW = action.payload.width;
+  const canvasH = action.payload.height;
   const scale = canvasH / state.world.height;
   const width = Math.ceil(canvasW / scale);
 
@@ -8,6 +8,8 @@ export default function resizeCanvasReducer(state, action) {
     ...state,
     assets: {
       ...state.assets,
+      sceneWidth: canvasW,
+      sceneHeight: canvasH,
       scale,
       dpr: action.payload.dpr
     },

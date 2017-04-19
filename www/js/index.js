@@ -1,39 +1,54 @@
-import createGame from './createGame';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
-var app = {
-  initialize: function() {
-    document.addEventListener('deviceready', () => { }, false);
+import Game from './components/Game';
+import { resizeCanvas, tick } from './actions';
+import initGame from './initGame';
 
-    const canvas = document.querySelector('#root canvas');
-    this.resizeCanvas(canvas);
-    createGame(canvas).then((game) => {
-
-      // Add event listener for resize
-      window.addEventListener('resize', () => {
-        this.resizeCanvas(canvas);
-        game.resize(window.devicePixelRatio);
-      }, false);
-
-      canvas.addEventListener('touchstart', (event) => {
-        event.preventDefault();
-        game.touch();
-      }, false);
-
-      // Start the game
-      game.resize(window.devicePixelRatio);
-      game.start();
-    });
-  },
-
-  resizeCanvas: function resizeCanvas(canvas ) {
-    const dpr = window.devicePixelRatio;
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
+class GameContainer extends Component {
+  constructor(...args) {
+    super(...args);
+    this.state = { isLoading: true };
+    this.loop = this.loop.bind(this);
   }
-};
 
-app.initialize();
+  loop(timestamp) {
+    this.state.store.dispatch(tick(timestamp));
+    this.timer = requestAnimationFrame(this.loop);
+  }
+
+  componentDidMount() {
+    initGame().then((store) => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const dpr = window.devicePixelRatio;
+      store.dispatch(resizeCanvas(width, height, dpr));
+
+      this.setState({
+        store,
+        isLoading: false
+      });
+
+      this.timer = requestAnimationFrame(this.loop);
+    });
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this.timer);
+  }
+
+  render() {
+    if (this.state.isLoading) {
+      return <div>Loading...</div>;
+    } else {
+      return (
+        <Provider store={this.state.store}>
+          <Game/>
+        </Provider>
+      );
+    }
+  }
+}
+
+ReactDOM.render(<GameContainer/>, document.getElementById('root'));
