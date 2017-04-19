@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Layer, Rect, Stage, Text } from 'react-konva';
 import { Provider } from 'react-redux';
 
 import Game from './components/Game';
