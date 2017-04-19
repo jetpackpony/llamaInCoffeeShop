@@ -18,7 +18,8 @@ const mapStateToProps = (state) => {
   const { tileWidth, tileHeight } = state.world.ground;
   const image = state.assets.images.groundTile.imgObject;
   return {
-    tileWidth, tileHeight,
+    tileWidth,
+    tileHeight: tileHeight + state.world.groundOffset,
     image
   };
 };

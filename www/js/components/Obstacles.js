@@ -7,7 +7,7 @@ const Obstacles = ({ objects, worldHeight, image, width, height }) => {
     <Image
       key={obj.id}
       x={obj.body.position.x}
-      y={worldHeight - obj.body.position.y}
+      y={worldHeight - obj.body.position.y - height}
       image={image}
       width={width}
       height={height}

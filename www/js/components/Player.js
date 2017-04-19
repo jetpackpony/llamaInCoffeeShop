@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
   const width = image.width * height / image.height;
 
   // invert the y coordinate
-  const y = state.world.height - player.body.position.y;
+  const y = state.world.height - player.body.position.y - height;
 
   return {
     x: player.body.position.x,

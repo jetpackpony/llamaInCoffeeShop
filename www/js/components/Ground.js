@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
   const numTiles = Math.ceil(worldWidth / tileWidth) + 1;
   return {
     x,
-    y: state.world.height - y,
+    y: state.world.height - y - state.world.groundOffset,
     tileWidth,
     numTiles
   };
