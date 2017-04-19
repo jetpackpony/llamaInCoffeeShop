@@ -18,7 +18,6 @@ const Ground = ({ x, y, tileWidth, numTiles }) => {
 };
 
 const mapStateToProps = (state) => {
-  const scale = state.assets.scale;
   const { x, y } = state.world.objects
     .find((obj) => obj.id === 'ground')
     .body.position;
@@ -27,9 +26,9 @@ const mapStateToProps = (state) => {
   const worldWidth = state.world.width;
   const numTiles = Math.ceil(worldWidth / tileWidth) + 1;
   return {
-    x: x * scale,
-    y: (state.world.height - y) * scale,
-    tileWidth: tileWidth * scale,
+    x,
+    y: state.world.height - y,
+    tileWidth,
     numTiles
   };
 };

@@ -15,12 +15,10 @@ const GroundTile = ({ index, tileWidth, tileHeight, image }) => {
 };
 
 const mapStateToProps = (state) => {
-  const scale = state.assets.scale;
   const { tileWidth, tileHeight } = state.world.ground;
   const image = state.assets.images.groundTile.imgObject;
   return {
-    tileWidth: tileWidth * scale,
-    tileHeight: tileHeight * scale,
+    tileWidth, tileHeight,
     image
   };
 };

@@ -6,10 +6,10 @@ import Player from './Player';
 import Ground from './Ground';
 import Obstacles from './Obstacles';
 
-const Game = ({ width, height }) => {
+const Game = ({ width, height, scale }) => {
   return (
     <Stage width={width} height={height}>
-      <Layer>
+      <Layer scaleX={scale} scaleY={scale}>
         <Ground/>
         <Player/>
         <Obstacles/>
@@ -21,7 +21,8 @@ const Game = ({ width, height }) => {
 const mapStateToProps = (state) => {
   return {
     width: state.assets.sceneWidth,
-    height: state.assets.sceneHeight
+    height: state.assets.sceneHeight,
+    scale: state.assets.scale
   };
 };
 
