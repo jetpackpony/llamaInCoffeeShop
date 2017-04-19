@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Group } from 'react-konva';
-import GroundTile from './GroundTile';
+import { Group, Image } from 'react-konva';
 
 export default class Ground extends Component {
   constructor(...args) {
@@ -24,7 +23,7 @@ export default class Ground extends Component {
     let tiles = [];
     for(let i = 0; i < numTiles; i++) {
       tiles.push(
-        <GroundTile
+        <Image
           key={i}
           x={this.state.position.x + this.state.width * i}
           y={this.state.position.y}
