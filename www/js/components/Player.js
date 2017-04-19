@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layer, Rect, Stage, Image } from 'react-konva';
+import { Image } from 'react-konva';
 
 export default class Player extends Component {
   constructor(...args) {

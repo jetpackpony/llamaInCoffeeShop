@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Layer, Rect, Stage, Text } from 'react-konva';
 
 import Player from './components/Player';
+import Ground from './components/Ground';
 
 class GameContainer extends Component {
   constructor(...args) {
@@ -30,6 +31,7 @@ class GameContainer extends Component {
       <Stage width={this.state.width} height={this.state.height}>
         <Layer ref="layer">
           <Player/>
+          <Ground/>
         </Layer>
       </Stage>
     );
