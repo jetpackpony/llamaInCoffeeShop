@@ -4,12 +4,12 @@ import { Group } from 'react-konva';
 
 import Obstacle from './Obstacle';
 
-const Obstacles = ({ objects }) => {
+const Obstacles = ({ objects, worldHeight }) => {
   const obstacles = objects.map((obj) => (
     <Obstacle
       key={obj.id}
       x={obj.body.position.x}
-      y={obj.body.position.y}
+      y={worldHeight - obj.body.position.y}
     />
   ));
 
@@ -23,7 +23,8 @@ const Obstacles = ({ objects }) => {
 
 const mapStateToProps = (state) => {
   return {
-    objects: state.world.objects.filter((obj) => obj.type === 'obstacle')
+    objects: state.world.objects.filter((obj) => obj.type === 'obstacle'),
+    worldHeight: state.assets.sceneHeight
   };
 };
 

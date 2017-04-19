@@ -23,7 +23,8 @@ const mapStateToProps = (state) => {
     .find((obj) => obj.id === 'ground')
     .body.position;
   return {
-    x, y,
+    x,
+    y: state.assets.sceneHeight - y,
     tileWidth: state.world.ground.tileWidth,
     //worldWidth: state.world.width
     worldWidth: state.assets.sceneWidth
