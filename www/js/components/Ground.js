@@ -1,42 +1,33 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Group, Image } from 'react-konva';
+import { times } from '../utils';
 
-export default class Ground extends Component {
-  constructor(...args) {
-    super(...args);
-    this.state = {
-      image: null,
-      position: { x: 100, y: 100 }
-    };
-  }
-  componentDidMount() {
-    const image = new window.Image();
-    image.onload = () => {
-      const height = 70;
-      const width = image.width * height / image.height;
-      this.setState({ image, width, height });
-    };
-    image.src = 'img/groundTile.png';
-  }
-  render() {
-    let numTiles = 10;
-    let tiles = [];
-    for(let i = 0; i < numTiles; i++) {
-      tiles.push(
-        <Image
-          key={i}
-          x={this.state.position.x + this.state.width * i}
-          y={this.state.position.y}
-          image={this.state.image}
-          width={this.state.width}
-          height={this.state.height}
-        />
-      );
-    }
-    return (
-      <Group>
-        {tiles}
-      </Group>
-    );
-  }
-}
+import GroundTile from './GroundTile';
+
+const Ground = ({ x, y, tileWidth, worldWidth }) => {
+  const numTiles = Math.ceil(worldWidth / tileWidth) + 1;
+  const tiles = times(numTiles).map((i) => (
+    <GroundTile key={i} index={i} />
+  ));
+
+  return (
+    <Group x={x} y={y}>
+      {tiles}
+    </Group>
+  );
+};
+
+const mapStateToProps = (state) => {
+  const { x, y } = state.world.objects
+    .find((obj) => obj.id === 'ground')
+    .body.position;
+  return {
+    x, y,
+    tileWidth: state.world.ground.tileWidth,
+    //worldWidth: state.world.width
+    worldWidth: state.assets.sceneWidth
+  };
+};
+
+export default connect(mapStateToProps)(Ground);
