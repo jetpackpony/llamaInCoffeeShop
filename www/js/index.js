@@ -4,13 +4,19 @@ import { Layer, Rect, Stage, Text } from 'react-konva';
 import { Provider } from 'react-redux';
 
 import Game from './components/Game';
-import { resizeCanvas } from './actions';
+import { resizeCanvas, tick } from './actions';
 import initGame from './initGame';
 
 class GameContainer extends Component {
   constructor(...args) {
     super(...args);
     this.state = { isLoading: true };
+    this.loop = this.loop.bind(this);
+  }
+
+  loop(timestamp) {
+    this.state.store.dispatch(tick(timestamp));
+    this.timer = requestAnimationFrame(this.loop);
   }
 
   componentDidMount() {
@@ -24,7 +30,13 @@ class GameContainer extends Component {
         store,
         isLoading: false
       });
+
+      this.timer = requestAnimationFrame(this.loop);
     });
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this.timer);
   }
 
   render() {
