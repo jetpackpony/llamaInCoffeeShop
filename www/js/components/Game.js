@@ -5,14 +5,15 @@ import { connect } from 'react-redux';
 import Player from './Player';
 import Ground from './Ground';
 import Obstacles from './Obstacles';
+import { jump } from '../actions';
 
-const Game = ({ width, height, scale }) => {
+const Game = ({ width, height, scale, onTouch }) => {
   return (
-    <Stage width={width} height={height}>
+    <Stage width={width} height={height} ontouchstart={onTouch}>
       <Layer scaleX={scale} scaleY={scale}>
         <Ground/>
-        <Player/>
         <Obstacles/>
+        <Player/>
       </Layer>
     </Stage>
   );
@@ -26,4 +27,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Game);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTouch: () => dispatch(jump())
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
