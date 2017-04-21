@@ -4,7 +4,8 @@ import loadImages from './loadImages';
 const imgUrls = {
   groundTile: 'img/groundTile.png',
   player: 'img/llama.png',
-  obstacle: 'img/table.png'
+  coffee: 'img/coffee.png',
+  table: 'img/table.png'
 };
 
 const initGame = async function initGame() {

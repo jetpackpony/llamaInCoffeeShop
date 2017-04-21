@@ -58,6 +58,19 @@ export default {
         id: `obstacle-${timestamp}`,
         generated: timestamp,
         type: 'obstacle',
+        view: 'table',
+        body: {
+          acceleration: { x: 0, y: 0 },
+          velocity: { x: worldSpeed, y: 0 },
+          position: { x: worldWidth + 1, y: groundHeight },
+          lastTick: timestamp
+        }
+      }
+      {
+        id: `collectable-${timestamp}`,
+        generated: timestamp,
+        type: 'collectable',
+        view: 'coffee',
         body: {
           acceleration: { x: 0, y: 0 },
           velocity: { x: worldSpeed, y: 0 },
@@ -76,6 +89,9 @@ export default {
     },
     obstacle: {
       obstacleWidth: OBSTACLE_WIDTH
+    },
+    collectable: {
+      collectableWidth: OBSTACLE_WIDTH
     }
   }
 };
