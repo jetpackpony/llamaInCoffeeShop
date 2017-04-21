@@ -58,6 +58,7 @@ export default {
         id: `obstacle-${timestamp}`,
         generated: timestamp,
         type: 'obstacle',
+        view: 'table',
         body: {
           acceleration: { x: 0, y: 0 },
           velocity: { x: worldSpeed, y: 0 },
@@ -69,6 +70,7 @@ export default {
         id: `collectable-${timestamp}`,
         generated: timestamp,
         type: 'collectable',
+        view: 'coffee',
         body: {
           acceleration: { x: 0, y: 0 },
           velocity: { x: worldSpeed, y: 0 },

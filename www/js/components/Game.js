@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import Metrics from './Metrics';
 import Player from './Player';
 import Ground from './Ground';
-import Obstacles from './Obstacles';
-import Collectables from './Collectables';
+import WorldObjects from './WorldObjects';
 import { jump } from '../actions';
 
 const Game = ({ width, height, scale, onTouch }) => {
@@ -15,8 +14,7 @@ const Game = ({ width, height, scale, onTouch }) => {
       <Layer scaleX={scale} scaleY={scale}>
         <Metrics/>
         <Ground/>
-        <Obstacles/>
-        <Collectables/>
+        <WorldObjects/>
         <Player/>
       </Layer>
     </Stage>

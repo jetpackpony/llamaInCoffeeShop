@@ -1,14 +1,17 @@
-const cleanUpCollectables = (objs, collectableWidth) => {
+const cleanUpObjects = (objs, objWidth) => {
   return objs.filter((obj) => {
-    return obj.type !== 'collectable' || obj.body.position.x > 0 - collectableWidth;
+    return (obj.type !== 'obstacle' && obj.type !== 'collectable') || obj.body.position.x > 0 - objWidth;
   });
 };
 
 const generateObj = (timestamp, worldWidth, worldSpeed, groundHeight) => {
+  let obstacle = true;
+  if (Math.random() >= 0.5) obstacle = false;
   return {
-    id: `collectable-${timestamp}`,
+    id: `${(obstacle) ? 'obstacle' : 'collectable'}-${timestamp}`,
     generated: timestamp,
-    type: 'collectable',
+    type: (obstacle) ? 'obstacle' : 'collectable',
+    view: (obstacle) ? 'table' : 'coffee',
     body: {
       acceleration: { x: 0, y: 0 },
       velocity: { x: worldSpeed, y: 0 },
@@ -18,14 +21,14 @@ const generateObj = (timestamp, worldWidth, worldSpeed, groundHeight) => {
   };
 };
 
-const generateCollectables = (world, timestamp) => {
+const generateObjects = (world, timestamp) => {
   const lastObjectTime = world.objects
-    .filter((el) => el.type === 'collectable')
+    .filter((el) => el.type === 'obstacle' || el.type === 'collectable')
     .map((el) => el.generated || 0)
     .sort((a, b) => a - b)
     .pop() || 0;
 
-  if (timestamp - lastObjectTime > 1300) {
+  if (timestamp - lastObjectTime > 1000) {
     return [ generateObj(timestamp, world.width, world.worldSpeed, world.groundHeight) ];
   }
   return [];
@@ -34,10 +37,10 @@ const generateCollectables = (world, timestamp) => {
 export default (world, timestamp) => {
   return {
     ...world,
-    objects: cleanUpCollectables([
+    objects: cleanUpObjects([
       ...world.objects,
-      ...generateCollectables(world, timestamp)
-    ], world.collectable.collectableWidth)
+      ...generateObjects(world, timestamp)
+    ], world.obstacle.obstacleWidth)
   };
 };
 
