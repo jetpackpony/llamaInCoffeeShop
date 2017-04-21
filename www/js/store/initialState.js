@@ -65,6 +65,17 @@ export default {
           lastTick: timestamp
         }
       }
+      {
+        id: `collectable-${timestamp}`,
+        generated: timestamp,
+        type: 'collectable',
+        body: {
+          acceleration: { x: 0, y: 0 },
+          velocity: { x: worldSpeed, y: 0 },
+          position: { x: worldWidth + 1, y: groundHeight },
+          lastTick: timestamp
+        }
+      }
       */
     ],
     ground: {
@@ -76,6 +87,9 @@ export default {
     },
     obstacle: {
       obstacleWidth: OBSTACLE_WIDTH
+    },
+    collectable: {
+      collectableWidth: OBSTACLE_WIDTH
     }
   }
 };

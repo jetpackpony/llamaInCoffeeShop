@@ -1,14 +1,14 @@
-const cleanUpObstacles = (objs, obstacleWidth) => {
+const cleanUpCollectables = (objs, collectableWidth) => {
   return objs.filter((obj) => {
-    return obj.type !== 'obstacle' || obj.body.position.x > 0 - obstacleWidth;
+    return obj.type !== 'collectable' || obj.body.position.x > 0 - collectableWidth;
   });
 };
 
 const generateObj = (timestamp, worldWidth, worldSpeed, groundHeight) => {
   return {
-    id: `obstacle-${timestamp}`,
+    id: `collectable-${timestamp}`,
     generated: timestamp,
-    type: 'obstacle',
+    type: 'collectable',
     body: {
       acceleration: { x: 0, y: 0 },
       velocity: { x: worldSpeed, y: 0 },
@@ -18,14 +18,14 @@ const generateObj = (timestamp, worldWidth, worldSpeed, groundHeight) => {
   };
 };
 
-const generateObstacles = (world, timestamp) => {
+const generateCollectables = (world, timestamp) => {
   const lastObjectTime = world.objects
-    .filter((el) => el.type === 'obstacle')
+    .filter((el) => el.type === 'collectable')
     .map((el) => el.generated || 0)
     .sort((a, b) => a - b)
     .pop() || 0;
 
-  if (timestamp - lastObjectTime > 1500) {
+  if (timestamp - lastObjectTime > 1300) {
     return [ generateObj(timestamp, world.width, world.worldSpeed, world.groundHeight) ];
   }
   return [];
@@ -34,10 +34,10 @@ const generateObstacles = (world, timestamp) => {
 export default (world, timestamp) => {
   return {
     ...world,
-    objects: cleanUpObstacles([
+    objects: cleanUpCollectables([
       ...world.objects,
-      ...generateObstacles(world, timestamp)
-    ], world.obstacle.obstacleWidth)
+      ...generateCollectables(world, timestamp)
+    ], world.collectable.collectableWidth)
   };
 };
 

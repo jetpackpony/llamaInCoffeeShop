@@ -6,6 +6,7 @@ import Metrics from './Metrics';
 import Player from './Player';
 import Ground from './Ground';
 import Obstacles from './Obstacles';
+import Collectables from './Collectables';
 import { jump } from '../actions';
 
 const Game = ({ width, height, scale, onTouch }) => {
@@ -15,6 +16,7 @@ const Game = ({ width, height, scale, onTouch }) => {
         <Metrics/>
         <Ground/>
         <Obstacles/>
+        <Collectables/>
         <Player/>
       </Layer>
     </Stage>
