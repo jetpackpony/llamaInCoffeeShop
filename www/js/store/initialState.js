@@ -13,6 +13,7 @@ const PLAYER_POSITION_X = 50;
 const OBSTACLE_WIDTH = 50;
 
 export default {
+  gameState: 'playing',
   assets: {
     canvas: null,
     sceneWidth: 700,
