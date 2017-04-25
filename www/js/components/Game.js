@@ -8,6 +8,7 @@ import Ground from './Ground';
 import WorldObjects from './WorldObjects';
 import { jump } from '../actions';
 import Pause from './Pause';
+import EnergyBar from './EnergyBar';
 
 const Game = ({ width, height, scale, onTouch }) => {
   return (
@@ -18,6 +19,7 @@ const Game = ({ width, height, scale, onTouch }) => {
         <WorldObjects/>
         <Player/>
         <Pause/>
+        <EnergyBar/>
       </Layer>
     </Stage>
   );
