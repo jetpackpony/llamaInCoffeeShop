@@ -7,7 +7,7 @@ const WORLD_HEIGHT = 500;
 const GROUND_HEIGHT = 100;
 const GROUND_TILE_WIDTH = 100;
 
-const PLAYER_HEIGHT = 100;
+const PLAYER_WIDTH = 70;
 const PLAYER_POSITION_X = 50;
 
 const OBSTACLE_WIDTH = 50;
@@ -93,16 +93,16 @@ export default {
       tileHeight: GROUND_HEIGHT
     },
     player: {
-      height: PLAYER_HEIGHT,
-      width: PLAYER_HEIGHT
+      height: PLAYER_WIDTH,
+      width: PLAYER_WIDTH
     },
     obstacle: {
-      obstacleHeight: OBSTACLE_WIDTH,
-      obstacleWidth: OBSTACLE_WIDTH
+      height: OBSTACLE_WIDTH,
+      width: OBSTACLE_WIDTH
     },
     collectable: {
-      collectableHeight: OBSTACLE_WIDTH,
-      collectableWidth: OBSTACLE_WIDTH
+      height: OBSTACLE_WIDTH,
+      width: OBSTACLE_WIDTH
     }
   }
 };
