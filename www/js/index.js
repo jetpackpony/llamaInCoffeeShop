@@ -14,7 +14,7 @@ class GameContainer extends Component {
   }
 
   loop(timestamp) {
-    this.state.store.dispatch(tick(timestamp));
+    this.state.store.dispatch(tick(Math.round(timestamp)));
     if (this.state.store.getState().gameState !== 'paused') {
       this.timer = requestAnimationFrame(this.loop);
     }
