@@ -1,6 +1,7 @@
 import { Vector, Box, testPolygonPolygon } from 'sat';
 
 export const calculateCollisions = (world) => {
+  const offset = 10;
   const player = world.objects.find((obj) => obj.id === 'player');
   const collidables = world
     .objects
@@ -8,16 +9,16 @@ export const calculateCollisions = (world) => {
     .filter((obj) => !obj.collidingWithPlayer);
 
   const playerBox = new Box(
-    new Vector(player.body.position.x, player.body.position.y),
-    world.player.width,
-    world.player.height
+    new Vector(player.body.position.x + offset, player.body.position.y + offset),
+    world.player.width - offset*2,
+    world.player.height - offset*2
   ).toPolygon();
 
   return collidables.filter((obj) => {
     const objBox = new Box(
-      new Vector(obj.body.position.x, obj.body.position.y),
-      world.obstacle.width,
-      world.obstacle.height,
+      new Vector(obj.body.position.x + offset, obj.body.position.y + offset),
+      world.obstacle.width - offset*2,
+      world.obstacle.height - offset*2,
     ).toPolygon();
     return testPolygonPolygon(playerBox, objBox);
   });
