@@ -6,7 +6,7 @@ const mapStateToProps = (state) => {
   const player = state.world.objects.find((obj) => obj.id === 'player');
   const image = state.assets.images.player.imgObject;
   const height = state.world.player.height;
-  const width = image.width * height / image.height;
+  const width = state.world.player.width;
 
   // invert the y coordinate
   const y = state.world.height - player.body.position.y - height;
