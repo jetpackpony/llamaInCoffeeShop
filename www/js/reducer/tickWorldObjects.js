@@ -40,7 +40,7 @@ export default (world, timestamp) => {
     objects: cleanUpObjects([
       ...world.objects,
       ...generateObjects(world, timestamp)
-    ], world.obstacle.obstacleWidth)
+    ], world.obstacle.width)
   };
 };
 

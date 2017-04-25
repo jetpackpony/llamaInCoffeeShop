@@ -11,12 +11,30 @@ const logger = createLogger({
 });
 middlewares.push(logger);
 
+
+const getHeight = (width, image) => image.height * (width / image.width);
+
 export default function initStore({ images }) {
   const initValue = {
     ...initialState,
     assets: {
       ...initialState.assets,
       images
+    },
+    world: {
+      ...initialState.world,
+      player: {
+        ...initialState.world.player,
+        height: getHeight(initialState.world.player.width, images.player.imgObject)
+      },
+      obstacle: {
+        ...initialState.world.obstacle,
+        height: getHeight(initialState.world.obstacle.width, images.table.imgObject)
+      },
+      collectable: {
+        ...initialState.world.collectable,
+        height: getHeight(initialState.world.collectable.width, images.coffee.imgObject)
+      }
     }
   };
   return createStore(

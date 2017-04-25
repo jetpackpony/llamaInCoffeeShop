@@ -16,8 +16,8 @@ export const calculateCollisions = (world) => {
   return collidables.filter((obj) => {
     const objBox = new Box(
       new Vector(obj.body.position.x, obj.body.position.y),
-      world.obstacle.obstacleWidth,
-      world.obstacle.obstacleHeight,
+      world.obstacle.width,
+      world.obstacle.height,
     ).toPolygon();
     return testPolygonPolygon(playerBox, objBox);
   });

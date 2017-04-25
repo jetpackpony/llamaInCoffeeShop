@@ -18,7 +18,7 @@ const WorldObject = ({ object, images, width, worldHeight }) => {
 
 const mapStateToProps = (state) => {
   const images = state.assets.images;
-  const width = state.world.collectable.collectableWidth;
+  const width = state.world.collectable.width;
   const worldHeight = state.world.height;
   return {
     images,
