@@ -10,7 +10,7 @@ const Line = ({ text, index }) => (
   />
 );
 
-const Metrics = ({ fps, width, height, scale, dpr, coffees, tables }) => (
+const Metrics = ({ fps, width, height, scale, dpr, coffees, tables, energy }) => (
   <Group y="10">
     <Line text={fps} index="0" />
     <Line text={width} index="1" />
@@ -19,6 +19,7 @@ const Metrics = ({ fps, width, height, scale, dpr, coffees, tables }) => (
     <Line text={dpr} index="4" />
     <Line text={coffees} index="5" />
     <Line text={tables} index="6" />
+    <Line text={energy} index="7" />
   </Group>
 );
 
@@ -30,7 +31,8 @@ const mapStateToProps = (state) => {
     scale: `scale: ${state.assets.scale}`,
     dpr: `dpr: ${state.assets.dpr}`,
     coffees: `coffees: ${state.score.coffees}`,
-    tables: `tables: ${state.score.tables}`
+    tables: `tables: ${state.score.tables}`,
+    energy: `energy: ${state.score.energy}`
   };
 };
 

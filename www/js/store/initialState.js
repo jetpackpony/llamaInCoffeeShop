@@ -24,7 +24,8 @@ export default {
   },
   score: {
     coffees: 0,
-    tables: 0
+    tables: 0,
+    energy: 100
   },
   metrics: {
     frameRate: 0,

@@ -25,10 +25,18 @@ export const calculateCollisions = (world) => {
 
 export const updateScore = (collisions, oldScore) => {
   const newScore = collisions.reduce((score, collision) => {
-    if (collision.view === 'coffee') score.coffees++;
-    if (collision.view === 'table') score.tables++;
+    if (collision.view === 'coffee') {
+      score.coffees++;
+      score.energy += 20;
+    }
+    if (collision.view === 'table') {
+      score.tables++;
+      score.energy -= 20;
+    }
     return score;
   }, { ...oldScore });
+  if (newScore.energy > 100) newScore.energy = 100;
+  if (newScore.energy < 0) newScore.energy = 0;
 
   return {
     ...oldScore,
@@ -39,11 +47,13 @@ export const updateScore = (collisions, oldScore) => {
 export const updateCollisions = (world, collisions) => {
   const collidingIds = collisions.map((obj) => obj.id);
   const objects = world.objects.map((obj) => {
+    const collidingWithPlayer = obj.collidingWithPlayer || collidingIds.includes(obj.id);
+    if (collidingWithPlayer && obj.type === 'collectable') return null;
     return {
       ...obj,
-      collidingWithPlayer: obj.collidingWithPlayer || collidingIds.includes(obj.id)
+      collidingWithPlayer
     };
-  });
+  }).filter((obj) => obj !== null);
 
   return {
     ...world,
