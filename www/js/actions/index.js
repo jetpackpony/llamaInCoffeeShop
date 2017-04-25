@@ -1,7 +1,8 @@
 export const ActionTypes = {
   JUMP: 'JUMP',
   TICK: 'TICK',
-  RESIZE_CANVAS: 'RESIZE_CANVAS'
+  RESIZE_CANVAS: 'RESIZE_CANVAS',
+  PAUSE_GAME: 'PAUSE_GAME'
 };
 
 export function jump() {
@@ -14,4 +15,8 @@ export function tick(timestamp) {
 
 export function resizeCanvas(width, height, dpr) {
   return { type: ActionTypes.RESIZE_CANVAS, payload: { width, height, dpr } };
+}
+
+export function pauseGame() {
+  return { type: ActionTypes.PAUSE_GAME };
 }

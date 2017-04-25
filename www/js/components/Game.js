@@ -7,6 +7,7 @@ import Player from './Player';
 import Ground from './Ground';
 import WorldObjects from './WorldObjects';
 import { jump } from '../actions';
+import Pause from './Pause';
 
 const Game = ({ width, height, scale, onTouch }) => {
   return (
@@ -16,6 +17,7 @@ const Game = ({ width, height, scale, onTouch }) => {
         <Ground/>
         <WorldObjects/>
         <Player/>
+        <Pause/>
       </Layer>
     </Stage>
   );

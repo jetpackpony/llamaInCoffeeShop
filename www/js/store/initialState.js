@@ -13,6 +13,7 @@ const PLAYER_POSITION_X = 50;
 const OBSTACLE_WIDTH = 50;
 
 export default {
+  gameState: 'playing',
   assets: {
     canvas: null,
     sceneWidth: 700,
@@ -20,6 +21,11 @@ export default {
     images: {},
     scale: 1,
     dpr: 1
+  },
+  score: {
+    coffees: 0,
+    tables: 0,
+    energy: 100
   },
   metrics: {
     frameRate: 0,
@@ -59,6 +65,7 @@ export default {
         generated: timestamp,
         type: 'obstacle',
         view: 'table',
+        collidingWithPlayer: false,
         body: {
           acceleration: { x: 0, y: 0 },
           velocity: { x: worldSpeed, y: 0 },
@@ -71,6 +78,7 @@ export default {
         generated: timestamp,
         type: 'collectable',
         view: 'coffee',
+        collidingWithPlayer: false,
         body: {
           acceleration: { x: 0, y: 0 },
           velocity: { x: worldSpeed, y: 0 },
@@ -85,12 +93,15 @@ export default {
       tileHeight: GROUND_HEIGHT
     },
     player: {
-      height: PLAYER_HEIGHT
+      height: PLAYER_HEIGHT,
+      width: PLAYER_HEIGHT
     },
     obstacle: {
+      obstacleHeight: OBSTACLE_WIDTH,
       obstacleWidth: OBSTACLE_WIDTH
     },
     collectable: {
+      collectableHeight: OBSTACLE_WIDTH,
       collectableWidth: OBSTACLE_WIDTH
     }
   }
