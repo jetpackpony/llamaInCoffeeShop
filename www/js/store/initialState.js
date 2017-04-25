@@ -22,6 +22,10 @@ export default {
     scale: 1,
     dpr: 1
   },
+  score: {
+    coffees: 0,
+    tables: 0
+  },
   metrics: {
     frameRate: 0,
     frameCounter: 0,
@@ -60,6 +64,7 @@ export default {
         generated: timestamp,
         type: 'obstacle',
         view: 'table',
+        collidingWithPlayer: false,
         body: {
           acceleration: { x: 0, y: 0 },
           velocity: { x: worldSpeed, y: 0 },
@@ -72,6 +77,7 @@ export default {
         generated: timestamp,
         type: 'collectable',
         view: 'coffee',
+        collidingWithPlayer: false,
         body: {
           acceleration: { x: 0, y: 0 },
           velocity: { x: worldSpeed, y: 0 },
@@ -86,12 +92,15 @@ export default {
       tileHeight: GROUND_HEIGHT
     },
     player: {
-      height: PLAYER_HEIGHT
+      height: PLAYER_HEIGHT,
+      width: PLAYER_HEIGHT
     },
     obstacle: {
+      obstacleHeight: OBSTACLE_WIDTH,
       obstacleWidth: OBSTACLE_WIDTH
     },
     collectable: {
+      collectableHeight: OBSTACLE_WIDTH,
       collectableWidth: OBSTACLE_WIDTH
     }
   }
