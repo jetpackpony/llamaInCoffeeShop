@@ -17,9 +17,9 @@ class Pause extends Component {
   render() {
     return (
       <Text
-        x={this.props.state.assets.sceneWidth}
+        x={this.props.state.world.width - 50}
         y="10"
-        fontSize="50"
+        fontSize="30"
         text="II"
         fill="black"
         ontouchstart={this.handleClick}
