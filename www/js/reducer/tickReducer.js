@@ -8,6 +8,11 @@ import {
 } from './collisions';
 
 export default function tickReducer(state, action) {
+  let gameState = state.gameState;
+  if (gameState === 'loosing') {
+    return state;
+  }
+
   const timestamp = action.payload.timestamp;
   let newWorld = tickWorld(state.world, timestamp);
 
@@ -17,8 +22,13 @@ export default function tickReducer(state, action) {
   const score = updateScore(collisions, state.score);
   newWorld = updateCollisions(newWorld, collisions);
 
+  if (state.score.energy <= 0) {
+    gameState = 'loosing';
+  }
+
   return {
     ...state,
+    gameState,
     score,
     metrics: tickMetrics(state.metrics, timestamp),
     world: newWorld

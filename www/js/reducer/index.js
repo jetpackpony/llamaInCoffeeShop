@@ -1,10 +1,14 @@
 import jumpReducer from './jumpReducer';
 import tickReducer from './tickReducer';
 import resizeCanvasReducer from './resizeCanvasReducer';
+import restartGameReducer from './restartGameReducer';
 
 import initialState from '../store/initialState';
 import { ActionTypes } from '../actions';
-const { JUMP, TICK, RESIZE_CANVAS, PAUSE_GAME } = ActionTypes;
+const {
+  JUMP, TICK, RESIZE_CANVAS, PAUSE_GAME,
+  RESTART_GAME
+} = ActionTypes;
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -15,6 +19,7 @@ export default (state = initialState, action) => {
       ...state,
       gameState: 'paused'
     });
+    case RESTART_GAME: return restartGameReducer(state, action);
     default: return state;
   }
 };

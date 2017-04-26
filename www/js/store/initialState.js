@@ -1,16 +1,16 @@
 const GRAVITY = -5000;
 
-const GROUND_SPEED = -300;
-const JUMP_VELOCITY_Y = 1500;
+const GROUND_SPEED = -800;
+const JUMP_VELOCITY_Y = 2500;
 
-const WORLD_HEIGHT = 500;
-const GROUND_HEIGHT = 100;
+const WORLD_HEIGHT = 1000;
+const GROUND_HEIGHT = 200;
 const GROUND_TILE_WIDTH = 100;
 
-const PLAYER_WIDTH = 70;
+const PLAYER_WIDTH = 80;
 const PLAYER_POSITION_X = 50;
 
-const OBSTACLE_WIDTH = 50;
+const OBSTACLE_WIDTH = 70;
 
 export default {
   gameState: 'playing',
