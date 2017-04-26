@@ -21,16 +21,25 @@ const generateObj = (timestamp, worldWidth, worldSpeed, groundHeight) => {
   };
 };
 
+const getRandomArbitrary = (min, max) => {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+const minSpread = 200;
+const maxSpread = 500;
+
 const generateObjects = (world, timestamp) => {
-  const lastObjectTime = world.objects
+  const lastObjectX = world.objects
     .filter((el) => el.type === 'obstacle' || el.type === 'collectable')
-    .map((el) => el.generated || 0)
+    .map((el) => el.body.position.x || 0)
     .sort((a, b) => a - b)
     .pop() || 0;
 
-  if (timestamp - lastObjectTime > 1000) {
+  const xSinceLastObject = world.width - lastObjectX;
+  if (xSinceLastObject >= getRandomArbitrary(minSpread, maxSpread)) {
     return [ generateObj(timestamp, world.width, world.worldSpeed, world.groundHeight) ];
   }
+
   return [];
 };
 
