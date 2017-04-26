@@ -13,6 +13,8 @@ const PLAYER_POSITION_X = 50;
 const OBSTACLE_WIDTH = 70;
 
 export default {
+  collectableBonus: 5,
+  obstacleDamage: -30,
   gameState: 'playing',
   assets: {
     canvas: null,

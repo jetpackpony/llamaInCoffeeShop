@@ -19,7 +19,7 @@ export default function tickReducer(state, action) {
   newWorld = tickGround(newWorld, timestamp);
   newWorld = tickWorldObjects(newWorld, timestamp);
   const collisions = calculateCollisions(newWorld);
-  const score = updateScore(collisions, state.score);
+  const score = updateScore(collisions, state.score, state.collectableBonus, state.obstacleDamage);
   newWorld = updateCollisions(newWorld, collisions);
 
   if (state.score.energy <= 0) {

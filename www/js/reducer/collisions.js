@@ -24,15 +24,15 @@ export const calculateCollisions = (world) => {
   });
 };
 
-export const updateScore = (collisions, oldScore) => {
+export const updateScore = (collisions, oldScore, coffee, table) => {
   const newScore = collisions.reduce((score, collision) => {
     if (collision.view === 'coffee') {
       score.coffees++;
-      score.energy += 20;
+      score.energy += coffee;
     }
     if (collision.view === 'table') {
       score.tables++;
-      score.energy -= 20;
+      score.energy += table;
     }
     return score;
   }, { ...oldScore });
