@@ -4,14 +4,13 @@ const cleanUpObjects = (objs, objWidth) => {
   });
 };
 
-const generateObj = (timestamp, worldWidth, worldSpeed, groundHeight, obstacleProbability) => {
-  let obstacle = false;
-  if (Math.random() >= obstacleProbability) obstacle = true;
+const generateObj = (timestamp, worldWidth, worldSpeed, groundHeight, spread) => {
   return {
-    id: `${(obstacle) ? 'obstacle' : 'collectable'}-${timestamp}`,
+    id: `obstacle-${timestamp}`,
     generated: timestamp,
-    type: (obstacle) ? 'obstacle' : 'collectable',
-    view: (obstacle) ? 'table' : 'coffee',
+    type: 'obstacle',
+    view: 'table',
+    spread,
     body: {
       acceleration: { x: 0, y: 0 },
       velocity: { x: worldSpeed, y: 0 },
@@ -26,15 +25,17 @@ const getRandomArbitrary = (min, max) => {
 }
 
 const generateObjects = (world, timestamp) => {
-  const lastObjectX = world.objects
-    .filter((el) => el.type === 'obstacle' || el.type === 'collectable')
-    .map((el) => el.body.position.x || 0)
-    .sort((a, b) => a - b)
-    .pop() || 0;
+  const lastObject = world.objects
+    .filter((el) => el.type === 'obstacle')
+    .sort((a, b) => a.body.position.x - b.body.position.x)
+    .pop();
+  if (!lastObject) {
+    return [ generateObj(timestamp, world.width, world.worldSpeed, world.groundHeight, getRandomArbitrary(world.minSpread, world.maxSpread)) ];
+  }
 
-  const xSinceLastObject = world.width - lastObjectX;
-  if (xSinceLastObject >= getRandomArbitrary(world.minSpread, world.maxSpread)) {
-    return [ generateObj(timestamp, world.width, world.worldSpeed, world.groundHeight, world.obstacleProbability) ];
+  const xSinceLastObject = world.width - lastObject.body.position.x;
+  if (xSinceLastObject >= lastObject.spread) {
+    return [ generateObj(timestamp, world.width, world.worldSpeed, world.groundHeight, getRandomArbitrary(world.minSpread, world.maxSpread)) ];
   }
 
   return [];

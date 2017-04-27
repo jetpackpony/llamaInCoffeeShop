@@ -3,14 +3,14 @@ const GRAVITY = -5000;
 const GROUND_SPEED = -800;
 const JUMP_VELOCITY_Y = 1500;
 
-const WORLD_HEIGHT = 1000;
-const GROUND_HEIGHT = 300;
+const WORLD_HEIGHT = 500;
+const GROUND_HEIGHT = 150;
 const GROUND_TILE_WIDTH = 100;
 
-const PLAYER_WIDTH = 80;
+const PLAYER_WIDTH = 60;
 const PLAYER_POSITION_X = 50;
 
-const OBSTACLE_WIDTH = 70;
+const OBSTACLE_WIDTH = 50;
 
 export default {
   collectableBonus: 5,
@@ -35,8 +35,8 @@ export default {
     lastFrameRateTime: 0
   },
   world: {
-    minSpread: 200,
-    maxSpread: 1000,
+    minSpread: 400,
+    maxSpread: 800,
     obstacleProbability: 0.5,
     gravity: GRAVITY,
     width: 0,

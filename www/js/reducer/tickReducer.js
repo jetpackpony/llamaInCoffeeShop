@@ -2,6 +2,7 @@ import tickMetrics from './tickMetrics';
 import tickWorld from './tickWorld';
 import tickGround from './tickGround';
 import tickWorldObjects from './tickWorldObjects';
+import tickWorldCollectables from './tickWorldCollectables';
 import {
   calculateCollisions,
   updateScore, updateCollisions
@@ -18,6 +19,7 @@ export default function tickReducer(state, action) {
 
   newWorld = tickGround(newWorld, timestamp);
   newWorld = tickWorldObjects(newWorld, timestamp);
+  //newWorld = tickWorldCollectables(newWorld, timestamp);
   const collisions = calculateCollisions(newWorld);
   const score = updateScore(collisions, state.score, state.collectableBonus, state.obstacleDamage);
   newWorld = updateCollisions(newWorld, collisions);
