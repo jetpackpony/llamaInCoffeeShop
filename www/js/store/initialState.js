@@ -1,7 +1,7 @@
 const GRAVITY = -5000;
 
 const GROUND_SPEED = -800;
-const JUMP_VELOCITY_Y = 1500;
+const JUMP_VELOCITY_Y = 1200;
 
 const WORLD_HEIGHT = 500;
 const GROUND_HEIGHT = 150;
@@ -35,8 +35,8 @@ export default {
     lastFrameRateTime: 0
   },
   world: {
-    minSpread: 400,
-    maxSpread: 800,
+    minSpread: 700,
+    maxSpread: 1500,
     obstacleProbability: 0.5,
     gravity: GRAVITY,
     width: 0,

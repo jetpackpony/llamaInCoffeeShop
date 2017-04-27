@@ -4,9 +4,9 @@ const cleanUpObjects = (objs, objWidth) => {
   });
 };
 
-const generateObj = (timestamp, worldWidth, worldSpeed, groundHeight, spread) => {
+const generateObj = (timestamp, x, y, worldSpeed, spread) => {
   return {
-    id: `obstacle-${timestamp}`,
+    id: `obstacle-${timestamp + x}`,
     generated: timestamp,
     type: 'obstacle',
     view: 'table',
@@ -14,10 +14,37 @@ const generateObj = (timestamp, worldWidth, worldSpeed, groundHeight, spread) =>
     body: {
       acceleration: { x: 0, y: 0 },
       velocity: { x: worldSpeed, y: 0 },
-      position: { x: worldWidth + 1, y: groundHeight },
+      position: { x, y },
       lastTick: timestamp
     }
   };
+};
+
+const generatePattern = (timestamp, worldWidth, worldSpeed, groundHeight, spread, width) => {
+  const patterns = [
+    [0, width, width * 6, width * 7],
+    [0, width * 4, width * 5],
+    /*
+    [0, width * 4, width * 5],
+    [0, width * 4, width * 5],
+    [0, width * 4, width * 5],
+    [0, width, width * 4, width * 5],
+    [0, width, width * 4, width * 5],
+    [0, width],
+    [0, width],
+    [0, width],
+    [0, width],
+    [0, width],
+    [0]
+    */
+  ];
+
+  const randId = Math.floor(Math.random() * patterns.length);
+  const pattern = patterns[randId];
+
+  return pattern.map((x) => {
+    return generateObj(timestamp, worldWidth + x, groundHeight, worldSpeed, spread);
+  });
 };
 
 const getRandomArbitrary = (min, max) => {
@@ -30,12 +57,12 @@ const generateObjects = (world, timestamp) => {
     .sort((a, b) => a.body.position.x - b.body.position.x)
     .pop();
   if (!lastObject) {
-    return [ generateObj(timestamp, world.width, world.worldSpeed, world.groundHeight, getRandomArbitrary(world.minSpread, world.maxSpread)) ];
+    return generatePattern(timestamp, world.width, world.worldSpeed, world.groundHeight, getRandomArbitrary(world.minSpread, world.maxSpread), world.obstacle.width);
   }
 
   const xSinceLastObject = world.width - lastObject.body.position.x;
   if (xSinceLastObject >= lastObject.spread) {
-    return [ generateObj(timestamp, world.width, world.worldSpeed, world.groundHeight, getRandomArbitrary(world.minSpread, world.maxSpread)) ];
+    return generatePattern(timestamp, world.width, world.worldSpeed, world.groundHeight, getRandomArbitrary(world.minSpread, world.maxSpread), world.obstacle.width);
   }
 
   return [];
