@@ -41,8 +41,14 @@ export default function tickReducer(state, action) {
   const score = updateScore(collisions, state.score);
   newWorld = updateCollisions(newWorld, collisions);
 
-  if (state.score.energy <= 0) {
+  if (score.energy <= 0) {
     gameState = 'loosing';
+  }
+
+  if (score.energy > 90) {
+    newWorld.ground.body.acceleration.x = -50;
+  } else {
+    newWorld.ground.body.acceleration.x = 50;
   }
 
   return {
