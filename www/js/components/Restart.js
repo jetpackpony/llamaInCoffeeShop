@@ -18,7 +18,7 @@ class Restart extends Component {
       <Text
         x={this.props.x}
         y="10"
-        fontSize="30"
+        fontSize="70"
         text="⟲"
         fill="black"
         ontouchstart={this.handleClick}
@@ -29,7 +29,7 @@ class Restart extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    x: state.world.width - 50,
+    x: state.world.width - 100,
   };
 };
 
