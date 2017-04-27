@@ -1,22 +1,6 @@
-const GRAVITY = -5000;
-
-const MIN_GROUND_SPEED = -800;
-const MAX_GROUND_SPEED = -3000;
-const GROUND_ACCELERATION = 300;
-const JUMP_VELOCITY_Y = 1200;
-
-const WORLD_HEIGHT = 500;
-const GROUND_HEIGHT = 150;
-const GROUND_TILE_WIDTH = 100;
-
-const PLAYER_WIDTH = 60;
-const PLAYER_POSITION_X = 50;
-
-const OBSTACLE_WIDTH = 50;
+import * as CONST from '../constants';
 
 export default {
-  collectableBonus: 5,
-  obstacleDamage: -30,
   gameState: 'playing',
   assets: {
     canvas: null,
@@ -36,83 +20,74 @@ export default {
     frameCounter: 0,
     lastFrameRateTime: 0
   },
+
   world: {
+    timestamp: 0,
     minSpread: 700,
     maxSpread: 1500,
-    minSpeed: MIN_GROUND_SPEED,
-    maxSpeed: MAX_GROUND_SPEED,
-    groundAcceleration: GROUND_ACCELERATION,
+    minSpeed: CONST.MIN_GROUND_SPEED,
+    maxSpeed: CONST.MAX_GROUND_SPEED,
+    groundAcceleration: CONST.GROUND_ACCELERATION,
     obstacleProbability: 0.5,
-    gravity: GRAVITY,
+    gravity: CONST.GRAVITY,
     width: 0,
-    height: WORLD_HEIGHT,
-    groundHeight: GROUND_HEIGHT,
+    height: CONST.WORLD_HEIGHT,
+    groundHeight: CONST.GROUND_HEIGHT,
     groundOffset: 30,
-    worldSpeed: MIN_GROUND_SPEED,
-    jumpVelocity: { x: 0, y: JUMP_VELOCITY_Y },
+    worldSpeed: CONST.MIN_GROUND_SPEED,
+    jumpVelocity: { x: 0, y: CONST.JUMP_VELOCITY_Y },
+
+    player: {
+      body: {
+        acceleration: { x: 0, y: CONST.GRAVITY },
+        velocity: { x: 0, y: 0 },
+        position: { x: CONST.PLAYER_POSITION_X, y: CONST.WORLD_HEIGHT },
+        lastTick: 0
+      },
+      height: CONST.PLAYER_WIDTH,
+      width: CONST.PLAYER_WIDTH
+    },
+    ground: {
+      body: {
+        acceleration: { x: 0, y: 0 },
+        velocity: { x: CONST.MIN_GROUND_SPEED, y: 0 },
+        position: { x: 0, y: CONST.GROUND_HEIGHT },
+        lastTick: 0,
+      },
+      tileWidth: CONST.GROUND_TILE_WIDTH,
+      tileHeight: CONST.GROUND_HEIGHT
+    },
     objects: [
-      {
-        id: 'player',
-        body: {
-          acceleration: { x: 0, y: GRAVITY },
-          velocity: { x: 0, y: 0 },
-          position: { x: PLAYER_POSITION_X, y: WORLD_HEIGHT },
-          lastTick: 0
-        }
-      },
-      {
-        id: 'ground',
-        body: {
-          acceleration: { x: 0, y: 0 },
-          velocity: { x: MIN_GROUND_SPEED, y: 0 },
-          position: { x: 0, y: GROUND_HEIGHT },
-          lastTick: 0
-        }
-      },
       /*
       {
         id: `obstacle-${timestamp}`,
-        generated: timestamp,
         type: 'obstacle',
         view: 'table',
-        collidingWithPlayer: false,
+        colliding: false
         body: {
-          acceleration: { x: 0, y: 0 },
-          velocity: { x: worldSpeed, y: 0 },
           position: { x: worldWidth + 1, y: groundHeight },
           lastTick: timestamp
         }
       }
       {
         id: `collectable-${timestamp}`,
-        generated: timestamp,
         type: 'collectable',
         view: 'coffee',
-        collidingWithPlayer: false,
+        colliding: false,
         body: {
-          acceleration: { x: 0, y: 0 },
-          velocity: { x: worldSpeed, y: 0 },
           position: { x: worldWidth + 1, y: groundHeight },
           lastTick: timestamp
         }
       }
       */
     ],
-    ground: {
-      tileWidth: GROUND_TILE_WIDTH,
-      tileHeight: GROUND_HEIGHT
-    },
-    player: {
-      height: PLAYER_WIDTH,
-      width: PLAYER_WIDTH
-    },
     obstacle: {
-      height: OBSTACLE_WIDTH,
-      width: OBSTACLE_WIDTH
+      height: CONST.OBSTACLE_WIDTH,
+      width: CONST.OBSTACLE_WIDTH
     },
     collectable: {
-      height: OBSTACLE_WIDTH,
-      width: OBSTACLE_WIDTH
+      height: CONST.OBSTACLE_WIDTH,
+      width: CONST.OBSTACLE_WIDTH
     }
   }
 };
