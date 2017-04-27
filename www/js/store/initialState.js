@@ -1,6 +1,8 @@
 const GRAVITY = -5000;
 
-const GROUND_SPEED = -800;
+const MIN_GROUND_SPEED = -800;
+const MAX_GROUND_SPEED = -3000;
+const GROUND_ACCELERATION = 300;
 const JUMP_VELOCITY_Y = 1200;
 
 const WORLD_HEIGHT = 500;
@@ -37,13 +39,16 @@ export default {
   world: {
     minSpread: 700,
     maxSpread: 1500,
+    minSpeed: MIN_GROUND_SPEED,
+    maxSpeed: MAX_GROUND_SPEED,
+    groundAcceleration: GROUND_ACCELERATION,
     obstacleProbability: 0.5,
     gravity: GRAVITY,
     width: 0,
     height: WORLD_HEIGHT,
     groundHeight: GROUND_HEIGHT,
     groundOffset: 30,
-    worldSpeed: GROUND_SPEED,
+    worldSpeed: MIN_GROUND_SPEED,
     jumpVelocity: { x: 0, y: JUMP_VELOCITY_Y },
     objects: [
       {
@@ -59,7 +64,7 @@ export default {
         id: 'ground',
         body: {
           acceleration: { x: 0, y: 0 },
-          velocity: { x: GROUND_SPEED, y: 0 },
+          velocity: { x: MIN_GROUND_SPEED, y: 0 },
           position: { x: 0, y: GROUND_HEIGHT },
           lastTick: 0
         }
