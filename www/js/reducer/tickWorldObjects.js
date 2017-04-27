@@ -4,9 +4,9 @@ const cleanUpObjects = (objs, objWidth) => {
   });
 };
 
-const generateObj = (timestamp, worldWidth, worldSpeed, groundHeight) => {
-  let obstacle = true;
-  if (Math.random() >= 0.5) obstacle = false;
+const generateObj = (timestamp, worldWidth, worldSpeed, groundHeight, obstacleProbability) => {
+  let obstacle = false;
+  if (Math.random() >= obstacleProbability) obstacle = true;
   return {
     id: `${(obstacle) ? 'obstacle' : 'collectable'}-${timestamp}`,
     generated: timestamp,
@@ -25,9 +25,6 @@ const getRandomArbitrary = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-const minSpread = 200;
-const maxSpread = 500;
-
 const generateObjects = (world, timestamp) => {
   const lastObjectX = world.objects
     .filter((el) => el.type === 'obstacle' || el.type === 'collectable')
@@ -36,8 +33,8 @@ const generateObjects = (world, timestamp) => {
     .pop() || 0;
 
   const xSinceLastObject = world.width - lastObjectX;
-  if (xSinceLastObject >= getRandomArbitrary(minSpread, maxSpread)) {
-    return [ generateObj(timestamp, world.width, world.worldSpeed, world.groundHeight) ];
+  if (xSinceLastObject >= getRandomArbitrary(world.minSpread, world.maxSpread)) {
+    return [ generateObj(timestamp, world.width, world.worldSpeed, world.groundHeight, world.obstacleProbability) ];
   }
 
   return [];
