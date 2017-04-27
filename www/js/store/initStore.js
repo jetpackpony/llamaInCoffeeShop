@@ -6,10 +6,12 @@ import reducer from '../reducer';
 import { tick, ActionTypes } from '../actions';
 
 const middlewares = [];
+/*
 const logger = createLogger({
   predicate: (getState, action) => action.type !== ActionTypes.TICK
 });
 middlewares.push(logger);
+*/
 
 
 const getHeight = (width, image) => image.height * (width / image.width);
