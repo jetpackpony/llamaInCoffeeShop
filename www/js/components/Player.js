@@ -11,7 +11,7 @@ const Player = ({ x, y, image, height, width }) => {
         y={y + offset}
         width={width - offset*2}
         height={height - offset*2}
-        fill="green"
+        fill="purple"
       />
       {/*
       <Image

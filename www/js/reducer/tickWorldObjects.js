@@ -22,28 +22,17 @@ const generateObj = (timestamp, x, y, worldSpeed, spread) => {
 
 const generatePattern = (timestamp, worldWidth, worldSpeed, groundHeight, spread, width) => {
   const patterns = [
-    [0, width, width * 6, width * 7],
-    [0, width * 4, width * 5],
-    /*
-    [0, width * 4, width * 5],
-    [0, width * 4, width * 5],
-    [0, width * 4, width * 5],
-    [0, width, width * 4, width * 5],
-    [0, width, width * 4, width * 5],
-    [0, width],
-    [0, width],
-    [0, width],
-    [0, width],
-    [0, width],
-    [0]
-    */
+    [0, 5],
+    [0],
+    [0, 1],
+    [0, 3, 4],
   ];
 
   const randId = Math.floor(Math.random() * patterns.length);
   const pattern = patterns[randId];
 
   return pattern.map((x) => {
-    return generateObj(timestamp, worldWidth + x, groundHeight, worldSpeed, spread);
+    return generateObj(timestamp, worldWidth + x * width, groundHeight, worldSpeed, spread);
   });
 };
 
