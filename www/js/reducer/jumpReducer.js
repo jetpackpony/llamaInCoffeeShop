@@ -1,37 +1,26 @@
-const updateVelocity = function updateVelocity(obj, velocity) {
-  return {
-    ...obj,
-    body: {
-      ...obj.body,
-      velocity
-    }
-  };
-};
-
-const playerIsOnTheGround = function playerIsOnTheGround(state) {
-  const playerPositionY = state.world.objects.find((obj) => obj.id === 'player').body.position.y;
-  const groundHeight = state.world.groundHeight;
-  return playerPositionY <= groundHeight;
+const isPlayerNearTheGround = (world) => {
+  const playerPositionY = world.player.body.position.y;
+  const groundHeight = world.groundHeight;
+  const playerHeight = world.player.height;
+  return Math.abs(playerPositionY - groundHeight) < playerHeight * 0.1;
 };
 
 export default (state, action) => {
-  // If the player is on the ground, don't allow another touch
-  if (!playerIsOnTheGround(state)) {
+  if (!isPlayerNearTheGround(state.world)) {
     return state;
   }
-  const jumpVelocity = state.world.jumpVelocity;
 
   return {
     ...state,
     world: {
       ...state.world,
-      objects: state.world.objects.map((obj) => {
-        if (obj.id === 'player') {
-          return updateVelocity(obj, jumpVelocity);
-        } else {
-          return obj;
+      player: {
+        ...state.world.player,
+        body: {
+          ...state.world.player.body,
+          velocity: state.world.jumpVelocity
         }
-      })
+      }
     }
   };
 };

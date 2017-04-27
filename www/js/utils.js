@@ -5,3 +5,8 @@ export const times = (num) => {
   }
   return res.reverse();
 };
+
+export const randInRange = (min, max) => {
+  return Math.floor(Math.random() * (max - min)) + min;
+};
+

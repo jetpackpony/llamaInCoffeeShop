@@ -1,41 +1,47 @@
-import { Vector, Box, testPolygonPolygon } from 'sat';
+import { getCollisions } from '../physics';
 
-export const calculateCollisions = (world) => {
-  const offset = 10;
-  const player = world.objects.find((obj) => obj.id === 'player');
-  const collidables = world
+const offset = 10;
+
+export const getCollidingObjects = (world) => {
+  const objects = world
     .objects
-    .filter((obj) => obj.type === 'obstacle' || obj.type === 'collectable')
-    .filter((obj) => !obj.collidingWithPlayer);
+    .filter((obj) => !obj.colliding)
 
-  const playerBox = new Box(
-    new Vector(player.body.position.x + offset, player.body.position.y + offset),
-    world.player.width - offset*2,
-    world.player.height - offset*2
-  ).toPolygon();
+  const playerBounds = {
+    x: world.player.body.position.x,
+    y: world.player.body.position.y,
+    w: world.player.width,
+    h: world.player.height
+  };
+  const objectsBounds = objects.map((obj) => ({
+    id: obj.id,
+    x: obj.body.position.x,
+    y: obj.body.position.y,
+    w: world.obstacle.width,
+    h: world.obstacle.height
+  }));
 
-  return collidables.filter((obj) => {
-    const objBox = new Box(
-      new Vector(obj.body.position.x + offset, obj.body.position.y + offset),
-      world.obstacle.width - offset*2,
-      world.obstacle.height - offset*2,
-    ).toPolygon();
-    return testPolygonPolygon(playerBox, objBox);
-  });
+  const collisionIds = getCollisions(playerBounds, objectsBounds, offset);
+
+  return objects.filter((obj) => collisionIds.includes(obj.id));
 };
 
-export const updateScore = (collisions, oldScore, coffee, table) => {
+export const updateScore = (
+  collectableBonus, obstacleDamage,
+  collisions, oldScore
+) => {
   const newScore = collisions.reduce((score, collision) => {
-    if (collision.view === 'coffee') {
+    if (collision.type === 'collectable') {
       score.coffees++;
-      score.energy += coffee;
+      score.energy += collectableBonus;
     }
-    if (collision.view === 'table') {
+    if (collision.type === 'obstacle') {
       score.tables++;
-      score.energy += table;
+      score.energy += obstacleDamage;
     }
     return score;
   }, { ...oldScore });
+
   if (newScore.energy > 100) newScore.energy = 100;
   if (newScore.energy < 0) newScore.energy = 0;
 
@@ -47,17 +53,15 @@ export const updateScore = (collisions, oldScore, coffee, table) => {
 
 export const updateCollisions = (world, collisions) => {
   const collidingIds = collisions.map((obj) => obj.id);
-  const objects = world.objects.map((obj) => {
-    const collidingWithPlayer = obj.collidingWithPlayer || collidingIds.includes(obj.id);
-    if (collidingWithPlayer && obj.type === 'collectable') return null;
-    return {
-      ...obj,
-      collidingWithPlayer
-    };
-  }).filter((obj) => obj !== null);
-
   return {
     ...world,
-    objects
+    objects: world.objects
+      .map((obj) => ({
+        ...obj,
+        colliding: obj.colliding || collidingIds.includes(obj.id)
+      }))
+      .filter((obj) => (
+        !(obj.colliding && obj.type === 'collectable')
+      ))
   };
 };

@@ -32,7 +32,9 @@ const generateObjects = (world, timestamp) => {
   return [];
 };
 
-export default (world, timestamp) => {
+export default (world) => {
+  return world;
+  /*
   return {
     ...world,
     objects: [
@@ -40,5 +42,6 @@ export default (world, timestamp) => {
       ...generateObjects(world, timestamp)
     ]
   };
+  */
 };
 

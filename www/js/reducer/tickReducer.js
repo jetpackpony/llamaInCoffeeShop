@@ -1,12 +1,29 @@
+import { compose, curry } from 'ramda';
+
 import tickMetrics from './tickMetrics';
-import tickWorld from './tickWorld';
+import tickObjects from './tickObjects';
 import tickGround from './tickGround';
-import tickWorldObjects from './tickWorldObjects';
-import tickWorldCollectables from './tickWorldCollectables';
-import {
-  calculateCollisions,
-  updateScore, updateCollisions
-} from './collisions';
+import tickPlayer from './tickPlayer';
+import generateObstacles from './generateObstacles';
+import generateCollectables from './generateCollectables';
+import cleanUpObjects from './cleanUpObjects';
+import * as Collisions from './collisions';
+import { COLLECTABLE_BONUS, OBSTACLE_DAMAGE } from '../constants';
+
+const calculateWorld = compose(
+  cleanUpObjects,
+  generateCollectables,
+  generateObstacles,
+  tickObjects,
+  tickGround,
+  tickPlayer
+);
+
+const updateScore = curry(Collisions.updateScore)(
+  COLLECTABLE_BONUS,
+  OBSTACLE_DAMAGE
+);
+const { getCollidingObjects, updateCollisions } = Collisions;
 
 export default function tickReducer(state, action) {
   let gameState = state.gameState;
@@ -14,14 +31,14 @@ export default function tickReducer(state, action) {
     return state;
   }
 
-  const timestamp = action.payload.timestamp;
-  let newWorld = tickWorld(state.world, timestamp);
+  let timestamp = action.payload.timestamp;
+  let newWorld = calculateWorld({
+    ...state.world,
+    timestamp
+  });
 
-  newWorld = tickGround(newWorld, timestamp);
-  newWorld = tickWorldObjects(newWorld, timestamp);
-  //newWorld = tickWorldCollectables(newWorld, timestamp);
-  const collisions = calculateCollisions(newWorld);
-  const score = updateScore(collisions, state.score, state.collectableBonus, state.obstacleDamage);
+  const collisions = getCollidingObjects(newWorld);
+  const score = updateScore(collisions, state.score);
   newWorld = updateCollisions(newWorld, collisions);
 
   if (state.score.energy <= 0) {

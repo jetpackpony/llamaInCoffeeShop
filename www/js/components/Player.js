@@ -27,10 +27,10 @@ const Player = ({ x, y, image, height, width }) => {
 };
 
 const mapStateToProps = (state) => {
-  const player = state.world.objects.find((obj) => obj.id === 'player');
+  const player = state.world.player;
+  const height = player.height;
+  const width = player.width;
   const image = state.assets.images.player.imgObject;
-  const height = state.world.player.height;
-  const width = state.world.player.width;
 
   // invert the y coordinate
   const y = state.world.height - player.body.position.y - height;

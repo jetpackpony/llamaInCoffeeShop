@@ -1,12 +1,19 @@
-export default function tickGround(world, timestamp) {
+import { calcVelocity, calcPosition, updateBody } from '../physics';
+
+export default (world) => {
+  const timeDiff = (world.timestamp - world.ground.body.lastTick) / 1000;
+  const newBody = updateBody(world.ground.body, timeDiff);
+  newBody.position.x = newBody.position.x % world.ground.tileWidth;
+
   return {
     ...world,
-    objects: world.objects.map((obj) => {
-      // If this is the ground, clip the x position
-      if (obj.id === 'ground') {
-        obj.body.position.x = obj.body.position.x % world.ground.tileWidth;
+    ground: {
+      ...world.ground,
+      body: {
+        ...world.ground.body,
+        ...newBody,
+        lastTick: world.timestamp
       }
-      return obj;
-    })
-  }
+    }
+  };
 };
