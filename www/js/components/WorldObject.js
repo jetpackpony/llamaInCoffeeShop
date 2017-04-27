@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Group, Image, Rect } from 'react-konva';
 
 const WorldObject = ({ object, images, width, height, worldHeight }) => {
-  const image = images[object.view].imgObject;
+  //const image = images[object.view].imgObject;
+  const color = (object.view === 'coffee') ? 'blue' : 'red';
   const x = object.body.position.x;
   const y = worldHeight - object.body.position.y - height;
   const offset = 10;
@@ -14,8 +15,12 @@ const WorldObject = ({ object, images, width, height, worldHeight }) => {
         y={y + offset}
         width={width - offset*2}
         height={height - offset*2}
-        fill="red"
+        fill={color}
       />
+      {
+
+/*
+ *
       <Image
         x={x}
         y={y}
@@ -23,6 +28,8 @@ const WorldObject = ({ object, images, width, height, worldHeight }) => {
         height={height}
         image={image}
       />
+      */
+      }
     </Group>
   );
 };

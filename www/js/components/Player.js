@@ -11,8 +11,9 @@ const Player = ({ x, y, image, height, width }) => {
         y={y + offset}
         width={width - offset*2}
         height={height - offset*2}
-        fill="red"
+        fill="green"
       />
+      {/*
       <Image
         x={x}
         y={y}
@@ -20,6 +21,7 @@ const Player = ({ x, y, image, height, width }) => {
         height={height}
         image={image}
       />
+        */}
     </Group>
   );
 };
