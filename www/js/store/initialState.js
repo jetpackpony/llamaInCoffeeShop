@@ -16,11 +16,6 @@ export default {
     energy: 100,
     steps: 0
   },
-  metrics: {
-    frameRate: 0,
-    frameCounter: 0,
-    lastFrameRateTime: 0
-  },
 
   world: {
     timestamp: 0,

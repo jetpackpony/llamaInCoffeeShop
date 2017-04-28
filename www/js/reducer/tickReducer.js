@@ -1,6 +1,5 @@
 import { compose, curry } from 'ramda';
 
-import tickMetrics from './tickMetrics';
 import tickObjects from './tickObjects';
 import tickGround from './tickGround';
 import tickPlayer from './tickPlayer';
@@ -23,7 +22,6 @@ export default function tickReducer(state, action) {
   const collisions = getCollidingObjects(state.world);
   const score = updateScore(collisions, state.score);
 
-  let timestamp = action.payload.timestamp;
   let newWorld = compose(
     updateCollisions(collisions),
     cleanUpObjects,
@@ -34,7 +32,7 @@ export default function tickReducer(state, action) {
     tickPlayer
   )({
     ...state.world,
-    timestamp
+    timestamp: action.payload.timestamp
   });
 
   if (score.energy <= 0) {
@@ -58,7 +56,6 @@ export default function tickReducer(state, action) {
     ...state,
     gameState,
     score,
-    metrics: tickMetrics(state.metrics, timestamp),
     world: newWorld
   };
 };
