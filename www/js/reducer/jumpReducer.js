@@ -1,8 +1,10 @@
+import { JUMP_MIN_HEIGHT } from '../constants';
+
 const isPlayerNearTheGround = (world) => {
   const playerPositionY = world.player.body.position.y;
   const groundHeight = world.groundHeight;
   const playerHeight = world.player.height;
-  return Math.abs(playerPositionY - groundHeight) < playerHeight * 0.1;
+  return Math.abs(playerPositionY - groundHeight) < playerHeight * JUMP_MIN_HEIGHT;
 };
 
 export default (state, action) => {

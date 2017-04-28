@@ -5,6 +5,7 @@ export const MAX_GROUND_SPEED = -3000;
 export const GROUND_ACCELERATION = 300;
 
 export const JUMP_VELOCITY_Y = 1200;
+export const JUMP_MIN_HEIGHT = 0.3; // multiplier for player height
 
 export const WORLD_HEIGHT = 500;
 export const GROUND_HEIGHT = 150;
