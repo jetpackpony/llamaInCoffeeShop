@@ -1,7 +1,7 @@
 import { curry } from 'ramda';
 import { getCollisions } from '../physics';
+import { COLLISION_BOX_OFFSET } from '../constants';
 
-const offset = 10;
 
 export const calculateCollisions = (world) => {
   const objects = world
@@ -21,7 +21,9 @@ export const calculateCollisions = (world) => {
     w: world.obstacle.width,
     h: world.obstacle.height
   }));
-  const collisionIds = getCollisions(playerBounds, objectsBounds, offset);
+  const collisionIds = getCollisions(
+    playerBounds, objectsBounds, COLLISION_BOX_OFFSET
+  );
 
   return {
     ...world,

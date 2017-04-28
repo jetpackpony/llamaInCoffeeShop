@@ -19,3 +19,5 @@ export const OBSTACLE_WIDTH = 50;
 
 export const COLLECTABLE_BONUS = 5;
 export const OBSTACLE_DAMAGE = -30;
+
+export const COLLISION_BOX_OFFSET = 10;
