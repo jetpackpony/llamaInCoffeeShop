@@ -1,7 +1,6 @@
 import * as CONST from '../constants';
 
 export default {
-  gameState: 'playing',
   assets: {
     canvas: null,
     sceneWidth: 700,
@@ -10,14 +9,15 @@ export default {
     scale: 1,
     dpr: 1
   },
-  score: {
-    coffees: 0,
-    tables: 0,
-    energy: 100,
-    steps: 0
-  },
 
   world: {
+    gameState: 'playing',
+    score: {
+      coffees: 0,
+      tables: 0,
+      energy: 100,
+      steps: 0
+    },
     timestamp: 0,
     minSpread: 700,
     maxSpread: 1500,

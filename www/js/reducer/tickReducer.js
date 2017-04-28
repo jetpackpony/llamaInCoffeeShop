@@ -14,13 +14,13 @@ const { getCollidingObjects, updateCollisions } = Collisions;
 
 export default function tickReducer(state, action) {
   let groundPosition = Math.abs(state.world.ground.body.position.x);
-  let gameState = state.gameState;
+  let gameState = state.world.gameState;
   if (gameState === 'loosing') {
     return state;
   }
 
   const collisions = getCollidingObjects(state.world);
-  const score = updateScore(collisions, state.score);
+  const score = updateScore(collisions, state.world.score);
 
   let newWorld = compose(
     updateCollisions(collisions),
@@ -54,8 +54,10 @@ export default function tickReducer(state, action) {
 
   return {
     ...state,
-    gameState,
-    score,
-    world: newWorld
+    world: {
+      ...newWorld,
+      score,
+      gameState
+    }
   };
 };

@@ -12,7 +12,7 @@ const Score = ({ steps }) => (
 
 const mapStateToProps = (state) => {
   return {
-    steps: state.score.steps
+    steps: state.world.score.steps
   };
 };
 
