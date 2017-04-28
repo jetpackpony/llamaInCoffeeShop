@@ -2,7 +2,6 @@ import * as CONST from '../constants';
 
 export default {
   assets: {
-    canvas: null,
     sceneWidth: 700,
     sceneHeight: 400,
     images: {},
@@ -23,9 +22,6 @@ export default {
     maxSpread: 1500,
     minSpeed: CONST.MIN_GROUND_SPEED,
     maxSpeed: CONST.MAX_GROUND_SPEED,
-    groundAcceleration: CONST.GROUND_ACCELERATION,
-    obstacleProbability: 0.5,
-    gravity: CONST.GRAVITY,
     width: 0,
     height: CONST.WORLD_HEIGHT,
     groundHeight: CONST.GROUND_HEIGHT,
