@@ -51,7 +51,8 @@ export default {
         lastTick: 0,
       },
       tileWidth: CONST.GROUND_TILE_WIDTH,
-      tileHeight: CONST.GROUND_HEIGHT
+      tileHeight: CONST.GROUND_HEIGHT,
+      xDiffSinceLastTick: 0
     },
     objects: [
       /*
