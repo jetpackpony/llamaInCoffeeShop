@@ -7,7 +7,6 @@ import Player from './Player';
 import Ground from './Ground';
 import WorldObjects from './WorldObjects';
 import { jump } from '../actions';
-import Pause from './Pause';
 import EnergyBar from './EnergyBar';
 import Restart from './Restart';
 
