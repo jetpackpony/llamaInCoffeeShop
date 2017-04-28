@@ -47,7 +47,7 @@ const makeObject = (world, spread) => {
 };
 
 export default function generateCollectables(world) {
-  const spread = randInRange(world.minSpread / 2, world.maxSpread / 2);
+  const spread = randInRange(world.minSpread, world.maxSpread);
   return {
     ...world,
     objects: [

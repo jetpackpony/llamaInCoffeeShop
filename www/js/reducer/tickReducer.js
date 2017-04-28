@@ -10,19 +10,7 @@ import cleanUpObjects from './cleanUpObjects';
 import * as Collisions from './collisions';
 import { COLLECTABLE_BONUS, OBSTACLE_DAMAGE } from '../constants';
 
-const calculateWorld = compose(
-  cleanUpObjects,
-  generateCollectables,
-  generateObstacles,
-  tickObjects,
-  tickGround,
-  tickPlayer
-);
-
-const updateScore = curry(Collisions.updateScore)(
-  COLLECTABLE_BONUS,
-  OBSTACLE_DAMAGE
-);
+const updateScore = Collisions.updateScore(COLLECTABLE_BONUS, OBSTACLE_DAMAGE);
 const { getCollidingObjects, updateCollisions } = Collisions;
 
 export default function tickReducer(state, action) {
@@ -32,16 +20,22 @@ export default function tickReducer(state, action) {
     return state;
   }
 
+  const collisions = getCollidingObjects(state.world);
+  const score = updateScore(collisions, state.score);
+
   let timestamp = action.payload.timestamp;
-  let newWorld = calculateWorld({
+  let newWorld = compose(
+    updateCollisions(collisions),
+    cleanUpObjects,
+    generateCollectables,
+    generateObstacles,
+    tickObjects,
+    tickGround,
+    tickPlayer
+  )({
     ...state.world,
     timestamp
   });
-
-  const collisions = getCollidingObjects(newWorld);
-  newWorld = updateCollisions(newWorld, collisions);
-
-  const score = updateScore(collisions, state.score);
 
   if (score.energy <= 0) {
     gameState = 'loosing';

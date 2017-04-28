@@ -1,3 +1,4 @@
+import { compose, curry } from 'ramda';
 import { getCollisions } from '../physics';
 
 const offset = 10;
@@ -26,7 +27,7 @@ export const getCollidingObjects = (world) => {
   return objects.filter((obj) => collisionIds.includes(obj.id));
 };
 
-export const updateScore = (
+export const updateScore = curry((
   collectableBonus, obstacleDamage,
   collisions, oldScore
 ) => {
@@ -49,9 +50,9 @@ export const updateScore = (
     ...oldScore,
     ...newScore
   };
-};
+});
 
-export const updateCollisions = (world, collisions) => {
+export const updateCollisions = curry((collisions, world) => {
   const collidingIds = collisions.map((obj) => obj.id);
   return {
     ...world,
@@ -64,4 +65,4 @@ export const updateCollisions = (world, collisions) => {
         !(obj.colliding && obj.type === 'collectable')
       ))
   };
-};
+});
