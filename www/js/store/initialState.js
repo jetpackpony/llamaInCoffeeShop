@@ -13,7 +13,8 @@ export default {
   score: {
     coffees: 0,
     tables: 0,
-    energy: 100
+    energy: 100,
+    steps: 0
   },
   metrics: {
     frameRate: 0,

@@ -2,7 +2,7 @@ import React from 'react';
 import { Layer, Stage } from 'react-konva';
 import { connect } from 'react-redux';
 
-import Metrics from './Metrics';
+import Score from './Score';
 import Player from './Player';
 import Ground from './Ground';
 import WorldObjects from './WorldObjects';
@@ -15,7 +15,7 @@ const Game = ({ width, height, scale, onTouch }) => {
   return (
     <Stage width={width} height={height} ontouchstart={onTouch}>
       <Layer scaleX={scale} scaleY={scale}>
-        <Metrics/>
+        <Score/>
         <Ground/>
         <WorldObjects/>
         <Player/>

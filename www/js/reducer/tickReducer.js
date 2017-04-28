@@ -26,6 +26,7 @@ const updateScore = curry(Collisions.updateScore)(
 const { getCollidingObjects, updateCollisions } = Collisions;
 
 export default function tickReducer(state, action) {
+  let groundPosition = Math.abs(state.world.ground.body.position.x);
   let gameState = state.gameState;
   if (gameState === 'loosing') {
     return state;
@@ -38,8 +39,9 @@ export default function tickReducer(state, action) {
   });
 
   const collisions = getCollidingObjects(newWorld);
-  const score = updateScore(collisions, state.score);
   newWorld = updateCollisions(newWorld, collisions);
+
+  const score = updateScore(collisions, state.score);
 
   if (score.energy <= 0) {
     gameState = 'loosing';
@@ -50,6 +52,13 @@ export default function tickReducer(state, action) {
   } else {
     newWorld.ground.body.acceleration.x = 50;
   }
+  let newGroundPosition = Math.abs(newWorld.ground.body.position.x);
+  let diff = newGroundPosition - groundPosition;
+
+  if (diff <= 0) {
+    diff = newWorld.ground.tileWidth - diff;
+  }
+  score.steps = Math.round(score.steps + diff / newWorld.player.width / 3);
 
   return {
     ...state,
