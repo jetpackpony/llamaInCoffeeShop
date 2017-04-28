@@ -1,47 +1,61 @@
-const generateObj = (timestamp, worldWidth, worldSpeed, groundHeight) => {
+import { curry, last } from 'ramda';
+import { randInRange } from '../utils';
+
+const getLastObjectByType = (type, objects) => (last(objects
+  .filter((el) => el.type === type)
+  .sort((a, b) => a.body.position.x - b.body.position.x))
+);
+
+const getLastObstacle = curry(getLastObjectByType)('obstacle');
+const getLastCollectable = curry(getLastObjectByType)('collectable');
+
+const shouldGenerateCollectable = (world) => {
+  const lastObstacle = getLastObstacle(world.objects);
+  if (!lastObstacle) {
+    return false;
+  }
+  const xSinceLastObstacle = world.width - lastObstacle.body.position.x;
+  if (xSinceLastObstacle < world.obstacle.width || xSinceLastObstacle > (lastObstacle.spread - world.obstacle.width)) {
+    return false;
+  }
+
+  const lastCollectable = getLastCollectable(world.objects);
+  if (!lastCollectable) {
+    return true;
+  }
+  const xSinceLastCollectable = world.width - lastCollectable.body.position.x;
+  if (xSinceLastCollectable >= lastCollectable.spread) {
+    return true;
+  }
+  return false;
+};
+
+const makeObject = (world, spread) => {
   return {
-    id: `collectable-${timestamp}`,
-    generated: timestamp,
+    id: `collectable-${world.timestamp}`,
     type: 'collectable',
     view: 'coffee',
+    spread,
     body: {
-      acceleration: { x: 0, y: 0 },
-      velocity: { x: worldSpeed, y: 0 },
-      position: { x: worldWidth + 1, y: groundHeight },
-      lastTick: timestamp
+      position: {
+        x: world.width,
+        y: world.groundHeight
+      },
+      lastTick: world.timestamp
     }
   };
 };
 
-const getRandomArbitrary = (min, max) => {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
-const generateObjects = (world, timestamp) => {
-  const lastObjectX = world.objects
-    .filter((el) => el.type === 'collectable')
-    .map((el) => el.body.position.x || 0)
-    .sort((a, b) => a - b)
-    .pop() || 0;
-
-  const xSinceLastObject = world.width - lastObjectX;
-  if (xSinceLastObject >= getRandomArbitrary(world.minSpread, world.maxSpread)) {
-    return [ generateObj(timestamp, world.width, world.worldSpeed, world.groundHeight) ];
-  }
-
-  return [];
-};
-
-export default (world) => {
-  return world;
-  /*
+export default function generateCollectables(world) {
+  const spread = randInRange(world.minSpread / 2, world.maxSpread / 2);
   return {
     ...world,
     objects: [
       ...world.objects,
-      ...generateObjects(world, timestamp)
+      ...(shouldGenerateCollectable(world))
+        ? [ makeObject(world, spread) ]
+        : []
     ]
   };
-  */
 };
 
