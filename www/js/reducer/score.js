@@ -1,10 +1,7 @@
 import { curry } from 'ramda';
 
-export const updateScore = curry((
-  collectableBonus, obstacleDamage,
-  collisions, world
-) => {
-  const newScore = collisions.reduce((score, collision) => {
+export const updateScore = curry(( collectableBonus, obstacleDamage, world) => {
+  const newScore = world.newCollisions.reduce((score, collision) => {
     if (collision.type === 'collectable') {
       score.coffees++;
       score.energy += collectableBonus;

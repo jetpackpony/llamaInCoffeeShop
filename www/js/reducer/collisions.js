@@ -3,10 +3,10 @@ import { getCollisions } from '../physics';
 
 const offset = 10;
 
-export const getCollidingObjects = (world) => {
+export const calculateCollisions = (world) => {
   const objects = world
     .objects
-    .filter((obj) => !obj.colliding)
+    .filter((obj) => !obj.colliding);
 
   const playerBounds = {
     x: world.player.body.position.x,
@@ -21,14 +21,16 @@ export const getCollidingObjects = (world) => {
     w: world.obstacle.width,
     h: world.obstacle.height
   }));
-
   const collisionIds = getCollisions(playerBounds, objectsBounds, offset);
 
-  return objects.filter((obj) => collisionIds.includes(obj.id));
+  return {
+    ...world,
+    newCollisions: objects.filter((obj) => collisionIds.includes(obj.id))
+  }
 };
 
-export const updateCollisionObjects = curry((collisions, world) => {
-  const collidingIds = collisions.map((obj) => obj.id);
+export const updateCollisionObjects = curry((world) => {
+  const collidingIds = world.newCollisions.map((obj) => obj.id);
   return {
     ...world,
     objects: world.objects

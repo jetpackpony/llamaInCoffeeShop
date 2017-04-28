@@ -6,7 +6,10 @@ import tickPlayer from './tickPlayer';
 import generateObstacles from './generateObstacles';
 import generateCollectables from './generateCollectables';
 import cleanUpObjects from './cleanUpObjects';
-import { getCollidingObjects, updateCollisionObjects } from './collisions';
+import {
+  calculateCollisions,
+  updateCollisionObjects
+} from './collisions';
 import * as ScoreUpdators from './score';
 import { COLLECTABLE_BONUS, OBSTACLE_DAMAGE } from '../constants';
 
@@ -19,27 +22,24 @@ export default function tickReducer(state, action) {
     return state;
   }
 
-  const collisions = getCollidingObjects(state.world);
-
-  let newWorld = compose(
-    updateGameState,
-    updateScore(collisions),
-    updateCollisionObjects(collisions),
-    cleanUpObjects,
-    generateCollectables,
-    generateObstacles,
-    tickObjects,
-    tickGround,
-    tickPlayer
-  )({
-    ...state.world,
-    timestamp: action.payload.timestamp
-  });
-
   return {
     ...state,
     world: {
-      ...newWorld
+      ...compose(
+        updateGameState,
+        updateScore,
+        updateCollisionObjects,
+        calculateCollisions,
+        cleanUpObjects,
+        generateCollectables,
+        generateObstacles,
+        tickObjects,
+        tickGround,
+        tickPlayer
+      )({
+        ...state.world,
+        timestamp: action.payload.timestamp
+      })
     }
   };
 };

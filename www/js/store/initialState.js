@@ -32,6 +32,7 @@ export default {
     groundOffset: 30,
     worldSpeed: CONST.MIN_GROUND_SPEED,
     jumpVelocity: { x: 0, y: CONST.JUMP_VELOCITY_Y },
+    newCollisions: [],
 
     player: {
       body: {
