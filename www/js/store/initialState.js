@@ -47,7 +47,7 @@ export default function getInitialState() {
           velocity: { x: CONST.MIN_GROUND_SPEED, y: 0 },
           position: { x: 0, y: CONST.GROUND_HEIGHT },
           lastTick: 0,
-          xDiffSinceLastTick: 0
+          prevPositionX: 0
         },
         tileWidth: CONST.GROUND_TILE_WIDTH,
         tileHeight: CONST.GROUND_HEIGHT,
