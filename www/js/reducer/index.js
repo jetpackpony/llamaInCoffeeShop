@@ -3,14 +3,14 @@ import tickReducer from './tickReducer';
 import resizeCanvasReducer from './resizeCanvasReducer';
 import restartGameReducer from './restartGameReducer';
 
-import initialState from '../store/initialState';
+import getInitialState from '../store/initialState';
 import { ActionTypes } from '../actions';
 const {
   JUMP, TICK, RESIZE_CANVAS,
   RESTART_GAME
 } = ActionTypes;
 
-export default (state = initialState, action) => {
+export default (state = getInitialState(), action) => {
   switch (action.type) {
     case JUMP: return jumpReducer(state, action);
     case TICK: return tickReducer(state, action);
