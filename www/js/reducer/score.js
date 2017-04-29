@@ -16,7 +16,7 @@ export const updateScore = curry(( collectableBonus, obstacleDamage, world) => {
   if (newScore.energy > 100) newScore.energy = 100;
   if (newScore.energy < 0) newScore.energy = 0;
 
-  newScore.steps = Math.round(newScore.steps + world.ground.xDiffSinceLastTick / world.player.width / 3);
+  newScore.steps = Math.round(newScore.steps + world.ground.body.xDiffSinceLastTick / world.player.width / 3);
 
   return {
     ...world,

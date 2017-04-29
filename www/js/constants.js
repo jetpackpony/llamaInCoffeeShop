@@ -1,7 +1,7 @@
 export const GRAVITY = -5000;
 
-export const MIN_GROUND_SPEED = -800;
-export const MAX_GROUND_SPEED = -3000;
+export const MIN_GROUND_SPEED = 800;
+export const MAX_GROUND_SPEED = 3000;
 export const GROUND_ACCELERATION = 300;
 
 export const JUMP_VELOCITY_Y = 1200;
