@@ -22,27 +22,19 @@ const modifyXDiff = R.curry((prevX, body) => (
 ));
 
 export default (world) => {
-  const body = world.ground.body;
-  const transformations = {
-    position: { x: clipXPosition },
-    velocity: { x: clipXVelocity },
-    acceleration: { x: calcXAcceleration(world.score.energy) },
-    lastTick: () => world.timestamp
-  };
-  const updateGroundBody = R.compose(
-    modifyXDiff(body.position.x),
-    R.evolve(transformations),
-    updateBody
-  );
-  const timeDiff = (world.timestamp - body.lastTick) / 1000;
-
-  return {
-    ...world,
+  const timeDiff = (world.timestamp - world.ground.body.lastTick) / 1000;
+  return R.evolve({
     ground: {
-      ...world.ground,
-      body: {
-        ...updateGroundBody(body, timeDiff),
-      }
+      body: R.compose(
+        modifyXDiff(world.ground.body.position.x),
+        R.evolve({
+          position: { x: clipXPosition },
+          velocity: { x: clipXVelocity },
+          acceleration: { x: calcXAcceleration(world.score.energy) },
+          lastTick: () => world.timestamp
+        }),
+        updateBody(timeDiff)
+      )
     }
-  };
+  }, world);
 };
