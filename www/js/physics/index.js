@@ -1,3 +1,4 @@
+import R from 'ramda';
 import { Vector, Box, testPolygonPolygon } from 'sat';
 
 export const calcVelocity = (v, a, t) => {
@@ -17,7 +18,7 @@ export const calcPosition = (position, velocity, t) => {
   };
 };
 
-export const updateBody = function updateBody(body, timeDiff) {
+export const updateBody = R.curry(function updateBody(timeDiff, body) {
   // If haven't updated before, don't calculate anything
   if (body.lastTick === 0) {
     return body;
@@ -31,7 +32,7 @@ export const updateBody = function updateBody(body, timeDiff) {
     velocity: velocity,
     position: position
   };
-};
+});
 
 const makeBox = (x, y, w, h, offset) => {
   return new Box(

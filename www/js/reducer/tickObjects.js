@@ -7,11 +7,11 @@ export default function tickWorld(world) {
 
     // Inherit acceleration and velocity from ground
     // and update the body
-    const newBody = updateBody({
+    const newBody = updateBody(timeDiff, {
       ...world.ground.body,
       position: obj.body.position,
       lastTick: obj.body.lastTick
-    }, timeDiff);
+    });
 
     return {
       ...obj,
