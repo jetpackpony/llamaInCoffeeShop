@@ -4,7 +4,7 @@ import { Group, Image, Rect } from 'react-konva';
 
 const WorldObject = ({ object, images, width, height, worldHeight }) => {
   //const image = images[object.view].imgObject;
-  const color = (object.view === 'coffee') ? 'blue' : 'red';
+  const color = (object.view === 'coffee') ? 'green' : 'red';
   const x = object.body.position.x;
   const y = worldHeight - object.body.position.y - height;
   const offset = 10;
