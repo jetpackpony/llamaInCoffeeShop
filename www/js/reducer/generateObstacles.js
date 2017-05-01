@@ -2,10 +2,15 @@ import { randInRange } from '../utils';
 import { MIN_GROUND_SPEED } from '../constants';
 
 const obstaclePatterns = [
+  [0, 6, 7, 13],
+  [0, 6, 7, 8, 14],
+  [0, 1, 7, 8, 9, 15],
   [0, 6],
+  [0, 6, 12],
+  [0, 2],
   [0],
   [0, 1],
-  [0, 2, 3],
+  [0, 1, 2],
 ];
 
 const getLastObject = (world) => {
