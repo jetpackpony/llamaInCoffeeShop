@@ -9,8 +9,7 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, "www"),
-    //host: '192.168.1.35'
-    host: '192.168.1.15'
+    host: '192.168.1.35'
   },
   module: {
     rules: [
