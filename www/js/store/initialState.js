@@ -19,8 +19,10 @@ export default function getInitialState() {
         steps: 0
       },
       timestamp: 0,
-      minSpread: 700,
-      maxSpread: 1500,
+      minSpread: CONST.MIN_OBSTACLE_SPREAD,
+      maxSpread: CONST.MAX_OBSTACLE_SPREAD,
+      minCollectableSpread: CONST.MIN_COLLECTABLE_SPREAD,
+      maxCollectableSpread: CONST.MAX_COLLECTABLE_SPREAD,
       minSpeed: CONST.MIN_GROUND_SPEED,
       maxSpeed: CONST.MAX_GROUND_SPEED,
       width: 0,

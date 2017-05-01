@@ -9,27 +9,6 @@ const getLastObjectByType = (type, objects) => (last(objects
 const getLastObstacle = curry(getLastObjectByType)('obstacle');
 const getLastCollectable = curry(getLastObjectByType)('collectable');
 
-const shouldGenerateCollectable = (world) => {
-  const lastObstacle = getLastObstacle(world.objects);
-  if (!lastObstacle) {
-    return false;
-  }
-  const xSinceLastObstacle = world.width - lastObstacle.body.position.x;
-  if (xSinceLastObstacle < world.obstacle.width || xSinceLastObstacle > (lastObstacle.spread - world.obstacle.width)) {
-    return false;
-  }
-
-  const lastCollectable = getLastCollectable(world.objects);
-  if (!lastCollectable) {
-    return true;
-  }
-  const xSinceLastCollectable = world.width - lastCollectable.body.position.x;
-  if (xSinceLastCollectable >= lastCollectable.spread) {
-    return true;
-  }
-  return false;
-};
-
 const makeObject = (world, spread) => {
   return {
     id: `collectable-${world.timestamp}`,
@@ -46,8 +25,35 @@ const makeObject = (world, spread) => {
   };
 };
 
+const shouldGenerateCollectable = (world) => {
+  const lastObstacle = getLastObstacle(world.objects);
+  if (!lastObstacle) {
+    return false;
+  }
+  const isTooEarly = (xSince) => {
+    return xSince <= world.collectable.width * 3;
+  };
+  const isTooLate = (xSince) => {
+    return xSince >= lastObstacle.spread - world.collectable.width * 3;
+  };
+  const xSinceLastObstacle = world.width - lastObstacle.body.position.x;
+  if (isTooEarly(xSinceLastObstacle) || isTooLate(xSinceLastObstacle)) {
+    return false;
+  }
+
+  const lastCollectable = getLastCollectable(world.objects);
+  if (!lastCollectable) {
+    return true;
+  }
+  const xSinceLastCollectable = world.width - lastCollectable.body.position.x;
+  if (xSinceLastCollectable >= lastCollectable.spread) {
+    return true;
+  }
+  return false;
+};
+
 export default function generateCollectables(world) {
-  const spread = randInRange(world.minSpread, world.maxSpread);
+  const spread = randInRange(world.minCollectableSpread, world.maxCollectableSpread);
   return {
     ...world,
     objects: [
