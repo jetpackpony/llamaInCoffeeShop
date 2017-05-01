@@ -1,10 +1,11 @@
 import { randInRange } from '../utils';
+import { MIN_GROUND_SPEED } from '../constants';
 
 const obstaclePatterns = [
-  [0, 5],
+  [0, 6],
   [0],
   [0, 1],
-  [0, 3, 4],
+  [0, 2, 3],
 ];
 
 const getLastObject = (world) => {
@@ -26,6 +27,7 @@ const shouldGenerateObjects = (worldWidth, lastObject) => {
 };
 
 const generatePattern = (world, pattern, spread) => {
+  const speedMultiplier = Math.abs(world.ground.body.velocity.x / MIN_GROUND_SPEED);
   return pattern.map((x) => ({
     id: `obstacle-${world.timestamp + x}`,
     type: 'obstacle',
@@ -33,7 +35,7 @@ const generatePattern = (world, pattern, spread) => {
     spread,
     body: {
       position: {
-        x: world.width + (x * world.obstacle.width),
+        x: world.width + (x * world.obstacle.width * speedMultiplier),
         y: world.groundHeight
       },
       lastTick: world.timestamp
