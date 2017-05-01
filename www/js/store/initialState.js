@@ -1,108 +1,91 @@
-const GRAVITY = -5000;
+import * as CONST from '../constants';
 
-const GROUND_SPEED = -800;
-const JUMP_VELOCITY_Y = 2500;
+export default function getInitialState() {
+  return {
+    assets: {
+      sceneWidth: 700,
+      sceneHeight: 400,
+      images: {},
+      scale: 1,
+      dpr: 1
+    },
 
-const WORLD_HEIGHT = 1000;
-const GROUND_HEIGHT = 200;
-const GROUND_TILE_WIDTH = 100;
-
-const PLAYER_WIDTH = 80;
-const PLAYER_POSITION_X = 50;
-
-const OBSTACLE_WIDTH = 70;
-
-export default {
-  gameState: 'playing',
-  assets: {
-    canvas: null,
-    sceneWidth: 700,
-    sceneHeight: 400,
-    images: {},
-    scale: 1,
-    dpr: 1
-  },
-  score: {
-    coffees: 0,
-    tables: 0,
-    energy: 100
-  },
-  metrics: {
-    frameRate: 0,
-    frameCounter: 0,
-    lastFrameRateTime: 0
-  },
-  world: {
-    gravity: GRAVITY,
-    width: 0,
-    height: WORLD_HEIGHT,
-    groundHeight: GROUND_HEIGHT,
-    groundOffset: 30,
-    worldSpeed: GROUND_SPEED,
-    jumpVelocity: { x: 0, y: JUMP_VELOCITY_Y },
-    objects: [
-      {
-        id: 'player',
-        body: {
-          acceleration: { x: 0, y: GRAVITY },
-          velocity: { x: 0, y: 0 },
-          position: { x: PLAYER_POSITION_X, y: WORLD_HEIGHT },
-          lastTick: 0
-        }
+    world: {
+      gameState: 'playing',
+      score: {
+        coffees: 0,
+        tables: 0,
+        energy: 100,
+        steps: 0
       },
-      {
-        id: 'ground',
+      timestamp: 0,
+      minSpread: CONST.MIN_OBSTACLE_SPREAD,
+      maxSpread: CONST.MAX_OBSTACLE_SPREAD,
+      minCollectableSpread: CONST.MIN_COLLECTABLE_SPREAD,
+      maxCollectableSpread: CONST.MAX_COLLECTABLE_SPREAD,
+      minSpeed: CONST.MIN_GROUND_SPEED,
+      maxSpeed: CONST.MAX_GROUND_SPEED,
+      width: 0,
+      height: CONST.WORLD_HEIGHT,
+      groundHeight: CONST.GROUND_HEIGHT,
+      groundOffset: 30,
+      worldSpeed: CONST.MIN_GROUND_SPEED,
+      jumpVelocity: { x: 0, y: CONST.JUMP_VELOCITY_Y },
+      newCollisions: [],
+
+      player: {
+        body: {
+          acceleration: { x: 0, y: CONST.GRAVITY },
+          velocity: { x: 0, y: 0 },
+          position: { x: CONST.PLAYER_POSITION_X, y: CONST.WORLD_HEIGHT },
+          lastTick: 0
+        },
+        height: CONST.PLAYER_WIDTH,
+        width: CONST.PLAYER_WIDTH
+      },
+      ground: {
         body: {
           acceleration: { x: 0, y: 0 },
-          velocity: { x: GROUND_SPEED, y: 0 },
-          position: { x: 0, y: GROUND_HEIGHT },
-          lastTick: 0
-        }
+          velocity: { x: CONST.MIN_GROUND_SPEED, y: 0 },
+          position: { x: 0, y: CONST.GROUND_HEIGHT },
+          lastTick: 0,
+          prevPositionX: 0
+        },
+        tileWidth: CONST.GROUND_TILE_WIDTH,
+        tileHeight: CONST.GROUND_HEIGHT,
       },
-      /*
+      objects: [
+        /*
       {
         id: `obstacle-${timestamp}`,
-        generated: timestamp,
         type: 'obstacle',
         view: 'table',
-        collidingWithPlayer: false,
+        colliding: false
         body: {
-          acceleration: { x: 0, y: 0 },
-          velocity: { x: worldSpeed, y: 0 },
           position: { x: worldWidth + 1, y: groundHeight },
           lastTick: timestamp
         }
       }
       {
         id: `collectable-${timestamp}`,
-        generated: timestamp,
         type: 'collectable',
         view: 'coffee',
-        collidingWithPlayer: false,
+        colliding: false,
         body: {
-          acceleration: { x: 0, y: 0 },
-          velocity: { x: worldSpeed, y: 0 },
           position: { x: worldWidth + 1, y: groundHeight },
           lastTick: timestamp
         }
       }
       */
-    ],
-    ground: {
-      tileWidth: GROUND_TILE_WIDTH,
-      tileHeight: GROUND_HEIGHT
-    },
-    player: {
-      height: PLAYER_WIDTH,
-      width: PLAYER_WIDTH
-    },
-    obstacle: {
-      height: OBSTACLE_WIDTH,
-      width: OBSTACLE_WIDTH
-    },
-    collectable: {
-      height: OBSTACLE_WIDTH,
-      width: OBSTACLE_WIDTH
+      ],
+      obstacle: {
+        height: CONST.OBSTACLE_WIDTH,
+        width: CONST.OBSTACLE_WIDTH
+      },
+      collectable: {
+        height: CONST.OBSTACLE_WIDTH,
+        width: CONST.OBSTACLE_WIDTH
+      }
     }
-  }
+  };
 };

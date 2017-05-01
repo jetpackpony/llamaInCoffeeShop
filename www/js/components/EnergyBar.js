@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
     y: 10,
     width: width,
     height: 30,
-    energy: state.score.energy
+    energy: state.world.score.energy
   };
 };
 

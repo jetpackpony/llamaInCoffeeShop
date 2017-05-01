@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Group, Image } from 'react-konva';
+import { Group, Image, Rect } from 'react-konva';
 
 const GroundTile = ({ index, tileWidth, tileHeight, image }) => {
   return (
+    <Rect
+      x={index * tileWidth}
+      y={0}
+      width={tileWidth}
+      height={tileHeight}
+      fill="grey"
+      stroke="black"
+      strokeWidth="2"
+    />
+  );
+/*
     <Image
       x={index * tileWidth}
       y={0}
@@ -11,7 +22,7 @@ const GroundTile = ({ index, tileWidth, tileHeight, image }) => {
       width={tileWidth}
       height={tileHeight}
     />
-  );
+    */
 };
 
 const mapStateToProps = (state) => {

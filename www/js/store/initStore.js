@@ -1,20 +1,23 @@
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
-import initialState from './initialState';
+import getInitialState from './initialState';
 
 import reducer from '../reducer';
 import { tick, ActionTypes } from '../actions';
 
 const middlewares = [];
+/*
 const logger = createLogger({
   predicate: (getState, action) => action.type !== ActionTypes.TICK
 });
 middlewares.push(logger);
+*/
 
 
 const getHeight = (width, image) => image.height * (width / image.width);
 
 export default function initStore({ images }) {
+  const initialState = getInitialState();
   const initValue = {
     ...initialState,
     assets: {

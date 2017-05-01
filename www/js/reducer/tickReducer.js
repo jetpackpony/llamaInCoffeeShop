@@ -1,36 +1,45 @@
-import tickMetrics from './tickMetrics';
-import tickWorld from './tickWorld';
+import { compose, curry } from 'ramda';
+
+import tickObjects from './tickObjects';
 import tickGround from './tickGround';
-import tickWorldObjects from './tickWorldObjects';
+import tickPlayer from './tickPlayer';
+import generateObstacles from './generateObstacles';
+import generateCollectables from './generateCollectables';
+import cleanUpObjects from './cleanUpObjects';
 import {
   calculateCollisions,
-  updateScore, updateCollisions
+  updateCollisionObjects
 } from './collisions';
+import * as ScoreUpdators from './score';
+import { COLLECTABLE_BONUS, OBSTACLE_DAMAGE } from '../constants';
+
+const updateScore =
+  ScoreUpdators.updateScore(COLLECTABLE_BONUS, OBSTACLE_DAMAGE);
+const updateGameState = ScoreUpdators.updateGameState;
 
 export default function tickReducer(state, action) {
-  let gameState = state.gameState;
-  if (gameState === 'loosing') {
+  if (state.world.gameState === 'loosing') {
     return state;
-  }
-
-  const timestamp = action.payload.timestamp;
-  let newWorld = tickWorld(state.world, timestamp);
-
-  newWorld = tickGround(newWorld, timestamp);
-  newWorld = tickWorldObjects(newWorld, timestamp);
-  const collisions = calculateCollisions(newWorld);
-  const score = updateScore(collisions, state.score);
-  newWorld = updateCollisions(newWorld, collisions);
-
-  if (state.score.energy <= 0) {
-    gameState = 'loosing';
   }
 
   return {
     ...state,
-    gameState,
-    score,
-    metrics: tickMetrics(state.metrics, timestamp),
-    world: newWorld
+    world: {
+      ...compose(
+        updateGameState,
+        updateScore,
+        updateCollisionObjects,
+        calculateCollisions,
+        cleanUpObjects,
+        generateCollectables,
+        generateObstacles,
+        tickObjects,
+        tickGround,
+        tickPlayer
+      )({
+        ...state.world,
+        timestamp: action.payload.timestamp
+      })
+    }
   };
 };

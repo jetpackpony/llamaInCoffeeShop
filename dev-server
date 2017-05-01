@@ -1,2 +1,6 @@
 #!/bin/sh
-webpack-dev-server --open
+HOST=""
+if [ "$1" != "" ]; then
+  HOST="--host $1"
+fi
+webpack-dev-server --open $HOST
