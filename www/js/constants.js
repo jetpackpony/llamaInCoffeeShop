@@ -1,8 +1,8 @@
 export const GRAVITY = -5000;
 
-export const MIN_GROUND_SPEED = 800;
-export const MAX_GROUND_SPEED = 3000;
-export const GROUND_ACCELERATION = 1000;
+export const MIN_GROUND_SPEED = 600;
+export const MAX_GROUND_SPEED = 1300;
+export const GROUND_ACCELERATION = 100;
 
 export const JUMP_VELOCITY_Y = 1200;
 export const JUMP_MIN_HEIGHT = 0.3; // multiplier for player height
