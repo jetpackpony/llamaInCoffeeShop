@@ -9,35 +9,33 @@ const getLastObjectByType = (type, objects) => (last(objects
 const getLastObstacle = curry(getLastObjectByType)('obstacle');
 const getLastCollectable = curry(getLastObjectByType)('collectable');
 
-const makeObject = (world, spread) => {
-  return {
-    id: `collectable-${world.timestamp}`,
-    type: 'collectable',
-    view: 'coffee',
-    spread,
-    body: {
-      position: {
-        x: world.width,
-        y: world.groundHeight
-      },
-      lastTick: world.timestamp
-    }
-  };
-};
+const makeObject = (spread, world) => ({
+  id: `collectable-${world.timestamp}`,
+  type: 'collectable',
+  view: 'coffee',
+  spread,
+  body: {
+    position: {
+      x: world.width,
+      y: world.groundHeight
+    },
+    lastTick: world.timestamp
+  }
+});
 
 const shouldGenerateCollectable = (world) => {
   const lastObstacle = getLastObstacle(world.objects);
   if (!lastObstacle) {
     return false;
   }
-  const isTooEarly = (xSince) => {
-    return xSince <= world.collectable.width * 3;
-  };
-  const isTooLate = (xSince) => {
-    return xSince >= lastObstacle.spread - world.collectable.width * 3;
-  };
   const xSinceLastObstacle = world.width - lastObstacle.body.position.x;
-  if (isTooEarly(xSinceLastObstacle) || isTooLate(xSinceLastObstacle)) {
+  const isTooEarly = () => {
+    return xSinceLastObstacle <= world.collectable.width * 3;
+  };
+  const isTooLate = () => {
+    return xSinceLastObstacle >= lastObstacle.spread - world.collectable.width * 3;
+  };
+  if (isTooEarly() || isTooLate()) {
     return false;
   }
 
@@ -59,7 +57,7 @@ export default function generateCollectables(world) {
     objects: [
       ...world.objects,
       ...(shouldGenerateCollectable(world))
-        ? [ makeObject(world, spread) ]
+        ? [ makeObject(spread, world) ]
         : []
     ]
   };
