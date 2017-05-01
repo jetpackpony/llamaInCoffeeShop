@@ -22,7 +22,7 @@ const calcXAcceleration = R.curry((timeDiff, energy, oldAcc) => (
 ));
 
 export default (world) => {
-  const timeDiff = (world.timestamp - world.ground.body.lastTick) / 1000;
+  const timeDiff = clipValue(0.015, 0.5, (world.timestamp - world.ground.body.lastTick) / 1000);
   return R.evolve({
     ground: {
       body: R.compose(
