@@ -4,6 +4,7 @@ import { getGroundData, createGround } from './Ground';
 import { createScore } from './Score';
 import { createEnergyBar } from './EnergyBar';
 import { createRestart } from './Restart';
+import { updateWorldObjects } from './WorldObjects';
 
 export function setupCanvas(rootId, state, store) {
   let stage = new Konva.Stage({
@@ -22,10 +23,11 @@ export function setupCanvas(rootId, state, store) {
   let score = createScore(state);
   let energyBar = createEnergyBar(state);
   let restart = createRestart(state, store);
-  layer.add(ground, player, score, energyBar, restart);
+  let worldObjects = new Konva.Group();
+  layer.add(ground, worldObjects, player, score, energyBar, restart);
 
   return {
-    stage, layer, player, ground, score, energyBar, restart
+    stage, layer, player, ground, score, energyBar, restart, worldObjects
   };
 };
 
@@ -37,4 +39,6 @@ export function updateObjects(objects, state) {
   objects.energyBar
     .getChildren((node) => node.getId() === 'bar')
     .width(state.world.score.energy / 100 * 200);
+
+  updateWorldObjects(objects, state);
 };
