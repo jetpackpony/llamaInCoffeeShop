@@ -162,8 +162,11 @@ sed -i "s/'android', \['list', 'avds'\]/'android', ['list', 'avd']/" "./platform
 # ----
 # Add Plugins
 
-#if [[ $init = 1 ]] || [[ $plugins = 1 ]] ; then
-#fi
+if [[ $init = 1 ]] || [[ $plugins = 1 ]] ; then
+
+  # Add a crosswalk plugin for better webview on android
+  cordova plugin add cordova-plugin-crosswalk-webview
+fi
 
 # ----
 # Prepare Platforms
