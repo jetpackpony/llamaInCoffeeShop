@@ -12,7 +12,7 @@ const app = {
       const dpr = window.devicePixelRatio;
       store.dispatch(resizeCanvas(width, height, dpr));
 
-      let canvasObjects = setupCanvas('root', store.getState());
+      let canvasObjects = setupCanvas('root', store.getState(), store);
 
       const anim = new Konva.Animation((frame) => {
         store.dispatch(tick(Math.round(frame.time)));
