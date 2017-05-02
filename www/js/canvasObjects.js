@@ -24,14 +24,27 @@ export function setupCanvas(rootId, state, store) {
   let energyBar = createEnergyBar(state);
   let restart = createRestart(state, store);
   let worldObjects = new Konva.Group();
-  layer.add(ground, worldObjects, player, score, energyBar, restart);
+  let fpsCount = new Konva.Text({
+    x: 10,
+    y: 40,
+    text: '0 fps',
+    fontSize: "20"
+  });
+  layer.add(
+    ground, worldObjects,
+    player, score,
+    energyBar, restart,
+    fpsCount
+  );
 
   return {
-    stage, layer, player, ground, score, energyBar, restart, worldObjects
+    stage, layer, player, ground,
+    score, energyBar, restart,
+    worldObjects, fpsCount
   };
 };
 
-export function updateObjects(objects, state) {
+export function updateObjects(objects, state, fps) {
   objects.player.position(getPlayerData(state));
   objects.ground.position(getGroundData(state));
   objects.score.text(`${state.world.score.steps} m`);
@@ -41,4 +54,6 @@ export function updateObjects(objects, state) {
     .width(state.world.score.energy / 100 * 200);
 
   updateWorldObjects(objects, state);
+
+  objects.fpsCount.text(`${fps} fps`);
 };
