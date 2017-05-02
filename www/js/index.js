@@ -1,54 +1,30 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-
-import Game from './components/Game';
-import { resizeCanvas, tick } from './actions';
+import { resizeCanvas, tick, jump } from './actions';
 import initGame from './initGame';
+import Konva from 'konva';
 
-class GameContainer extends Component {
-  constructor(...args) {
-    super(...args);
-    this.state = { isLoading: true };
-    this.loop = this.loop.bind(this);
-  }
+import { setupCanvas, updateObjects } from './canvasObjects';
 
-  loop(timestamp) {
-    this.state.store.dispatch(tick(Math.round(timestamp)));
-    this.timer = requestAnimationFrame(this.loop);
-  }
-
-  componentDidMount() {
+const app = {
+  init() {
     initGame().then((store) => {
       const width = window.innerWidth;
       const height = window.innerHeight;
       const dpr = window.devicePixelRatio;
       store.dispatch(resizeCanvas(width, height, dpr));
 
-      this.setState({
-        store,
-        isLoading: false
-      });
+      let canvasObjects = setupCanvas('root', store.getState());
 
-      this.timer = requestAnimationFrame(this.loop);
+      const anim = new Konva.Animation((frame) => {
+        store.dispatch(tick(Math.round(frame.time)));
+        return updateObjects(canvasObjects, store.getState());
+      }, canvasObjects.layer);
+      anim.start();
+
+      document.querySelector('body').addEventListener('touchstart', () => {
+        store.dispatch(jump());
+      })
     });
   }
+};
 
-  componentWillUnmount() {
-    cancelAnimationFrame(this.timer);
-  }
-
-  render() {
-    if (this.state.isLoading) {
-      return <div>Loading...</div>;
-    } else {
-      return (
-        <Provider store={this.state.store}>
-          <Game/>
-        </Provider>
-      );
-    }
-  }
-}
-
-ReactDOM.render(<GameContainer/>, document.getElementById('root'));
+app.init();
