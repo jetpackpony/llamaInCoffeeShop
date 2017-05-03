@@ -19,14 +19,18 @@ export function setupCanvas(rootId, state, store) {
 
   let player = createPlayer(state);
   let ground = createGround(state);
+  let score = createScore(state);
 
   stage.addChild(
     ground,
-    player
+    player, score
   );
   renderer.render(stage);
 
-  return { renderer, stage, player, ground };
+  return {
+    renderer, stage, player, ground,
+    score
+  };
 
   /*
   let stage = new Konva.Stage({
@@ -72,8 +76,8 @@ export function updateObjects(objects, state) {
   objects.player.position.set(playerData.x, playerData.y);
   let groundData = getGroundData(state);
   objects.ground.position.set(groundData.x, groundData.y);
+  objects.score.text = `${state.world.score.steps} m`;
   /*
-  objects.score.text(`${state.world.score.steps} m`);
 
   objects.energyBar
     .getChildren((node) => node.getId() === 'bar')
