@@ -3,6 +3,10 @@ import initGame from './initGame';
 
 import { setupCanvas, updateObjects } from './canvasObjects';
 
+let frameCount = 0,
+  lastCount = 0,
+  fps = 0;
+
 const app = {
   init() {
     initGame().then((store) => {
@@ -14,8 +18,15 @@ const app = {
       let canvasObjects = setupCanvas('root', store.getState(), store);
 
       const loop = (timestamp) => {
+        frameCount++;
+        if (timestamp - lastCount > 500) {
+          fps = frameCount * 2;
+          frameCount = 0;
+          lastCount = timestamp;
+        }
+
         store.dispatch(tick(timestamp));
-        updateObjects(canvasObjects, store.getState());
+        updateObjects(canvasObjects, store.getState(), fps);
 
         requestAnimationFrame(loop);
       };
