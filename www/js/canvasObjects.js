@@ -12,9 +12,15 @@ export function setupCanvas(rootId, state, store) {
   renderer.view.style.display = "block";
   renderer.autoResize = true;
   renderer.resize(state.assets.sceneWidth, state.assets.sceneHeight);
+  renderer.backgroundColor = 0xFFFFFF;
   document.getElementById(rootId).appendChild(renderer.view);
 
   const stage = new PIXI.Container();
+
+
+
+
+
   renderer.render(stage);
 
   /*
