@@ -16,22 +16,24 @@ export function getGroundData(state) {
 };
 
 export function createGround(state) {
-  const groundData = getGroundData(state);
-  let ground = new Konva.Group(groundData);
+  const data = getGroundData(state);
+  let ground = new PIXI.Container();
 
-  R.times((index) => {
-    ground.add(
-      new Konva.Rect({
-        x: index * groundData.tileWidth,
-        y: 0,
-        width: groundData.tileWidth,
-        height: groundData.tileHeight,
-        fill: "grey",
-        stroke: "black",
-        strokeWidth: 2
-      })
-    );
-  }, groundData.numTiles);
+  ground.addChild(
+    ...R.times((index) => {
+      let rect = new PIXI.Graphics();
+      rect.lineStyle(2, 0x000000, 1);
+      rect.beginFill(0xA9A9A9);
+      rect.drawRect(0, 0, data.tileWidth, data.tileHeight);
+      rect.endFill();
+      rect.x = index * data.tileWidth;
+      return rect;
+    },
+    data.numTiles
+  ));
+
+  ground.x = data.x;
+  ground.y = data.y;
 
   return ground;
 };

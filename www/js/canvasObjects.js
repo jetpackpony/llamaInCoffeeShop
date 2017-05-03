@@ -18,11 +18,15 @@ export function setupCanvas(rootId, state, store) {
   const stage = new PIXI.Container();
 
   let player = createPlayer(state);
+  let ground = createGround(state);
 
-  stage.addChild(player);
+  stage.addChild(
+    ground,
+    player
+  );
   renderer.render(stage);
 
-  return { renderer, stage, player };
+  return { renderer, stage, player, ground };
 
   /*
   let stage = new Konva.Stage({
@@ -66,8 +70,9 @@ export function setupCanvas(rootId, state, store) {
 export function updateObjects(objects, state) {
   let playerData = getPlayerData(state);
   objects.player.position.set(playerData.x, playerData.y);
+  let groundData = getGroundData(state);
+  objects.ground.position.set(groundData.x, groundData.y);
   /*
-  objects.ground.position(getGroundData(state));
   objects.score.text(`${state.world.score.steps} m`);
 
   objects.energyBar
