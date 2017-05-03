@@ -1,15 +1,12 @@
-import Konva from 'konva';
-import { restartGame } from './actions';
+import * as PIXI from 'pixi.js';
 
 export function createRestart(state, store) {
-  let restart = new Konva.Text({
-    x: state.world.width - 100,
-    y: "10",
-    fontSize: "70",
-    text: "⟲",
-    fill: "black"
-  });
-  restart.on('touchstart', () => store.dispatch(restartGame()));
-  return restart;
+  let text = new PIXI.Text(
+    "⟲",
+    {fontSize: 50, fill: "black"}
+  );
+  text.anchor.x = 1;
+  text.x = state.world.width;
+  return text;
 };
 

@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import { restartGame } from './actions';
 import { getPlayerData, createPlayer } from './Player';
 import { getGroundData, createGround } from './Ground';
 import { createScore } from './Score';
@@ -21,17 +22,28 @@ export function setupCanvas(rootId, state, store) {
   let ground = createGround(state);
   let score = createScore(state);
   let energyBar = createEnergyBar(state);
+  let restart = createRestart(state, store);
 
   stage.addChild(
     ground,
     player, score,
-    energyBar
+    energyBar, restart
   );
   renderer.render(stage);
 
+  renderer.view.addEventListener('touchstart', (e) => {
+    const { clientX, clientY } = e.touches[0];
+    if (clientX > renderer.width - 50 && clientY < 50) {
+      e.stopPropagation();
+      store.dispatch(restartGame());
+    }
+  });
+
   return {
-    renderer, stage, player, ground,
-    score, energyBar
+    renderer, stage,
+    ground,
+    player, score,
+    energyBar, restart
   };
 
   /*

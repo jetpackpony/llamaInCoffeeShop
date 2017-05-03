@@ -1,4 +1,4 @@
-import Konva from 'konva';
+import * as PIXI from 'pixi.js';
 import R from 'ramda';
 
 export function getGroundData(state) {
