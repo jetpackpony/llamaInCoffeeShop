@@ -26,6 +26,8 @@ export function setupCanvas(rootId, state, store) {
   });
 
   const stage = new PIXI.Container();
+  stage.scale.x = state.assets.scale;
+  stage.scale.y = state.assets.scale;
 
   let player = createPlayer(state);
   let ground = createGround(state);
@@ -52,13 +54,6 @@ export function setupCanvas(rootId, state, store) {
     player, score, fpsCount,
     energyBar, restart
   };
-
-  /*
-  let layer = new Konva.Layer({
-    scaleX: state.assets.scale,
-    scaleY: state.assets.scale
-  });
-  */
 };
 
 export function updateObjects(objects, state, fps) {
