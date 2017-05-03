@@ -1,4 +1,4 @@
-import Konva from 'konva';
+import * as PIXI from 'pixi.js';
 import { getPlayerData, createPlayer } from './Player';
 import { getGroundData, createGround } from './Ground';
 import { createScore } from './Score';
@@ -7,6 +7,17 @@ import { createRestart } from './Restart';
 import { updateWorldObjects } from './WorldObjects';
 
 export function setupCanvas(rootId, state, store) {
+  var renderer = PIXI.autoDetectRenderer(1, 1);
+  renderer.view.style.position = "absolute";
+  renderer.view.style.display = "block";
+  renderer.autoResize = true;
+  renderer.resize(state.assets.sceneWidth, state.assets.sceneHeight);
+  document.getElementById(rootId).appendChild(renderer.view);
+
+  var stage = new PIXI.Container();
+  renderer.render(stage);
+
+  /*
   let stage = new Konva.Stage({
     container: rootId,
     width: state.assets.sceneWidth,
@@ -42,6 +53,7 @@ export function setupCanvas(rootId, state, store) {
     score, energyBar, restart,
     worldObjects, fpsCount
   };
+  */
 };
 
 export function updateObjects(objects, state, fps) {
