@@ -22,6 +22,7 @@ export function createEnergyBar(state) {
   filler.beginFill(0x800000);
   filler.drawRect(0, 0, data.energy / 100 * data.width, data.height);
   filler.endFill();
+  filler.id = 'bar';
 
   group.addChild(outline, filler);
 

@@ -1,4 +1,4 @@
-import Konva from 'konva';
+import * as PIXI from 'pixi.js';
 
 const getObjPosition = (state, obj) => {
   const width = state.world.collectable.width;
@@ -25,26 +25,29 @@ export function updateWorldObjects(objects, state) {
 
   stateObjects
     .forEach((obj) => {
-      const canvasObj = existingObjects.getChildren((o) => o.getId() === obj.id)[0];
+      const canvasObj = existingObjects.children.find((o) => o.id === obj.id);
+      const data = getObjPosition(state, obj);
       if (canvasObj) {
         // Update existing objects
-        canvasObj.position(getObjPosition(state, obj));
+        canvasObj.position.set(data.x, data.y);
       } else {
         // Create new objects
-        const color = (obj.view === 'coffee') ? 'green' : 'red';
-        const newObj = new Konva.Rect({
-          id: obj.id,
-          fill: color,
-          ...getObjPosition(state, obj)
-        });
-        existingObjects.add(newObj);
+        const color = (obj.view === 'coffee') ? 0x228B22 : 0xDC143C;
+        const newObj = new PIXI.Graphics();
+        newObj.beginFill(color);
+        newObj.drawRect(0, 0, data.width, data.height);
+        newObj.endFill();
+        newObj.x = data.x;
+        newObj.y = data.y;
+        newObj.id = obj.id;
+        existingObjects.addChild(newObj);
       }
     });
 
   // Remove non-exiting objects
-  existingObjects.getChildren().forEach((obj) => {
-    if (!stateObjects.find((o) => o.id === obj.getId())) {
-      obj.destroy();
+  existingObjects.children.forEach((obj) => {
+    if (!stateObjects.find((o) => o.id === obj.id)) {
+      existingObjects.removeChild(obj);
     }
   });
 };
