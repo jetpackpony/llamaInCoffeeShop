@@ -7,14 +7,14 @@ import { createRestart } from './Restart';
 import { updateWorldObjects } from './WorldObjects';
 
 export function setupCanvas(rootId, state, store) {
-  var renderer = PIXI.autoDetectRenderer(1, 1);
+  const renderer = PIXI.autoDetectRenderer(1, 1);
   renderer.view.style.position = "absolute";
   renderer.view.style.display = "block";
   renderer.autoResize = true;
   renderer.resize(state.assets.sceneWidth, state.assets.sceneHeight);
   document.getElementById(rootId).appendChild(renderer.view);
 
-  var stage = new PIXI.Container();
+  const stage = new PIXI.Container();
   renderer.render(stage);
 
   /*
