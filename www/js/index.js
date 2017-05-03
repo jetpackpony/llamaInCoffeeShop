@@ -1,54 +1,53 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-
-import Game from './components/Game';
-import { resizeCanvas, tick } from './actions';
+import { resizeCanvas, restartGame, tick, jump } from './actions';
 import initGame from './initGame';
 
-class GameContainer extends Component {
-  constructor(...args) {
-    super(...args);
-    this.state = { isLoading: true };
-    this.loop = this.loop.bind(this);
-  }
+import createStage from './canvasObjects';
 
-  loop(timestamp) {
-    this.state.store.dispatch(tick(Math.round(timestamp)));
-    this.timer = requestAnimationFrame(this.loop);
-  }
+let frameCount = 0,
+  lastCount = 0,
+  fps = 0;
 
-  componentDidMount() {
+const app = {
+  init() {
     initGame().then((store) => {
       const width = window.innerWidth;
       const height = window.innerHeight;
       const dpr = window.devicePixelRatio;
       store.dispatch(resizeCanvas(width, height, dpr));
 
-      this.setState({
-        store,
-        isLoading: false
+      let stage = createStage(document.getElementById('root'), width, height, store.getState().assets.scale);
+
+      // Game loop
+      const loop = (timestamp) => {
+        frameCount++;
+        if (timestamp - lastCount > 500) {
+          fps = frameCount * 2;
+          frameCount = 0;
+          lastCount = timestamp;
+        }
+
+        store.dispatch(tick(timestamp));
+        stage.update(store.getState());
+
+        requestAnimationFrame(loop);
+      };
+      requestAnimationFrame(loop);
+
+      // Add listener for restart game
+      stage.canvas.addEventListener('touchstart', (e) => {
+        const { clientX, clientY } = e.touches[0];
+        if (clientX > stage.canvas.width - 50 && clientY < 50) {
+          e.stopPropagation();
+          store.dispatch(restartGame());
+        }
       });
 
-      this.timer = requestAnimationFrame(this.loop);
+      // Add event listener for jump
+      stage.canvas.addEventListener('touchstart', () => {
+        store.dispatch(jump());
+      })
     });
   }
+};
 
-  componentWillUnmount() {
-    cancelAnimationFrame(this.timer);
-  }
-
-  render() {
-    if (this.state.isLoading) {
-      return <div>Loading...</div>;
-    } else {
-      return (
-        <Provider store={this.state.store}>
-          <Game/>
-        </Provider>
-      );
-    }
-  }
-}
-
-ReactDOM.render(<GameContainer/>, document.getElementById('root'));
+app.init();
