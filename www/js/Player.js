@@ -1,4 +1,4 @@
-import Konva from 'konva';
+import * as PIXI from 'pixi.js';
 
 export function getPlayerData(state) {
   const offset = 10;
@@ -15,8 +15,12 @@ export function getPlayerData(state) {
 };
 
 export function createPlayer(state) {
-  return new Konva.Rect({
-    fill: "purple",
-    ...getPlayerData(state)
-  });
+  let data = getPlayerData(state);
+  var rect = new PIXI.Graphics();
+  rect.beginFill(0x9932CC);
+  rect.drawRect(0, 0, data.width, data.height);
+  rect.endFill();
+  rect.x = data.x;
+  rect.y = data.y;
+  return rect;
 };

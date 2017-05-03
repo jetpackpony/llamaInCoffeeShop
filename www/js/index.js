@@ -15,12 +15,12 @@ const app = {
 
       const loop = (timestamp) => {
         store.dispatch(tick(timestamp));
-        //updateObjects(canvasObjects, store.getState());
+        updateObjects(canvasObjects, store.getState());
 
         requestAnimationFrame(loop);
       };
 
-      //requestAnimationFrame(loop);
+      requestAnimationFrame(loop);
 
       document.querySelector('body').addEventListener('touchstart', () => {
         store.dispatch(jump());
