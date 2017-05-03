@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import { restartGame } from './actions';
+import { restartGame } from '../actions';
 import { getPlayerData, createPlayer } from './Player';
 import { getGroundData, createGround } from './Ground';
 import { createScore } from './Score';
