@@ -1,4 +1,4 @@
-import Konva from 'konva';
+import * as PIXI from 'pixi.js';
 
 export function getEnergyBarData(state) {
   return {
@@ -12,28 +12,21 @@ export function getEnergyBarData(state) {
 
 export function createEnergyBar(state) {
   let data = getEnergyBarData(state);
-  let group = new Konva.Group({
-    x: data.x,
-    y: data.y
-  });
+  let group = new PIXI.Container();
 
-  group.add(new Konva.Rect({
-    x: 0,
-    y: 0,
-    width: data.width,
-    height: data.height,
-    stroke: "brown",
-    strokeWidth: "3"
-  }));
+  let outline = new PIXI.Graphics();
+  outline.lineStyle(3, 0x800000, 1);
+  outline.drawRect(0, 0, data.width, data.height);
 
-  group.add(new Konva.Rect({
-    id: 'bar',
-    x: 0,
-    y: 0,
-    width: data.energy / 100 * data.width,
-    height: data.height,
-    fill: "brown"
-  }));
+  let filler = new PIXI.Graphics();
+  filler.beginFill(0x800000);
+  filler.drawRect(0, 0, data.energy / 100 * data.width, data.height);
+  filler.endFill();
+
+  group.addChild(outline, filler);
+
+  group.x = data.x;
+  group.y = data.y;
 
   return group;
 };

@@ -20,16 +20,18 @@ export function setupCanvas(rootId, state, store) {
   let player = createPlayer(state);
   let ground = createGround(state);
   let score = createScore(state);
+  let energyBar = createEnergyBar(state);
 
   stage.addChild(
     ground,
-    player, score
+    player, score,
+    energyBar
   );
   renderer.render(stage);
 
   return {
     renderer, stage, player, ground,
-    score
+    score, energyBar
   };
 
   /*
@@ -77,12 +79,10 @@ export function updateObjects(objects, state) {
   let groundData = getGroundData(state);
   objects.ground.position.set(groundData.x, groundData.y);
   objects.score.text = `${state.world.score.steps} m`;
+
+  objects.energyBar.children[1].width = state.world.score.energy / 100 * 200;
+
   /*
-
-  objects.energyBar
-    .getChildren((node) => node.getId() === 'bar')
-    .width(state.world.score.energy / 100 * 200);
-
   updateWorldObjects(objects, state);
 
   objects.fpsCount.text(`${fps} fps`);
