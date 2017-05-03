@@ -1,31 +1,17 @@
 import * as PIXI from 'pixi.js';
 
-const getObjPosition = (state, obj) => {
-  const width = state.world.collectable.width;
-  const height = state.world.collectable.height;
-  const x = obj.body.position.x;
-  const y = state.world.height - obj.body.position.y - height;
-  const offset = 10;
-
-  return {
-    x: x + offset,
-    y: y + offset,
-    width: width - offset * 2,
-    height: height - offset * 2
-  };
+export default function createOrUpdateWorldObjects(worldObjects, state) {
+  return updateWorldObjects(
+    worldObjects || new PIXI.Container(),
+    state
+  );
 };
 
-export function updateWorldObjects(objects, state) {
-  const existingObjects = objects.worldObjects;
-  const stateObjects =
-    state
-    .world
-    .objects
-    .filter((obj) => obj.type === 'obstacle' || obj.type === 'collectable');
-
+function updateWorldObjects(worldObjects, state) {
+  const stateObjects = state.world.objects;
   stateObjects
     .forEach((obj) => {
-      const canvasObj = existingObjects.children.find((o) => o.id === obj.id);
+      const canvasObj = worldObjects.children.find((o) => o.id === obj.id);
       const data = getObjPosition(state, obj);
       if (canvasObj) {
         // Update existing objects
@@ -40,14 +26,32 @@ export function updateWorldObjects(objects, state) {
         newObj.x = data.x;
         newObj.y = data.y;
         newObj.id = obj.id;
-        existingObjects.addChild(newObj);
+        worldObjects.addChild(newObj);
       }
     });
 
   // Remove non-exiting objects
-  existingObjects.children.forEach((obj) => {
+  worldObjects.children.forEach((obj) => {
     if (!stateObjects.find((o) => o.id === obj.id)) {
-      existingObjects.removeChild(obj);
+      worldObjects.removeChild(obj);
     }
   });
+
+  return worldObjects;
 };
+
+function getObjPosition(state, obj) {
+  const width = state.world.collectable.width;
+  const height = state.world.collectable.height;
+  const x = obj.body.position.x;
+  const y = state.world.height - obj.body.position.y - height;
+  const offset = 10;
+
+  return {
+    x: x + offset,
+    y: y + offset,
+    width: width - offset * 2,
+    height: height - offset * 2
+  };
+};
+

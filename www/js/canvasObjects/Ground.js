@@ -1,22 +1,12 @@
 import * as PIXI from 'pixi.js';
 import R from 'ramda';
 
-export function getGroundData(state) {
-  const { x, y } = state.world.ground.body.position;
-  const { tileWidth, tileHeight } = state.world.ground;
-  const worldWidth = state.world.width;
-  const numTiles = Math.ceil(worldWidth / tileWidth) + 1;
-  return {
-    x,
-    y: state.world.height - y - state.world.groundOffset,
-    tileWidth,
-    tileHeight: tileHeight + state.world.groundOffset,
-    numTiles
-  };
+export default function createOrUpdateGround(ground, state) {
+  const data = getGroundData(state);
+  return updateGround(ground || createGround(data), data);
 };
 
-export function createGround(state) {
-  const data = getGroundData(state);
+function createGround(data) {
   let ground = new PIXI.Container();
 
   ground.addChild(
@@ -32,8 +22,25 @@ export function createGround(state) {
     data.numTiles
   ));
 
-  ground.x = data.x;
-  ground.y = data.y;
-
   return ground;
 };
+
+function updateGround(ground, data) {
+  ground.x = data.x;
+  ground.y = data.y;
+  return ground;
+}
+
+function getGroundData(state) {
+  const { x, y } = state.world.ground.body.position;
+  const { tileWidth, tileHeight } = state.world.ground;
+  const worldWidth = state.world.width;
+  const numTiles = Math.ceil(worldWidth / tileWidth) + 1;
+  return {
+    x,
+    y: state.world.height - y - state.world.groundOffset,
+    tileWidth,
+    tileHeight: tileHeight + state.world.groundOffset,
+    numTiles
+  };
+}

@@ -1,17 +1,11 @@
 import * as PIXI from 'pixi.js';
 
-export function getEnergyBarData(state) {
-  return {
-    x: (state.world.width - 200) / 2,
-    y: 10,
-    width: 200,
-    height: 30,
-    energy: state.world.score.energy
-  };
-};
-
-export function createEnergyBar(state) {
+export default function createOrUpdateEnergyBar(energyBar, state) {
   let data = getEnergyBarData(state);
+  return updateEnergyBar(energyBar || createEnergyBar(data), data);
+}
+
+function createEnergyBar(data) {
   let group = new PIXI.Container();
 
   let outline = new PIXI.Graphics();
@@ -30,4 +24,23 @@ export function createEnergyBar(state) {
   group.y = data.y;
 
   return group;
-};
+}
+
+function updateEnergyBar(energyBar, data) {
+  energyBar
+    .children
+    .find((o) => o.id === 'bar')
+    .width = data.energy / 100 * data.width;
+  return energyBar;
+}
+
+function getEnergyBarData(state) {
+  const width = 200;
+  return {
+    x: (state.world.width - width) / 2,
+    y: 10,
+    width,
+    height: 30,
+    energy: state.world.score.energy
+  };
+}

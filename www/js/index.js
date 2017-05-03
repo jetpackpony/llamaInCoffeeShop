@@ -1,7 +1,7 @@
-import { resizeCanvas, tick, jump } from './actions';
+import { resizeCanvas, restartGame, tick, jump } from './actions';
 import initGame from './initGame';
 
-import { setupCanvas, updateObjects } from './canvasObjects';
+import createStage from './canvasObjects';
 
 let frameCount = 0,
   lastCount = 0,
@@ -15,8 +15,9 @@ const app = {
       const dpr = window.devicePixelRatio;
       store.dispatch(resizeCanvas(width, height, dpr));
 
-      let canvasObjects = setupCanvas('root', store.getState(), store);
+      let stage = createStage(document.getElementById('root'), width, height, store.getState().assets.scale);
 
+      // Game loop
       const loop = (timestamp) => {
         frameCount++;
         if (timestamp - lastCount > 500) {
@@ -26,14 +27,23 @@ const app = {
         }
 
         store.dispatch(tick(timestamp));
-        updateObjects(canvasObjects, store.getState(), fps);
+        stage.update(store.getState());
 
         requestAnimationFrame(loop);
       };
-
       requestAnimationFrame(loop);
 
-      document.querySelector('body').addEventListener('touchstart', () => {
+      // Add listener for restart game
+      stage.canvas.addEventListener('touchstart', (e) => {
+        const { clientX, clientY } = e.touches[0];
+        if (clientX > stage.canvas.width - 50 && clientY < 50) {
+          e.stopPropagation();
+          store.dispatch(restartGame());
+        }
+      });
+
+      // Add event listener for jump
+      stage.canvas.addEventListener('touchstart', () => {
         store.dispatch(jump());
       })
     });

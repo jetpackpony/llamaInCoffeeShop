@@ -1,6 +1,25 @@
 import * as PIXI from 'pixi.js';
 
-export function getPlayerData(state) {
+export default function createOrUpdatePlayer(player, state) {
+  const data = getPlayerData(state);
+  return updatePlayer(player || createPlayer(data), data);
+};
+
+function createPlayer({ width, height }) {
+  var rect = new PIXI.Graphics();
+  rect.beginFill(0x9932CC);
+  rect.drawRect(0, 0, width, height);
+  rect.endFill();
+  return rect;
+}
+
+function updatePlayer(player, data) {
+  player.x = data.x;
+  player.y = data.y;
+  return player;
+}
+
+function getPlayerData(state) {
   const offset = 10;
   const player = state.world.player;
   const { width, height } = player;
@@ -12,15 +31,4 @@ export function getPlayerData(state) {
     width: width - offset*2,
     height: height - offset*2,
   }
-};
-
-export function createPlayer(state) {
-  let data = getPlayerData(state);
-  var rect = new PIXI.Graphics();
-  rect.beginFill(0x9932CC);
-  rect.drawRect(0, 0, data.width, data.height);
-  rect.endFill();
-  rect.x = data.x;
-  rect.y = data.y;
-  return rect;
-};
+}

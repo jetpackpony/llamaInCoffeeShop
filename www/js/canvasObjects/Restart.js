@@ -1,6 +1,10 @@
 import * as PIXI from 'pixi.js';
 
-export function createRestart(state, store) {
+export default function createOrUpdateRestart(restart, state) {
+  return updateRestart(restart || createRestart(state), state);
+};
+
+function createRestart(state) {
   let text = new PIXI.Text(
     "⟲",
     {fontSize: 50, fill: "black"}
@@ -8,5 +12,8 @@ export function createRestart(state, store) {
   text.anchor.x = 1;
   text.x = state.world.width;
   return text;
-};
+}
 
+function updateRestart(restart, state) {
+  return restart;
+}
