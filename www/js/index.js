@@ -15,7 +15,7 @@ const app = {
       const dpr = window.devicePixelRatio;
       store.dispatch(resizeCanvas(width, height, dpr));
 
-      let stage = createStage(document.getElementById('root'), width, height, store.getState().assets.scale);
+      let stage = createStage(document.getElementById('root'), width, height, dpr, store.getState().assets.scale);
 
       // Game loop
       const loop = (timestamp) => {
@@ -36,7 +36,7 @@ const app = {
       // Add listener for restart game
       stage.canvas.addEventListener('touchstart', (e) => {
         const { clientX, clientY } = e.touches[0];
-        if (clientX > stage.canvas.width - 50 && clientY < 50) {
+        if (clientX > width - 50 && clientY < 50) {
           e.stopPropagation();
           store.dispatch(restartGame());
         }

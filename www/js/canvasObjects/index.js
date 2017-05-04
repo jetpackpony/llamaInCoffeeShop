@@ -6,12 +6,13 @@ import createOrUpdateScore from './Score';
 import createOrUpdateEnergyBar from './EnergyBar';
 import createOrUpdateRestart from './Restart';
 
-export default function createStage(root, width, height, scale) {
-  let renderer = PIXI.autoDetectRenderer(1, 1);
+export default function createStage(root, width, height, dpr, scale) {
+  let renderer = PIXI.autoDetectRenderer(width, height, {
+    autoResize: true,
+    resolution: dpr
+  });
   renderer.view.style.position = "absolute";
   renderer.view.style.display = "block";
-  renderer.autoResize = true;
-  renderer.resize(width, height);
   renderer.backgroundColor = 0xFFFFFF;
   root.appendChild(renderer.view);
 
