@@ -58,7 +58,7 @@ const shouldGenerateCollectable = (world) => {
 
 export default function generateCollectables(world) {
   const spread = randInRange(world.minCollectableSpread, world.maxCollectableSpread);
-  const collectableType = world.collectableTypes[0];
+  const collectableType = world.collectableTypes[randInRange(0, world.collectableTypes.length - 1)];
   return {
     ...world,
     objects: [

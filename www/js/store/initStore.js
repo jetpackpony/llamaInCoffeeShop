@@ -48,8 +48,16 @@ export default function initStore({ images }) {
     world: {
       ...initialState.world,
       player: initPlayer(initialState.world.player, images["llama01.png"]),
-      collectableTypes: generateTypes([ images["collectable01.png"] ]),
-      obstacleTypes: generateTypes([ images["obstacle01.png"] ]),
+      collectableTypes: generateTypes([
+        images["collectable01.png"],
+        images["collectable02.png"],
+        images["collectable03.png"]
+      ]),
+      obstacleTypes: generateTypes([
+        images["obstacle01.png"], images["obstacle02.png"],
+        images["obstacle03.png"], images["obstacle04.png"],
+        images["obstacle05.png"], images["obstacle06.png"]
+      ]),
     }
   };
   return createStore(
