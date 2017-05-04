@@ -1,5 +1,7 @@
 import { curry, last } from 'ramda';
 import { randInRange } from '../utils';
+import { COLLISION_BOX_OFFSET } from '../constants';
+import { getCollisionBounds } from '../physics';
 
 const getLastObjectByType = (type, objects) => (last(objects
   .filter((el) => el.type === type)
@@ -14,6 +16,7 @@ const makeObject = (spread, world) => ({
   type: 'collectable',
   view: 'coffee',
   spread,
+  collisionBounds: getCollisionBounds(world.collectable.width, world.collectable.height, COLLISION_BOX_OFFSET),
   body: {
     position: {
       x: world.width,

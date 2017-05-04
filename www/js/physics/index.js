@@ -1,5 +1,5 @@
 import R from 'ramda';
-import { Vector, Box, testPolygonPolygon } from 'sat';
+import { Vector, Polygon, testPolygonPolygon } from 'sat';
 
 export const calcVelocity = (v, a, t) => {
   return {
@@ -34,24 +34,27 @@ export const updateBody = R.curry(function updateBody(timeDiff, body) {
   };
 });
 
-const makeBox = (x, y, w, h, offset) => {
-  return new Box(
-    new Vector(
-      x + offset,
-      y + offset
-    ),
-    w - offset * 2,
-    h - offset * 2
-  ).toPolygon();
+const makePolygon = ({ x, y, collisionBounds }) => {
+  return new Polygon(
+    new Vector(x, y),
+    collisionBounds.map((point) => new Vector(point.x, point.y))
+  );
 };
 
-export const getCollisions = (player, objects, boxOffset) => {
-  const playerBox = makeBox(player.x, player.y, player.w, player.h, boxOffset);
+export const getCollisions = (player, objects) => {
+  const playerBox = makePolygon(player);
   return objects
     .filter((obj) => testPolygonPolygon(
         playerBox,
-        makeBox(obj.x, obj.y, obj.w, obj.h, boxOffset)
+        makePolygon(obj)
       )
     )
     .map((obj) => obj.id);
 };
+
+export const getCollisionBounds = (width, height, boxOffset) => ([
+  {x: boxOffset, y: boxOffset},
+  {x: width - boxOffset, y: boxOffset},
+  {x: width - boxOffset, y: height - boxOffset},
+  {x: boxOffset, y: height - boxOffset}
+]);

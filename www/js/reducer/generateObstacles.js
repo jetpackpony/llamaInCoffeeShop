@@ -1,5 +1,7 @@
 import { randInRange } from '../utils';
 import { MIN_GROUND_SPEED } from '../constants';
+import { COLLISION_BOX_OFFSET } from '../constants';
+import { getCollisionBounds } from '../physics';
 
 const obstaclePatterns = [
   [0, 6, 7, 13],
@@ -38,6 +40,7 @@ const generatePattern = (world, pattern, spread) => {
     type: 'obstacle',
     view: 'table',
     spread,
+    collisionBounds: getCollisionBounds(world.obstacle.width, world.obstacle.height, COLLISION_BOX_OFFSET),
     body: {
       position: {
         x: world.width + (x * world.obstacle.width * speedMultiplier),

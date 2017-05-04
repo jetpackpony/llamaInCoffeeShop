@@ -40,6 +40,7 @@ export default function getInitialState() {
           position: { x: CONST.PLAYER_POSITION_X, y: CONST.WORLD_HEIGHT },
           lastTick: 0
         },
+        collisionBounds: [{x: 0, y:0}, {x:0, y:0}],
         height: CONST.PLAYER_WIDTH,
         width: CONST.PLAYER_WIDTH
       },
@@ -61,6 +62,7 @@ export default function getInitialState() {
         type: 'obstacle',
         view: 'table',
         colliding: false
+        collisionBounds: [{x: 0, y:0}, {x:0, y:0}],
         body: {
           position: { x: worldWidth + 1, y: groundHeight },
           lastTick: timestamp
@@ -71,6 +73,7 @@ export default function getInitialState() {
         type: 'collectable',
         view: 'coffee',
         colliding: false,
+        collisionBounds: [{x: 0, y:0}, {x:0, y:0}],
         body: {
           position: { x: worldWidth + 1, y: groundHeight },
           lastTick: timestamp

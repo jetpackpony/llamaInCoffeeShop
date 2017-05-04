@@ -21,8 +21,14 @@ function updateWorldObjects(worldObjects, state) {
         // Create new objects
         worldObjects.addChild(
           (obj.view === 'coffee')
-          ? createCollectable(obj.id, data, state.assets.images)
-          : createObstacle(obj.id, data, state.assets.images)
+          ? createObject(
+            obj.id, data,
+            state.assets.images["collectable01.png"], 0x228B22
+          )
+          : createObject(
+            obj.id, data,
+            state.assets.images["obstacle01.png"], 0xDC143C
+          )
         );
       }
     });
@@ -38,56 +44,41 @@ function updateWorldObjects(worldObjects, state) {
 };
 
 function getObjPosition(state, obj) {
-  const width = state.world.obstacle.width;
-  const height = state.world.obstacle.height;
+  const width = state.world.collectable.width;
+  const height = state.world.collectable.height;
   const x = obj.body.position.x;
   const y = state.world.height - obj.body.position.y - height;
-  const offset = 10;
 
   return {
     x: x,
     y: y,
     width: width,
-    height: height
+    height: height,
+    collisionBounds: obj.collisionBounds
   };
 };
 
-function createObstacle(id, data, images) {
+function createObject(id, data, image, color) {
   const cont = new PIXI.Container();
   cont.id = id;
 
   if (SHOW_COLLISION_BOXES) {
-    const rect = new PIXI.Graphics();
-    rect.beginFill(0xDC143C);
-    rect.drawRect(0, 0, data.width, data.height);
-    rect.endFill();
-    cont.addChild(rect);
+    var polygon = new PIXI.Graphics();
+    polygon.beginFill(color);
+    polygon.drawPolygon(
+      data
+      .collisionBounds
+      .map((point) => Object.values(point))
+      .reduce((res, point) => (res.concat(point)), [])
+    );
+    polygon.endFill();
+    cont.addChild(polygon);
   }
 
-  const obstacle = new PIXI.Sprite(images["obstacle01.png"]);
-  obstacle.width = data.width;
-  obstacle.height = data.height;
+  const object = new PIXI.Sprite(image);
+  object.width = data.width;
+  object.height = data.height;
 
-  cont.addChild(obstacle);
-  return cont;
-}
-
-function createCollectable(id, data, images) {
-  const cont = new PIXI.Container();
-  cont.id = id;
-
-  if (SHOW_COLLISION_BOXES) {
-    const rect = new PIXI.Graphics();
-    rect.beginFill(0x228B22);
-    rect.drawRect(0, 0, data.width, data.height);
-    rect.endFill();
-    cont.addChild(rect);
-  }
-
-  const collectable = new PIXI.Sprite(images["collectable01.png"]);
-  collectable.width = data.width;
-  collectable.height = data.height;
-
-  cont.addChild(collectable);
+  cont.addChild(object);
   return cont;
 }

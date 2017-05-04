@@ -4,6 +4,8 @@ import getInitialState from './initialState';
 
 import reducer from '../reducer';
 import { tick, ActionTypes } from '../actions';
+import { COLLISION_BOX_OFFSET } from '../constants';
+import { getCollisionBounds } from '../physics';
 
 const middlewares = [];
 /*
@@ -18,6 +20,7 @@ const getHeight = (width, image) => image.height * (width / image.width);
 
 export default function initStore({ images }) {
   const initialState = getInitialState();
+  const playerHeight = getHeight(initialState.world.player.width, images["llama01.png"]);
   const initValue = {
     ...initialState,
     assets: {
@@ -28,7 +31,8 @@ export default function initStore({ images }) {
       ...initialState.world,
       player: {
         ...initialState.world.player,
-        height: getHeight(initialState.world.player.width, images["llama01.png"])
+        height: playerHeight,
+        collisionBounds: getCollisionBounds(initialState.world.player.width, playerHeight, COLLISION_BOX_OFFSET)
       },
       obstacle: {
         ...initialState.world.obstacle,
