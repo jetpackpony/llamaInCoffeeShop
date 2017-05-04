@@ -18,15 +18,11 @@ function updateWorldObjects(worldObjects, state) {
         canvasObj.position.set(data.x, data.y);
       } else {
         // Create new objects
-        const color = (obj.view === 'coffee') ? 0x228B22 : 0xDC143C;
-        const newObj = new PIXI.Graphics();
-        newObj.beginFill(color);
-        newObj.drawRect(0, 0, data.width, data.height);
-        newObj.endFill();
-        newObj.x = data.x;
-        newObj.y = data.y;
-        newObj.id = obj.id;
-        worldObjects.addChild(newObj);
+        worldObjects.addChild(
+          (obj.view === 'coffee')
+          ? createCollectable(obj.id, data, state.assets.images)
+          : createObstacle(obj.id, data, state.assets.images)
+        );
       }
     });
 
@@ -41,17 +37,44 @@ function updateWorldObjects(worldObjects, state) {
 };
 
 function getObjPosition(state, obj) {
-  const width = state.world.collectable.width;
-  const height = state.world.collectable.height;
+  const width = state.world.obstacle.width;
+  const height = state.world.obstacle.height;
   const x = obj.body.position.x;
   const y = state.world.height - obj.body.position.y - height;
   const offset = 10;
 
   return {
-    x: x + offset,
-    y: y + offset,
-    width: width - offset * 2,
-    height: height - offset * 2
+    x: x,
+    y: y,
+    width: width,
+    height: height
   };
 };
 
+function createObstacle(id, data, images) {
+  const cont = new PIXI.Container();
+  cont.id = id;
+
+  const rect = new PIXI.Graphics();
+  rect.beginFill(0xDC143C);
+  rect.drawRect(0, 0, data.width, data.height);
+  rect.endFill();
+
+  const obstacle = new PIXI.Sprite(images["obstacle01.png"]);
+  obstacle.width = data.width;
+  obstacle.height = data.height;
+
+  cont.addChild(rect, obstacle);
+  return cont;
+}
+
+function createCollectable(id, data, images) {
+  const newObj = new PIXI.Graphics();
+  newObj.beginFill(0x228B22);
+  newObj.drawRect(0, 0, data.width, data.height);
+  newObj.endFill();
+  newObj.x = data.x;
+  newObj.y = data.y;
+  newObj.id = id;
+  return newObj;
+}

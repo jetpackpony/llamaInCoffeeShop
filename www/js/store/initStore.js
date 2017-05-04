@@ -32,7 +32,7 @@ export default function initStore({ images }) {
       },
       obstacle: {
         ...initialState.world.obstacle,
-        height: getHeight(initialState.world.obstacle.width, images["llama01.png"])
+        height: getHeight(initialState.world.obstacle.width, images["obstacle01.png"])
       },
       collectable: {
         ...initialState.world.collectable,
