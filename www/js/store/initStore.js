@@ -36,7 +36,7 @@ export default function initStore({ images }) {
       },
       collectable: {
         ...initialState.world.collectable,
-        height: getHeight(initialState.world.collectable.width, images["llama01.png"])
+        height: getHeight(initialState.world.collectable.width, images["collectable01.png"])
       }
     }
   };

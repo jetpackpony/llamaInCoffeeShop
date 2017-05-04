@@ -73,12 +73,21 @@ function createObstacle(id, data, images) {
 }
 
 function createCollectable(id, data, images) {
-  const newObj = new PIXI.Graphics();
-  newObj.beginFill(0x228B22);
-  newObj.drawRect(0, 0, data.width, data.height);
-  newObj.endFill();
-  newObj.x = data.x;
-  newObj.y = data.y;
-  newObj.id = id;
-  return newObj;
+  const cont = new PIXI.Container();
+  cont.id = id;
+
+  if (SHOW_COLLISION_BOXES) {
+    const rect = new PIXI.Graphics();
+    rect.beginFill(0x228B22);
+    rect.drawRect(0, 0, data.width, data.height);
+    rect.endFill();
+    cont.addChild(rect);
+  }
+
+  const collectable = new PIXI.Sprite(images["collectable01.png"]);
+  collectable.width = data.width;
+  collectable.height = data.height;
+
+  cont.addChild(collectable);
+  return cont;
 }

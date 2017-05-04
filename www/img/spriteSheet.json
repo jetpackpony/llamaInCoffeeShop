@@ -1,7 +1,7 @@
 {
 	"meta": {
 		"image": "spriteSheet.png",
-		"size": {"w":525,"h":747},
+		"size": {"w":600,"h":749},
 		"scale": "1"
 	},
 	"frames": {
@@ -13,9 +13,17 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":525,"h":355},
 			"sourceSize": {"w":525,"h":355}
 		},
+		"collectable01.png":
+		{
+			"frame": {"x":0,"y":355,"w":240,"h":394},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":240,"h":394},
+			"sourceSize": {"w":240,"h":394}
+		},
 		"obstacle02.png":
 		{
-			"frame": {"x":0,"y":355,"w":184,"h":392},
+			"frame": {"x":240,"y":355,"w":184,"h":392},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":184,"h":392},
@@ -23,7 +31,7 @@
 		},
 		"llama02.png":
 		{
-			"frame": {"x":184,"y":355,"w":73,"h":109},
+			"frame": {"x":424,"y":355,"w":73,"h":109},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":73,"h":109},
@@ -31,7 +39,7 @@
 		},
 		"llama05.png":
 		{
-			"frame": {"x":257,"y":355,"w":73,"h":109},
+			"frame": {"x":424,"y":464,"w":73,"h":109},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":73,"h":109},
@@ -39,7 +47,7 @@
 		},
 		"llama01.png":
 		{
-			"frame": {"x":330,"y":355,"w":75,"h":108},
+			"frame": {"x":424,"y":573,"w":75,"h":108},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":75,"h":108},
@@ -47,7 +55,7 @@
 		},
 		"llama03.png":
 		{
-			"frame": {"x":405,"y":355,"w":75,"h":108},
+			"frame": {"x":525,"y":0,"w":75,"h":108},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":75,"h":108},
@@ -55,7 +63,7 @@
 		},
 		"llama04.png":
 		{
-			"frame": {"x":184,"y":464,"w":75,"h":108},
+			"frame": {"x":525,"y":108,"w":75,"h":108},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":75,"h":108},
@@ -63,7 +71,7 @@
 		},
 		"llama06.png":
 		{
-			"frame": {"x":259,"y":464,"w":74,"h":108},
+			"frame": {"x":525,"y":216,"w":74,"h":108},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":74,"h":108},
