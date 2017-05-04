@@ -28,15 +28,15 @@ export default function initStore({ images }) {
       ...initialState.world,
       player: {
         ...initialState.world.player,
-        height: getHeight(initialState.world.player.width, images.player.imgObject)
+        height: getHeight(initialState.world.player.width, images["llama01.png"])
       },
       obstacle: {
         ...initialState.world.obstacle,
-        height: getHeight(initialState.world.obstacle.width, images.table.imgObject)
+        height: getHeight(initialState.world.obstacle.width, images["llama01.png"])
       },
       collectable: {
         ...initialState.world.collectable,
-        height: getHeight(initialState.world.collectable.width, images.coffee.imgObject)
+        height: getHeight(initialState.world.collectable.width, images["llama01.png"])
       }
     }
   };
