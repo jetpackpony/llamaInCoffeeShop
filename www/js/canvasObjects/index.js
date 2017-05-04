@@ -5,6 +5,7 @@ import createOrUpdateWorldObjects from './WorldObjects';
 import createOrUpdateScore from './Score';
 import createOrUpdateEnergyBar from './EnergyBar';
 import createOrUpdateRestart from './Restart';
+import createOrUpdateFPSCounter from './FPSCounter';
 
 export default function createStage(root, width, height, dpr, scale) {
   let renderer = PIXI.autoDetectRenderer(width, height, {
@@ -24,20 +25,21 @@ export default function createStage(root, width, height, dpr, scale) {
 
   renderer.render(stage);
 
-  function update(state) {
-    objects = updateObjects(objects, state);
+  function update(state, fps) {
+    objects = updateObjects(objects, state, fps);
     stage.addChild(...Object.values(objects));
     renderer.render(stage);
   }
 
-  function updateObjects(objects, state) {
+  function updateObjects(objects, state, fps) {
     return {
       ground: createOrUpdateGround(objects.ground, state),
       worldObjects: createOrUpdateWorldObjects(objects.worldObjects, state),
       player: createOrUpdatePlayer(objects.player, state),
       score: createOrUpdateScore(objects.score, state),
       energyBar: createOrUpdateEnergyBar(objects.energyBar, state),
-      restart: createOrUpdateRestart(objects.restart, state)
+      restart: createOrUpdateRestart(objects.restart, state),
+      fpsCounter: createOrUpdateFPSCounter(objects.fpsCounter, fps)
     };
   }
 

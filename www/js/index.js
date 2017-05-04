@@ -27,7 +27,7 @@ const app = {
         }
 
         store.dispatch(tick(timestamp));
-        stage.update(store.getState());
+        stage.update(store.getState(), fps);
 
         requestAnimationFrame(loop);
       };
