@@ -73,5 +73,7 @@ function createObject(id, data) {
   object.height = data.height;
 
   cont.addChild(object);
+  cont.x = data.x;
+  cont.y = data.y;
   return cont;
 }
