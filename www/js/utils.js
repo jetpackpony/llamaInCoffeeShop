@@ -9,7 +9,7 @@ export const times = (num) => {
 };
 
 export const randInRange = (min, max) => {
-  return Math.floor(Math.random() * (max - min)) + min;
+  return Math.round(Math.random() * (max - min)) + min;
 };
 
 export const clipValue = curry((min, max, val) => (

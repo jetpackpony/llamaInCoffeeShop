@@ -67,7 +67,7 @@ export default function generateObstacles(world) {
       ...(shouldGenerateObjects(world.width, getLastObject(world)))
         ? generatePattern(
           world,
-          obstaclePatterns[randInRange(0, obstaclePatterns.length)],
+          obstaclePatterns[randInRange(0, obstaclePatterns.length - 1)],
           randInRange(world.minSpread, world.maxSpread)
         )
         : []
