@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import { SHOW_COLLISION_BOXES } from '../constants';
 
 export default function createOrUpdateWorldObjects(worldObjects, state) {
   return updateWorldObjects(
@@ -55,16 +56,19 @@ function createObstacle(id, data, images) {
   const cont = new PIXI.Container();
   cont.id = id;
 
-  const rect = new PIXI.Graphics();
-  rect.beginFill(0xDC143C);
-  rect.drawRect(0, 0, data.width, data.height);
-  rect.endFill();
+  if (SHOW_COLLISION_BOXES) {
+    const rect = new PIXI.Graphics();
+    rect.beginFill(0xDC143C);
+    rect.drawRect(0, 0, data.width, data.height);
+    rect.endFill();
+    cont.addChild(rect);
+  }
 
   const obstacle = new PIXI.Sprite(images["obstacle01.png"]);
   obstacle.width = data.width;
   obstacle.height = data.height;
 
-  cont.addChild(rect, obstacle);
+  cont.addChild(obstacle);
   return cont;
 }
 

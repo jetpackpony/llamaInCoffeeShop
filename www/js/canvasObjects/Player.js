@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import R from 'ramda';
+import { SHOW_COLLISION_BOXES } from '../constants';
 
 export default function createOrUpdatePlayer(player, state) {
   const data = getPlayerData(state);
@@ -9,18 +10,21 @@ export default function createOrUpdatePlayer(player, state) {
 function createPlayer(data) {
   let player = new PIXI.Container();
 
+  if (SHOW_COLLISION_BOXES) {
+    var rect = new PIXI.Graphics();
+    rect.beginFill(0x9932CC);
+    rect.drawRect(0, 0, data.width, data.height);
+    rect.endFill();
+    player.addChild(rect);
+  }
+
   var anim = new PIXI.extras.AnimatedSprite(data.images);
   anim.width = data.width;
   anim.height = data.height;
   anim.animationSpeed = 0.5;
   anim.play();
+  player.addChild(anim);
 
-  var rect = new PIXI.Graphics();
-  rect.beginFill(0x9932CC);
-  rect.drawRect(0, 0, data.width, data.height);
-  rect.endFill();
-
-  player.addChild(rect, anim);
   return player;
 }
 
