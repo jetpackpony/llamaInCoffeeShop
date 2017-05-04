@@ -4,7 +4,7 @@ import getInitialState from './initialState';
 
 import reducer from '../reducer';
 import { tick, ActionTypes } from '../actions';
-import { COLLISION_BOX_OFFSET } from '../constants';
+import { COLLISION_BOX_OFFSET, OBSTACLE_WIDTH } from '../constants';
 import { getCollisionBounds } from '../physics';
 
 const middlewares = [];
@@ -18,9 +18,27 @@ middlewares.push(logger);
 
 const getHeight = (width, image) => image.height * (width / image.width);
 
+const initPlayer = (initial, image) => {
+  const playerHeight = getHeight(initial.width, image);
+  return {
+    ...initial,
+    height: playerHeight,
+    collisionBounds: getCollisionBounds(
+      initial.width, playerHeight, COLLISION_BOX_OFFSET
+    )
+  };
+};
+
+const generateTypes = (images) => (
+  images.map((img) => ({
+    height: OBSTACLE_WIDTH,
+    width: img.width * (OBSTACLE_WIDTH / img.height),
+    image: img
+  }))
+);
+
 export default function initStore({ images }) {
   const initialState = getInitialState();
-  const playerHeight = getHeight(initialState.world.player.width, images["llama01.png"]);
   const initValue = {
     ...initialState,
     assets: {
@@ -29,19 +47,9 @@ export default function initStore({ images }) {
     },
     world: {
       ...initialState.world,
-      player: {
-        ...initialState.world.player,
-        height: playerHeight,
-        collisionBounds: getCollisionBounds(initialState.world.player.width, playerHeight, COLLISION_BOX_OFFSET)
-      },
-      obstacle: {
-        ...initialState.world.obstacle,
-        height: getHeight(initialState.world.obstacle.width, images["obstacle01.png"])
-      },
-      collectable: {
-        ...initialState.world.collectable,
-        height: getHeight(initialState.world.collectable.width, images["collectable01.png"])
-      }
+      player: initPlayer(initialState.world.player, images["llama01.png"]),
+      collectableTypes: generateTypes([ images["collectable01.png"] ]),
+      obstacleTypes: generateTypes([ images["obstacle01.png"] ]),
     }
   };
   return createStore(

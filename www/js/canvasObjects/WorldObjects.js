@@ -19,17 +19,7 @@ function updateWorldObjects(worldObjects, state) {
         canvasObj.position.set(data.x, data.y);
       } else {
         // Create new objects
-        worldObjects.addChild(
-          (obj.view === 'coffee')
-          ? createObject(
-            obj.id, data,
-            state.assets.images["collectable01.png"], 0x228B22
-          )
-          : createObject(
-            obj.id, data,
-            state.assets.images["obstacle01.png"], 0xDC143C
-          )
-        );
+        worldObjects.addChild(createObject(obj.id, data));
       }
     });
 
@@ -44,27 +34,30 @@ function updateWorldObjects(worldObjects, state) {
 };
 
 function getObjPosition(state, obj) {
-  const width = state.world.collectable.width;
-  const height = state.world.collectable.height;
+  const width = obj.objectType.width;
+  const height = obj.objectType.height;
+  const image = obj.objectType.image;
   const x = obj.body.position.x;
   const y = state.world.height - obj.body.position.y - height;
 
   return {
-    x: x,
-    y: y,
-    width: width,
-    height: height,
-    collisionBounds: obj.collisionBounds
+    x,
+    y,
+    width,
+    height,
+    collisionBounds: obj.collisionBounds,
+    image,
+    type: obj.type
   };
 };
 
-function createObject(id, data, image, color) {
+function createObject(id, data) {
   const cont = new PIXI.Container();
   cont.id = id;
 
   if (SHOW_COLLISION_BOXES) {
     var polygon = new PIXI.Graphics();
-    polygon.beginFill(color);
+    polygon.beginFill((data.type === 'obstacle') ? 0xDC143C : 0x228B22);
     polygon.drawPolygon(
       data
       .collisionBounds
@@ -75,7 +68,7 @@ function createObject(id, data, image, color) {
     cont.addChild(polygon);
   }
 
-  const object = new PIXI.Sprite(image);
+  const object = new PIXI.Sprite(data.image);
   object.width = data.width;
   object.height = data.height;
 

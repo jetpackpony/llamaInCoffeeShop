@@ -26,5 +26,5 @@ export const MAX_OBSTACLE_SPREAD = 1500;
 export const MIN_COLLECTABLE_SPREAD = 100;
 export const MAX_COLLECTABLE_SPREAD = 1000;
 
-export const SHOW_COLLISION_BOXES = true;
+export const SHOW_COLLISION_BOXES = false;
 export const COLLISION_BOX_OFFSET = 10;

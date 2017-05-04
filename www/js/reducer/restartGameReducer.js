@@ -9,8 +9,8 @@ export default (state, action) => {
       ...initialState.world,
       width: state.world.width,
       player: state.world.player,
-      obstacle: state.world.obstacle,
-      collectable: state.world.collectable
+      obstacleTypes: state.world.obstacleTypes,
+      collectableTypes: state.world.collectableTypes
     }
   };
 };

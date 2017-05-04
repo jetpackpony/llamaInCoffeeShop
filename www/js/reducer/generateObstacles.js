@@ -35,15 +35,19 @@ const shouldGenerateObjects = (worldWidth, lastObject) => {
 
 const generatePattern = (world, pattern, spread) => {
   const speedMultiplier = Math.abs(world.ground.body.velocity.x / MIN_GROUND_SPEED);
+  const obstacleType = world.obstacleTypes[0];
   return pattern.map((x) => ({
     id: `obstacle-${world.timestamp + x}`,
     type: 'obstacle',
     view: 'table',
     spread,
-    collisionBounds: getCollisionBounds(world.obstacle.width, world.obstacle.height, COLLISION_BOX_OFFSET),
+    collisionBounds: getCollisionBounds(
+      obstacleType.width, obstacleType.height, COLLISION_BOX_OFFSET
+    ),
+    objectType: obstacleType,
     body: {
       position: {
-        x: world.width + (x * world.obstacle.width * speedMultiplier),
+        x: world.width + (x * obstacleType.width * speedMultiplier),
         y: world.groundHeight
       },
       lastTick: world.timestamp
