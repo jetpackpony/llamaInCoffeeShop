@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import { SHOW_COLLISION_BOXES } from '../constants';
 
 export default function createOrUpdateWorldObjects(worldObjects, state) {
   return updateWorldObjects(
@@ -18,15 +19,7 @@ function updateWorldObjects(worldObjects, state) {
         canvasObj.position.set(data.x, data.y);
       } else {
         // Create new objects
-        const color = (obj.view === 'coffee') ? 0x228B22 : 0xDC143C;
-        const newObj = new PIXI.Graphics();
-        newObj.beginFill(color);
-        newObj.drawRect(0, 0, data.width, data.height);
-        newObj.endFill();
-        newObj.x = data.x;
-        newObj.y = data.y;
-        newObj.id = obj.id;
-        worldObjects.addChild(newObj);
+        worldObjects.addChild(createObject(obj.id, data));
       }
     });
 
@@ -41,17 +34,46 @@ function updateWorldObjects(worldObjects, state) {
 };
 
 function getObjPosition(state, obj) {
-  const width = state.world.collectable.width;
-  const height = state.world.collectable.height;
+  const width = obj.objectType.width;
+  const height = obj.objectType.height;
+  const image = obj.objectType.image;
   const x = obj.body.position.x;
   const y = state.world.height - obj.body.position.y - height;
-  const offset = 10;
 
   return {
-    x: x + offset,
-    y: y + offset,
-    width: width - offset * 2,
-    height: height - offset * 2
+    x,
+    y,
+    width,
+    height,
+    collisionBounds: obj.collisionBounds,
+    image,
+    type: obj.type
   };
 };
 
+function createObject(id, data) {
+  const cont = new PIXI.Container();
+  cont.id = id;
+
+  if (SHOW_COLLISION_BOXES) {
+    var polygon = new PIXI.Graphics();
+    polygon.beginFill((data.type === 'obstacle') ? 0xDC143C : 0x228B22);
+    polygon.drawPolygon(
+      data
+      .collisionBounds
+      .map((point) => Object.values(point))
+      .reduce((res, point) => (res.concat(point)), [])
+    );
+    polygon.endFill();
+    cont.addChild(polygon);
+  }
+
+  const object = new PIXI.Sprite(data.image);
+  object.width = data.width;
+  object.height = data.height;
+
+  cont.addChild(object);
+  cont.x = data.x;
+  cont.y = data.y;
+  return cont;
+}

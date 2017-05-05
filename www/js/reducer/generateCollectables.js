@@ -1,5 +1,7 @@
 import { curry, last } from 'ramda';
 import { randInRange } from '../utils';
+import { COLLISION_BOX_OFFSET } from '../constants';
+import { getCollisionBounds } from '../physics';
 
 const getLastObjectByType = (type, objects) => (last(objects
   .filter((el) => el.type === type)
@@ -9,11 +11,15 @@ const getLastObjectByType = (type, objects) => (last(objects
 const getLastObstacle = curry(getLastObjectByType)('obstacle');
 const getLastCollectable = curry(getLastObjectByType)('collectable');
 
-const makeObject = (spread, world) => ({
+const makeObject = (spread, world, collectableType) => ({
   id: `collectable-${world.timestamp}`,
   type: 'collectable',
   view: 'coffee',
   spread,
+  collisionBounds: getCollisionBounds(
+    collectableType.width, collectableType.height, COLLISION_BOX_OFFSET
+  ),
+  objectType: collectableType,
   body: {
     position: {
       x: world.width,
@@ -30,10 +36,10 @@ const shouldGenerateCollectable = (world) => {
   }
   const xSinceLastObstacle = world.width - lastObstacle.body.position.x;
   const isTooEarly = () => {
-    return xSinceLastObstacle <= world.collectable.width * 3;
+    return xSinceLastObstacle <= lastObstacle.width * 3;
   };
   const isTooLate = () => {
-    return xSinceLastObstacle >= lastObstacle.spread - world.collectable.width * 3;
+    return xSinceLastObstacle >= lastObstacle.spread - lastObstacle.width * 3;
   };
   if (isTooEarly() || isTooLate()) {
     return false;
@@ -52,12 +58,13 @@ const shouldGenerateCollectable = (world) => {
 
 export default function generateCollectables(world) {
   const spread = randInRange(world.minCollectableSpread, world.maxCollectableSpread);
+  const collectableType = world.collectableTypes[randInRange(0, world.collectableTypes.length - 1)];
   return {
     ...world,
     objects: [
       ...world.objects,
       ...(shouldGenerateCollectable(world))
-        ? [ makeObject(spread, world) ]
+        ? [ makeObject(spread, world, collectableType) ]
         : []
     ]
   };

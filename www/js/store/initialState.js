@@ -33,6 +33,9 @@ export default function getInitialState() {
       jumpVelocity: { x: 0, y: CONST.JUMP_VELOCITY_Y },
       newCollisions: [],
 
+      obstacleTypes: [],
+      collectableTypes: [],
+
       player: {
         body: {
           acceleration: { x: 0, y: CONST.GRAVITY },
@@ -40,6 +43,7 @@ export default function getInitialState() {
           position: { x: CONST.PLAYER_POSITION_X, y: CONST.WORLD_HEIGHT },
           lastTick: 0
         },
+        collisionBounds: [{x: 0, y:0}, {x:0, y:0}],
         height: CONST.PLAYER_WIDTH,
         width: CONST.PLAYER_WIDTH
       },
@@ -61,6 +65,8 @@ export default function getInitialState() {
         type: 'obstacle',
         view: 'table',
         colliding: false
+        collisionBounds: [{x: 0, y:0}, {x:0, y:0}],
+        objectType: obstacleType
         body: {
           position: { x: worldWidth + 1, y: groundHeight },
           lastTick: timestamp
@@ -71,21 +77,15 @@ export default function getInitialState() {
         type: 'collectable',
         view: 'coffee',
         colliding: false,
+        collisionBounds: [{x: 0, y:0}, {x:0, y:0}],
+        objectType: collectableType
         body: {
           position: { x: worldWidth + 1, y: groundHeight },
           lastTick: timestamp
         }
       }
       */
-      ],
-      obstacle: {
-        height: CONST.OBSTACLE_WIDTH,
-        width: CONST.OBSTACLE_WIDTH
-      },
-      collectable: {
-        height: CONST.OBSTACLE_WIDTH,
-        width: CONST.OBSTACLE_WIDTH
-      }
+      ]
     }
   };
 };

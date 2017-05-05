@@ -1,5 +1,7 @@
 import { randInRange } from '../utils';
 import { MIN_GROUND_SPEED } from '../constants';
+import { COLLISION_BOX_OFFSET } from '../constants';
+import { getCollisionBounds } from '../physics';
 
 const obstaclePatterns = [
   [0, 6, 7, 13],
@@ -33,19 +35,28 @@ const shouldGenerateObjects = (worldWidth, lastObject) => {
 
 const generatePattern = (world, pattern, spread) => {
   const speedMultiplier = Math.abs(world.ground.body.velocity.x / MIN_GROUND_SPEED);
-  return pattern.map((x) => ({
-    id: `obstacle-${world.timestamp + x}`,
-    type: 'obstacle',
-    view: 'table',
-    spread,
-    body: {
-      position: {
-        x: world.width + (x * world.obstacle.width * speedMultiplier),
-        y: world.groundHeight
-      },
-      lastTick: world.timestamp
-    }
-  }));
+  const typesNum = world.obstacleTypes.length;
+  return pattern.map((x) => {
+    const obstacleType = world.obstacleTypes[randInRange(0, typesNum - 1)];
+    return {
+      id: `obstacle-${world.timestamp + x}`,
+      type: 'obstacle',
+      view: 'table',
+      spread,
+      collisionBounds: getCollisionBounds(
+        obstacleType.width, obstacleType.height, COLLISION_BOX_OFFSET
+      ),
+      objectType: obstacleType,
+      body: {
+        position: {
+          x: world.width + (x * obstacleType.width * speedMultiplier),
+          y: world.groundHeight
+        },
+        lastTick: world.timestamp
+      }
+
+    };
+  });
 };
 
 export default function generateObstacles(world) {
@@ -56,7 +67,7 @@ export default function generateObstacles(world) {
       ...(shouldGenerateObjects(world.width, getLastObject(world)))
         ? generatePattern(
           world,
-          obstaclePatterns[randInRange(0, obstaclePatterns.length)],
+          obstaclePatterns[randInRange(0, obstaclePatterns.length - 1)],
           randInRange(world.minSpread, world.maxSpread)
         )
         : []
