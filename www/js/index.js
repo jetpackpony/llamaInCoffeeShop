@@ -1,53 +1,73 @@
+import React, { Component } from 'react';
+import { Stage, render } from 'react-pixi';
 import { resizeCanvas, restartGame, tick, jump } from './actions';
 import initGame from './initGame';
 
-import createStage from './canvasObjects';
+class App extends Component {
+  constructor(...args) {
+    super(...args);
+    this.loop = this.loop.bind(this);
+    this.state = {
+      storeState: null,
+      loading: true
+    };
+    this.store = null;
+  }
 
-let frameCount = 0,
-  lastCount = 0,
-  fps = 0;
+  loop(timestamp) {
+    this.store.dispatch(tick(timestamp));
+    this.setState({
+      storeState: this.store.getState()
+    });
 
-const app = {
-  init() {
+    requestAnimationFrame(this.loop);
+  }
+
+  componentDidMount() {
     initGame().then((store) => {
       const width = window.innerWidth;
       const height = window.innerHeight;
       const dpr = window.devicePixelRatio;
       store.dispatch(resizeCanvas(width, height, dpr));
+      this.store = store;
 
-      let stage = createStage(document.getElementById('root'), width, height, dpr, store.getState().assets.scale);
-
-      // Game loop
-      const loop = (timestamp) => {
-        frameCount++;
-        if (timestamp - lastCount > 500) {
-          fps = frameCount * 2;
-          frameCount = 0;
-          lastCount = timestamp;
-        }
-
-        store.dispatch(tick(timestamp));
-        stage.update(store.getState(), fps);
-
-        requestAnimationFrame(loop);
-      };
-      requestAnimationFrame(loop);
-
-      // Add listener for restart game
-      stage.canvas.addEventListener('touchstart', (e) => {
-        const { clientX, clientY } = e.touches[0];
-        if (clientX > width - 50 && clientY < 50) {
-          e.stopPropagation();
-          store.dispatch(restartGame());
-        }
-      });
-
-      // Add event listener for jump
-      stage.canvas.addEventListener('touchstart', () => {
-        store.dispatch(jump());
+      this.setState({
+        storeState: store.getState(),
+        loading: false
       })
+
+      requestAnimationFrame(this.loop);
     });
+  }
+
+  render() {
+    const store = this.state.storeState;
+    return (
+      <div>
+        {(this.state.loading)
+            ? <div>Loading...</div>
+            : (
+              <Stage
+                width={store.assets.sceneWidth}
+                height={store.assets.sceneHeight}
+                resolution={store.assets.dpr}
+                backgroundColor={0xFFFFFF}
+                style={{
+                  position: "absolute",
+                  display: "block",
+                  width: `${store.assets.sceneWidth}px`,
+                  height: `${store.assets.sceneHeight}px`
+                }}
+              >
+              </Stage>
+            )
+        }
+      </div>
+    );
   }
 };
 
-app.init();
+render(
+  React.createElement(App),
+  document.getElementById('root')
+);
