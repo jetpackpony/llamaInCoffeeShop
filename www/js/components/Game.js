@@ -17,6 +17,8 @@ const Game = ({ width, height, resolution, onTouch }) => {
       height={height}
       resolution={resolution}
       backgroundColor={0xFFFFFF}
+      touchstart={onTouch}
+      interactive={true}
       style={{
         position: "absolute",
         display: "block",
