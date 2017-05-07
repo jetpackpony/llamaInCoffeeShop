@@ -1,47 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Image, Group, Rect } from 'react-konva';
+import { DisplayObjectContainer, Sprite } from 'react-pixi';
 
-const Player = ({ x, y, image, height, width }) => {
-  const offset = 10;
+const Player = ({ x, y, frame, height, width }) => {
   return (
-    <Group>
-      <Rect
-        x={x + offset}
-        y={y + offset}
-        width={width - offset*2}
-        height={height - offset*2}
-        fill="purple"
+    <DisplayObjectContainer x={x} y={y}>
+      <Sprite
+        texture={frame}
       />
-      {/*
-      <Image
-        x={x}
-        y={y}
-        width={width}
-        height={height}
-        image={image}
-      />
-        */}
-    </Group>
+    </DisplayObjectContainer>
   );
 };
 
 const mapStateToProps = (state) => {
   const player = state.world.player;
-  const height = player.height;
-  const width = player.width;
-  const image = state.assets.images.player.imgObject;
-
-  // invert the y coordinate
+  const { width, height } = player;
+  const x = player.body.position.x;
   const y = state.world.height - player.body.position.y - height;
-
   return {
-    x: player.body.position.x,
+    x: x,
     y: y,
-    image,
-    height,
-    width
-  };
+    width: width,
+    height: height,
+    frame: state.assets.images['llama01.png']
+  }
 };
 
 export default connect(mapStateToProps)(Player);
