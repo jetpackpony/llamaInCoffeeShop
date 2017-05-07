@@ -45,7 +45,9 @@ export default function getInitialState() {
         },
         collisionBounds: [{x: 0, y:0}, {x:0, y:0}],
         height: CONST.PLAYER_WIDTH,
-        width: CONST.PLAYER_WIDTH
+        width: CONST.PLAYER_WIDTH,
+        currentAnimation: 'running',
+        currentFrame:  0
       },
       ground: {
         body: {
