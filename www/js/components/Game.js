@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layer, Stage } from 'react-konva';
+import { Stage } from 'react-pixi';
 import { connect } from 'react-redux';
 
 import Score from './Score';
@@ -10,8 +10,22 @@ import { jump } from '../actions';
 import EnergyBar from './EnergyBar';
 import Restart from './Restart';
 
-const Game = ({ width, height, scale, onTouch }) => {
+const Game = ({ width, height, resolution, onTouch }) => {
   return (
+    <Stage
+      width={width}
+      height={height}
+      resolution={resolution}
+      backgroundColor={0xFFFFFF}
+      style={{
+        position: "absolute",
+        display: "block",
+        width: `${width}px`,
+        height: `${height}px`
+      }}
+    >
+      <Player/>
+    {/*
     <Stage width={width} height={height} ontouchstart={onTouch}>
       <Layer scaleX={scale} scaleY={scale}>
         <Score/>
@@ -22,6 +36,8 @@ const Game = ({ width, height, scale, onTouch }) => {
         <Restart/>
       </Layer>
     </Stage>
+    */}
+    </Stage>
   );
 };
 
@@ -29,7 +45,7 @@ const mapStateToProps = (state) => {
   return {
     width: state.assets.sceneWidth,
     height: state.assets.sceneHeight,
-    scale: state.assets.scale
+    resolution: state.assets.dpr
   };
 };
 

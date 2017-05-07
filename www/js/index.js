@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
-import { Stage, render } from 'react-pixi';
-import { resizeCanvas, restartGame, tick, jump } from './actions';
+import ReactPIXI from 'react-pixi';
+import { Provider } from 'react-redux';
+
+import { resizeCanvas, tick } from './actions';
 import initGame from './initGame';
+import Game from './components/Game';
 
 class App extends Component {
   constructor(...args) {
     super(...args);
-    this.loop = this.loop.bind(this);
     this.state = {
-      storeState: null,
-      loading: true
+      store: null,
+      isLoading: true
     };
-    this.store = null;
+    this.loop = this.loop.bind(this);
   }
 
   loop(timestamp) {
-    this.store.dispatch(tick(timestamp));
-    this.setState({
-      storeState: this.store.getState()
-    });
-
+    this.state.store.dispatch(tick(timestamp));
     requestAnimationFrame(this.loop);
   }
 
@@ -29,45 +27,27 @@ class App extends Component {
       const height = window.innerHeight;
       const dpr = window.devicePixelRatio;
       store.dispatch(resizeCanvas(width, height, dpr));
-      this.store = store;
 
       this.setState({
-        storeState: store.getState(),
-        loading: false
-      })
+        store,
+        isLoading: false
+      });
 
       requestAnimationFrame(this.loop);
     });
   }
 
   render() {
-    const store = this.state.storeState;
-    return (
-      <div>
-        {(this.state.loading)
-            ? <div>Loading...</div>
-            : (
-              <Stage
-                width={store.assets.sceneWidth}
-                height={store.assets.sceneHeight}
-                resolution={store.assets.dpr}
-                backgroundColor={0xFFFFFF}
-                style={{
-                  position: "absolute",
-                  display: "block",
-                  width: `${store.assets.sceneWidth}px`,
-                  height: `${store.assets.sceneHeight}px`
-                }}
-              >
-              </Stage>
-            )
-        }
-      </div>
-    );
+    if (this.state.isLoading) {
+      return <div>Loading...</div>;
+    } else {
+      return (
+        <Provider store={this.state.store}>
+          <Game/>
+        </Provider>
+      );
+    }
   }
 };
 
-render(
-  React.createElement(App),
-  document.getElementById('root')
-);
+ReactPIXI.render(React.createElement(App), document.getElementById('root'));
