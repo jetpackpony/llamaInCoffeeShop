@@ -26,6 +26,7 @@ const Game = ({ width, height, resolution, onTouch }) => {
         height: `${height}px`
       }}
     >
+      <Ground/>
       <Player/>
     {/*
     <Stage width={width} height={height} ontouchstart={onTouch}>

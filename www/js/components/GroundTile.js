@@ -1,38 +1,22 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Group, Image, Rect } from 'react-konva';
+import { DisplayObjectContainer, Graphics } from 'react-pixi';
 
-const GroundTile = ({ index, tileWidth, tileHeight, image }) => {
-  return (
-    <Rect
-      x={index * tileWidth}
-      y={0}
-      width={tileWidth}
-      height={tileHeight}
-      fill="grey"
-      stroke="black"
-      strokeWidth="2"
-    />
-  );
-/*
-    <Image
-      x={index * tileWidth}
-      y={0}
-      image={image}
-      width={tileWidth}
-      height={tileHeight}
-    />
-    */
-};
-
-const mapStateToProps = (state) => {
-  const { tileWidth, tileHeight } = state.world.ground;
-  const image = state.assets.images.groundTile.imgObject;
-  return {
-    tileWidth,
-    tileHeight: tileHeight + state.world.groundOffset,
-    image
-  };
-};
-
-export default connect(mapStateToProps)(GroundTile);
+export default class GroundTile extends Component {
+  componentDidMount() {
+    const graphics = this.refs.rect;
+    graphics.lineStyle(2, 0x000000, 1);
+    graphics.beginFill(0xA9A9A9, 1);
+    graphics.drawRect(0, 0, this.props.width, this.props.height);
+  }
+  render() {
+    return (
+      <Graphics
+        ref='rect'
+        x={this.props.index * this.props.width}
+        y={0}
+        width={this.props.width}
+        height={this.props.height}
+      />
+    );
+  }
+}
