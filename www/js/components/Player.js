@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
 import R from 'ramda';
 import { connect } from 'react-redux';
 import { DisplayObjectContainer, Sprite } from 'react-pixi';
 import AnimatedSprite from './pixi/AnimatedSprite';
 import ManualAnimatedSprite from './pixi/ManualAnimatedSprite';
+import { SHOW_COLLISION_BOXES } from '../constants';
+import CollisionBox from './CollisionBox';
 
 const Player = ({
   x, y, height, width,
   frames,
-  currentAnimation, currentFrame
+  currentAnimation, currentFrame,
+  showCollisionBox, collisionBounds
 }) => {
   return (
     <DisplayObjectContainer x={x} y={y}>
+      {
+        (showCollisionBox)
+          ? <CollisionBox bounds={collisionBounds} color={0x9932CC} />
+          : null
+      }
       <AnimatedSprite
         textures={frames.running}
         animationSpeed={0.5}
@@ -45,7 +53,9 @@ const mapStateToProps = (state) => {
     height: height,
     frames,
     currentAnimation: player.currentAnimation,
-    currentFrame: player.currentFrame
+    currentFrame: player.currentFrame,
+    showCollisionBox: SHOW_COLLISION_BOXES,
+    collisionBounds: player.collisionBounds
   }
 };
 
