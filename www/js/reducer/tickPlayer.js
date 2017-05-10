@@ -9,6 +9,11 @@ export default function tickPlayer(world) {
     newBody.position.y = world.groundHeight;
   }
 
+  let animation = world.player.currentAnimation;
+  if (newBody.position.y <= world.groundHeight) {
+    animation = 'running';
+  }
+
   return {
     ...world,
     player: {
@@ -18,7 +23,8 @@ export default function tickPlayer(world) {
         ...newBody,
         lastTick: world.timestamp
       },
-      animation: (world.player.currentAnimation === 'jumping') ? updateAnimation(world.player.animation, world.timestamp) : world.player.animation
+      currentAnimation: animation,
+      animation: (animation === 'jumping') ? updateAnimation(world.player.animation, world.timestamp) : world.player.animation
     }
   };
 };
