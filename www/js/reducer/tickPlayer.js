@@ -17,7 +17,18 @@ export default function tickPlayer(world) {
         ...world.player.body,
         ...newBody,
         lastTick: world.timestamp
-      }
+      },
+      animation: (world.player.currentAnimation === 'jumping') ? updateAnimation(world.player.animation, world.timestamp) : world.player.animation
     }
+  };
+};
+
+const updateAnimation = (animation, time) => {
+  const timePerFrame = Math.ceil(animation.duration / animation.totalFrames);
+  const framesSinceStart = Math.floor((time - animation.start) / timePerFrame);
+  const newFrame = framesSinceStart % animation.totalFrames;
+  return {
+    ...animation,
+    currentFrame: newFrame
   };
 };

@@ -19,7 +19,12 @@ export default (state, action) => {
       player: {
         ...state.world.player,
         currentAnimation: 'jumping',
-        currentFrame: 0,
+        animation: {
+          start: state.world.timestamp,
+          duration: 200,
+          totalFrames: 6,
+          currentFrame: 0
+        },
         body: {
           ...state.world.player.body,
           velocity: state.world.jumpVelocity

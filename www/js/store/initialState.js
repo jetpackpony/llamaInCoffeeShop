@@ -47,7 +47,12 @@ export default function getInitialState() {
         height: CONST.PLAYER_WIDTH,
         width: CONST.PLAYER_WIDTH,
         currentAnimation: 'running',
-        currentFrame:  0
+        animation: {
+          start: 0,
+          duration: 200,
+          totalFrames: 6,
+          currentFrame: 0
+        }
       },
       ground: {
         body: {

@@ -10,7 +10,7 @@ import CollisionBox from './CollisionBox';
 const Player = ({
   x, y, height, width,
   frames,
-  currentAnimation, currentFrame,
+  currentAnimation, animation,
   showCollisionBox, collisionBounds
 }) => {
   return (
@@ -28,7 +28,7 @@ const Player = ({
       />
       <ManualAnimatedSprite
         textures={frames.jumping}
-        currentFrame={currentFrame}
+        currentFrame={animation.currentFrame}
         visible={(currentAnimation === 'jumping')}
       />
     </DisplayObjectContainer>
@@ -53,7 +53,7 @@ const mapStateToProps = (state) => {
     height: height,
     frames,
     currentAnimation: player.currentAnimation,
-    currentFrame: player.currentFrame,
+    animation: player.animation,
     showCollisionBox: SHOW_COLLISION_BOXES,
     collisionBounds: player.collisionBounds
   }
