@@ -1,50 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Group, Image, Rect } from 'react-konva';
+import { Sprite, DisplayObjectContainer } from 'react-pixi';
+import CollisionBox from './CollisionBox';
 
-const WorldObject = ({ object, images, width, height, worldHeight }) => {
-  //const image = images[object.view].imgObject;
-  const color = (object.view === 'coffee') ? 'green' : 'red';
-  const x = object.body.position.x;
-  const y = worldHeight - object.body.position.y - height;
-  const offset = 10;
+const WorldObject = ({ obj, worldHeight, showCollisionBox }) => {
   return (
-    <Group>
-      <Rect
-        x={x + offset}
-        y={y + offset}
-        width={width - offset*2}
-        height={height - offset*2}
-        fill={color}
-      />
+    <DisplayObjectContainer
+      x={obj.body.position.x}
+      y={worldHeight - obj.body.position.y - obj.objectType.height}
+    >
       {
-
-/*
- *
-      <Image
-        x={x}
-        y={y}
-        width={width}
-        height={height}
-        image={image}
-      />
-      */
+        (showCollisionBox)
+          ? (
+            <CollisionBox
+              bounds={obj.collisionBounds}
+              color={(obj.type === 'obstacle') ? 0xDC143C : 0x228B22}
+            />
+          )
+          : null
       }
-    </Group>
+      <Sprite
+        texture={obj.objectType.image}
+        width={obj.objectType.width}
+        height={obj.objectType.height}
+      />
+    </DisplayObjectContainer>
   );
 };
 
-const mapStateToProps = (state) => {
-  const images = state.assets.images;
-  const width = state.world.collectable.width;
-  const height = state.world.collectable.height;
-  const worldHeight = state.world.height;
-  return {
-    images,
-    worldHeight,
-    width,
-    height
-  };
-};
-
-export default connect(mapStateToProps)(WorldObject);
+export default WorldObject;

@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Group, Image, Text } from 'react-konva';
+import { DisplayObjectContainer } from 'react-pixi';
 import WorldObject from './WorldObject';
+import { SHOW_COLLISION_BOXES } from '../constants';
 
-const WorldObjects = ({ objects }) => {
+const WorldObjects = ({ objects, worldHeight, showCollisionBox }) => {
   return (
-    <Group>
+    <DisplayObjectContainer>
       {objects.map((obj) => (
-        <WorldObject key={obj.id} object={obj}/>
+        <WorldObject
+          key={obj.id}
+          obj={obj}
+          worldHeight={worldHeight}
+          showCollisionBox={showCollisionBox}
+        />
       ))
       }
-    </Group>
+    </DisplayObjectContainer>
   );
 };
 
@@ -21,7 +27,9 @@ const mapStateToProps = (state) => {
     .objects
     .filter((obj) => obj.type === 'obstacle' || obj.type === 'collectable');
   return {
-    objects
+    objects,
+    worldHeight: state.world.height,
+    showCollisionBox: SHOW_COLLISION_BOXES
   };
 };
 
