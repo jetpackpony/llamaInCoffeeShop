@@ -1,27 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Group, Rect } from 'react-konva';
+import { DisplayObjectContainer, Graphics } from 'react-pixi';
 
-const EnergyBar = ({ x, y, width, height, energy }) => {
-  return (
-    <Group>
-      <Rect
-        x={x}
-        y={y}
-        width={width}
-        height={height}
-        stroke="brown"
-        strokeWidth="3"
-      />
-      <Rect
-        x={x}
-        y={y}
-        width={energy / 100 * width}
-        height={height}
-        fill="brown"
-      />
-    </Group>
-  );
+class EnergyBar extends Component {
+  componentDidMount() {
+    const outline = this.refs.outline;
+    outline.lineStyle(3, 0x800000, 1);
+    outline.drawRect(0, 0, this.props.width, this.props.height);
+
+    const bar = this.refs.bar;
+    bar.beginFill(0x800000);
+    bar.drawRect(0, 0, this.props.barWidth, this.props.height);
+    bar.endFill();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.barWidth !== this.props.barWidth) {
+      this.refs.bar.width = this.props.barWidth;
+    }
+  }
+
+  render() {
+    const { x, y } = this.props;
+    return (
+      <DisplayObjectContainer x={x} y={y}>
+        <Graphics ref="outline"/>
+        <Graphics ref="bar"/>
+      </DisplayObjectContainer>
+    );
+  }
 };
 
 const mapStateToProps = (state) => {
@@ -30,9 +37,9 @@ const mapStateToProps = (state) => {
   return {
     x: (sceneWidth - width) / 2,
     y: 10,
-    width: width,
+    width,
     height: 30,
-    energy: state.world.score.energy
+    barWidth: state.world.score.energy / 100 * width
   };
 };
 
