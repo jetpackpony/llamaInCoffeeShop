@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Text, Group } from 'react-konva';
+import { Text } from 'react-pixi';
 
 const Score = ({ steps }) => (
   <Text
     x="10" y="10"
     text={`${steps} m`}
-    fontSize="20"
+    style={{fontSize: 20, fill: "black"}}
   />
 );
 
