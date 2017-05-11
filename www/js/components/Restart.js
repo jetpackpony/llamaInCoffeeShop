@@ -1,38 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Group, Text } from 'react-konva';
+import { Text, DisplayObjectContainer } from 'react-pixi';
 import { restartGame } from '../actions';
 
-class Restart extends Component {
-  constructor(...args) {
-    super(...args);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    this.props.restartGame();
-  }
-
-  render() {
-    return (
-      <Text
-        x={this.props.x}
-        y="10"
-        fontSize="70"
-        text="⟲"
-        fill="black"
-        ontouchstart={this.handleClick}
-      />
-    );
-  }
+const Restart = ({ x }) => {
+  return (
+    <Text
+      x={x}
+      y={10}
+      style={{ fontSize: 50, fill: "black" }}
+      text="⟲"
+    />
+  );
 };
 
 const mapStateToProps = (state) => {
   return {
-    x: state.world.width - 100,
+    x: state.world.width - 50,
   };
 };
 
-const mapDispatchToProps = { restartGame };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Restart);
+export default connect(mapStateToProps)(Restart);

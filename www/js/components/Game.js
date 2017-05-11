@@ -6,7 +6,7 @@ import Score from './Score';
 import Player from './Player';
 import Ground from './Ground';
 import WorldObjects from './WorldObjects';
-import { jump } from '../actions';
+import { jump, restartGame } from '../actions';
 import EnergyBar from './EnergyBar';
 import Restart from './Restart';
 
@@ -17,9 +17,9 @@ const Game = ({ width, height, resolution, scale, onTouch }) => {
       height={height}
       resolution={resolution}
       backgroundColor={0xFFFFFF}
-      touchstart={onTouch}
       interactive={true}
       scale={scale}
+      touchstart={onTouch}
       style={{
         position: "absolute",
         display: "block",
@@ -32,35 +32,32 @@ const Game = ({ width, height, resolution, scale, onTouch }) => {
       <Player/>
       <Score/>
       <EnergyBar/>
-    {/*
-    <Stage width={width} height={height} ontouchstart={onTouch}>
-      <Layer scaleX={scale} scaleY={scale}>
-        <Score/>
-        <Ground/>
-        <WorldObjects/>
-        <Player/>
-        <EnergyBar/>
-        <Restart/>
-      </Layer>
-    </Stage>
-    */}
+      <Restart/>
     </Stage>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    width: state.assets.sceneWidth,
-    height: state.assets.sceneHeight,
-    resolution: state.assets.dpr,
-    scale: state.assets.scale
-  };
-};
+const mapStateToProps = (state) => ({
+  width: state.assets.sceneWidth,
+  height: state.assets.sceneHeight,
+  resolution: state.assets.dpr,
+  scale: state.assets.scale
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onTouch: () => dispatch(jump())
+const mapDispatchToProps = { jump, restartGame };
+
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+  ...ownProps,
+  ...stateProps,
+  ...dispatchProps,
+  onTouch(e) {
+    const { x, y } = e.data.global;
+    if (x > stateProps.width - 50 && y < 50) {
+      dispatchProps.restartGame();
+    } else {
+      dispatchProps.jump();
+    }
   }
-};
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Game);
