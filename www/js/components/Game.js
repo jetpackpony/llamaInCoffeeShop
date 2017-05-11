@@ -10,7 +10,7 @@ import { jump } from '../actions';
 import EnergyBar from './EnergyBar';
 import Restart from './Restart';
 
-const Game = ({ width, height, resolution, onTouch }) => {
+const Game = ({ width, height, resolution, scale, onTouch }) => {
   return (
     <Stage
       width={width}
@@ -19,6 +19,7 @@ const Game = ({ width, height, resolution, onTouch }) => {
       backgroundColor={0xFFFFFF}
       touchstart={onTouch}
       interactive={true}
+      scale={scale}
       style={{
         position: "absolute",
         display: "block",
@@ -49,7 +50,8 @@ const mapStateToProps = (state) => {
   return {
     width: state.assets.sceneWidth,
     height: state.assets.sceneHeight,
-    resolution: state.assets.dpr
+    resolution: state.assets.dpr,
+    scale: state.assets.scale
   };
 };
 
