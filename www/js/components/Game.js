@@ -3,6 +3,7 @@ import { Stage } from 'react-pixi';
 import { connect } from 'react-redux';
 
 import Score from './Score';
+import FPSCounter from './FPSCounter';
 import Player from './Player';
 import Ground from './Ground';
 import WorldObjects from './WorldObjects';
@@ -31,6 +32,7 @@ const Game = ({ width, height, resolution, scale, onTouch }) => {
       <WorldObjects/>
       <Player/>
       <Score/>
+      <FPSCounter/>
       <EnergyBar/>
       <Restart/>
     </Stage>

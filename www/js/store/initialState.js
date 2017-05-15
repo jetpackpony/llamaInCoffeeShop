@@ -9,6 +9,11 @@ export default function getInitialState() {
       scale: 1,
       dpr: 1
     },
+    fps: {
+      lastTick: 0,
+      frameRate: 0,
+      count: 0
+    },
 
     world: {
       gameState: 'playing',
