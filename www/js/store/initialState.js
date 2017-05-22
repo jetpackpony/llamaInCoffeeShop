@@ -9,6 +9,11 @@ export default function getInitialState() {
       scale: 1,
       dpr: 1
     },
+    fps: {
+      lastTick: 0,
+      frameRate: 0,
+      count: 0
+    },
 
     world: {
       gameState: 'playing',
@@ -45,7 +50,14 @@ export default function getInitialState() {
         },
         collisionBounds: [{x: 0, y:0}, {x:0, y:0}],
         height: CONST.PLAYER_WIDTH,
-        width: CONST.PLAYER_WIDTH
+        width: CONST.PLAYER_WIDTH,
+        currentAnimation: 'running',
+        animation: {
+          start: 0,
+          duration: 200,
+          totalFrames: 6,
+          currentFrame: 0
+        }
       },
       ground: {
         body: {

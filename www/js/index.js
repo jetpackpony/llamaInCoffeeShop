@@ -1,53 +1,53 @@
-import { resizeCanvas, restartGame, tick, jump } from './actions';
+import React, { Component } from 'react';
+import ReactPIXI from 'react-pixi';
+import { Provider } from 'react-redux';
+
+import { resizeCanvas, tick } from './actions';
 import initGame from './initGame';
+import Game from './components/Game';
 
-import createStage from './canvasObjects';
+class App extends Component {
+  constructor(...args) {
+    super(...args);
+    this.state = {
+      store: null,
+      isLoading: true
+    };
+    this.loop = this.loop.bind(this);
+  }
 
-let frameCount = 0,
-  lastCount = 0,
-  fps = 0;
+  loop(timestamp) {
+    this.state.store.dispatch(tick(timestamp));
+    requestAnimationFrame(this.loop);
+  }
 
-const app = {
-  init() {
+  componentDidMount() {
     initGame().then((store) => {
       const width = window.innerWidth;
       const height = window.innerHeight;
       const dpr = window.devicePixelRatio;
       store.dispatch(resizeCanvas(width, height, dpr));
 
-      let stage = createStage(document.getElementById('root'), width, height, dpr, store.getState().assets.scale);
-
-      // Game loop
-      const loop = (timestamp) => {
-        frameCount++;
-        if (timestamp - lastCount > 500) {
-          fps = frameCount * 2;
-          frameCount = 0;
-          lastCount = timestamp;
-        }
-
-        store.dispatch(tick(timestamp));
-        stage.update(store.getState(), fps);
-
-        requestAnimationFrame(loop);
-      };
-      requestAnimationFrame(loop);
-
-      // Add listener for restart game
-      stage.canvas.addEventListener('touchstart', (e) => {
-        const { clientX, clientY } = e.touches[0];
-        if (clientX > width - 50 && clientY < 50) {
-          e.stopPropagation();
-          store.dispatch(restartGame());
-        }
+      this.setState({
+        store,
+        isLoading: false
       });
 
-      // Add event listener for jump
-      stage.canvas.addEventListener('touchstart', () => {
-        store.dispatch(jump());
-      })
+      requestAnimationFrame(this.loop);
     });
+  }
+
+  render() {
+    if (this.state.isLoading) {
+      return <div>Loading...</div>;
+    } else {
+      return (
+        <Provider store={this.state.store}>
+          <Game/>
+        </Provider>
+      );
+    }
   }
 };
 
-app.init();
+ReactPIXI.render(React.createElement(App), document.getElementById('root'));
