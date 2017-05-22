@@ -9,6 +9,7 @@ export default (state, action) => {
       ...initialState.world,
       width: state.world.width,
       player: state.world.player,
+      ground: state.world.ground,
       obstacleTypes: state.world.obstacleTypes,
       collectableTypes: state.world.collectableTypes
     }

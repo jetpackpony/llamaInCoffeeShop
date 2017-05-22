@@ -10,7 +10,7 @@ export const JUMP_MIN_HEIGHT = 0.3; // multiplier for player height
 export const WORLD_HEIGHT = 500;
 export const GROUND_HEIGHT = 150;
 
-export const GROUND_TILE_WIDTH = 100;
+export const GROUND_TILE_WIDTH = 50;
 
 export const PLAYER_WIDTH = 100;
 export const PLAYER_POSITION_X = 50;

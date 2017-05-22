@@ -37,6 +37,13 @@ const generateTypes = (images) => (
   }))
 );
 
+const initGround = (ground, image) => {
+  return {
+    ...ground,
+    tileHeight: getHeight(ground.tileWidth, image)
+  };
+};
+
 export default function initStore({ images }) {
   const initialState = getInitialState();
   const initValue = {
@@ -48,6 +55,7 @@ export default function initStore({ images }) {
     world: {
       ...initialState.world,
       player: initPlayer(initialState.world.player, images["llama01.png"]),
+      ground: initGround(initialState.world.ground, images['floorTile.png']),
       collectableTypes: generateTypes([
         images["collectable01.png"],
         images["collectable02.png"],

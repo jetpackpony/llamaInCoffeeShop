@@ -5,13 +5,14 @@ import { times } from '../utils';
 
 import GroundTile from './GroundTile';
 
-const Ground = ({ x, y, tileWidth, tileHeight, numTiles }) => {
+const Ground = ({ x, y, tileWidth, tileHeight, numTiles, tileImage }) => {
   const tiles = times(numTiles).map((i) => (
     <GroundTile
       key={i}
       index={i}
       width={tileWidth}
       height={tileHeight}
+      image={tileImage}
     />
   ));
 
@@ -31,8 +32,9 @@ const mapStateToProps = (state) => {
     x,
     y: state.world.height - y - state.world.groundOffset,
     tileWidth,
-    tileHeight: tileHeight + state.world.groundOffset,
-    numTiles
+    tileHeight,
+    numTiles,
+    tileImage: state.assets.images['floorTile.png']
   };
 };
 
