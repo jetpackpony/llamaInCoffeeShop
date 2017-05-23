@@ -33,7 +33,7 @@ export default function getInitialState() {
       width: 0,
       height: CONST.WORLD_HEIGHT,
       groundHeight: CONST.GROUND_HEIGHT,
-      groundOffset: 30,
+      groundOffset: 140,
       worldSpeed: CONST.MIN_GROUND_SPEED,
       jumpVelocity: { x: 0, y: CONST.JUMP_VELOCITY_Y },
       newCollisions: [],
