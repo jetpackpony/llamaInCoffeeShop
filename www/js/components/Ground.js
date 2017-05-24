@@ -1,41 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { DisplayObjectContainer } from 'react-pixi';
-import { times } from '../utils';
+import TilingSprite from './pixi/TilingSprite';
 
-import GroundTile from './GroundTile';
-
-const Ground = ({ x, y, tileWidth, tileHeight, numTiles, tileImage }) => {
-  const tiles = times(numTiles).map((i) => (
-    <GroundTile
-      key={i}
-      index={i}
-      width={tileWidth}
-      height={tileHeight}
-      image={tileImage}
-    />
-  ));
-
-  return (
-    <DisplayObjectContainer x={x} y={y}>
-      {tiles}
-    </DisplayObjectContainer>
-  );
-};
-
-const mapStateToProps = (state) => {
-  const { x, y } = state.world.ground.body.position;
-  const { tileWidth, tileHeight } = state.world.ground;
-  const worldWidth = state.world.width;
-  const numTiles = Math.ceil(worldWidth / tileWidth) + 1;
-  return {
-    x,
-    y: -1 * state.world.groundOffset,
-    tileWidth,
-    tileHeight,
-    numTiles,
-    tileImage: state.assets.images['floorTile.png']
-  };
-};
-
-export default connect(mapStateToProps)(Ground);
+export default connect((state) => ({
+  x: state.world.ground.body.position.x,
+  y: 0,
+  width: state.world.width + state.world.ground.tileWidth,
+  height: state.world.height,
+  texture: state.assets.images['floorTile.png']
+}))(TilingSprite);
