@@ -40,7 +40,8 @@ const generateTypes = (images) => (
 const initGround = (ground, image) => {
   return {
     ...ground,
-    tileHeight: getHeight(ground.tileWidth, image)
+    tileHeight: image.height,
+    tileWidth: image.width
   };
 };
 

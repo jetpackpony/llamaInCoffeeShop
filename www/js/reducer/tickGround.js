@@ -2,13 +2,12 @@ import R from 'ramda';
 import { clipValue } from  '../utils';
 import { calcVelocity, calcPosition, updateBody } from '../physics';
 import {
-  MIN_GROUND_SPEED, MAX_GROUND_SPEED,
-  GROUND_TILE_WIDTH, GROUND_ACCELERATION
+  MIN_GROUND_SPEED, MAX_GROUND_SPEED, GROUND_ACCELERATION
 } from '../constants';
 
-const clipXPosition = (oldPos) => (
-  oldPos % GROUND_TILE_WIDTH
-);
+const clipXPosition = R.curry((tileWidth, oldPos) => (
+  oldPos % tileWidth
+));
 const clipXVelocity = (oldVel) => (
   clipValue(MIN_GROUND_SPEED, MAX_GROUND_SPEED, Math.abs(oldVel)) * -1
 );
@@ -27,7 +26,7 @@ export default (world) => {
     ground: {
       body: R.compose(
         R.evolve({
-          position: { x: clipXPosition },
+          position: { x: clipXPosition(world.ground.tileWidth) },
           velocity: { x: clipXVelocity },
           acceleration: { x: calcXAcceleration(timeDiff, world.score.energy) },
           prevPositionX: () => world.ground.body.position.x,
