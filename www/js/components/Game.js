@@ -6,6 +6,7 @@ import Score from './Score';
 import FPSCounter from './FPSCounter';
 import Player from './Player';
 import Ground from './Ground';
+import Background from './Background';
 import WorldObjects from './WorldObjects';
 import { jump, restartGame } from '../actions';
 import EnergyBar from './EnergyBar';
@@ -29,6 +30,7 @@ const Game = ({ width, height, resolution, scale, onTouch }) => {
       }}
     >
       <Ground/>
+      <Background/>
       <WorldObjects/>
       <Player/>
       <Score/>
