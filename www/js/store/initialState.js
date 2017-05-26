@@ -40,6 +40,7 @@ export default function getInitialState() {
 
       obstacleTypes: [],
       collectableTypes: [],
+      backgroundTypes: [],
 
       player: {
         body: {
@@ -97,7 +98,21 @@ export default function getInitialState() {
         }
       }
       */
-      ]
+      ],
+      background: {
+        scenes: [
+          /*
+            {
+              id: `sceneType-${timestamp}`,
+              objectType: backgroundType,
+              body: {
+                position: { x: worldWidth + 1, y: groundHeight },
+                lastTick: timestamp
+              }
+            }
+           */
+        ]
+      }
     }
   };
 };

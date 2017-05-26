@@ -11,7 +11,8 @@ export default (state, action) => {
       player: state.world.player,
       ground: state.world.ground,
       obstacleTypes: state.world.obstacleTypes,
-      collectableTypes: state.world.collectableTypes
+      collectableTypes: state.world.collectableTypes,
+      backgroundTypes: state.world.backgroundTypes
     }
   };
 };

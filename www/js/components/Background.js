@@ -1,18 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Sprite } from 'react-pixi';
+import { DisplayObjectContainer, Sprite } from 'react-pixi';
+
+const Background = ({ scenes }) => {
+  return (
+    <DisplayObjectContainer>
+      {scenes.map((scene, i) => (
+        <Sprite
+          key={scene.id}
+          texture={scene.texture}
+          x={scene.x}
+          y={scene.y}
+          width={scene.width}
+          height={scene.height}
+        />
+      ))}
+    </DisplayObjectContainer>
+  );
+};
 
 const mapStateToProps = (state) => {
-  const texture = state.assets.images['window.png'];
-  const height = state.world.height / 2;
-  const width = height / texture.height * texture.width;
   return {
-    x: 0,
-    y: 0,
-    width,
-    height,
-    texture
+    scenes: state.world.background.scenes.map((scene) => ({
+      id: scene.id,
+      x: scene.body.position.x,
+      y: scene.body.position.y,
+      width: scene.objectType.width,
+      height: scene.objectType.height,
+      texture: scene.objectType.image
+    }))
   };
 };
 
-export default connect(mapStateToProps)(Sprite);
+export default connect(mapStateToProps)(Background);

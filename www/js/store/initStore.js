@@ -67,6 +67,9 @@ export default function initStore({ images }) {
         images["obstacle03.png"], images["obstacle04.png"],
         images["obstacle05.png"], images["obstacle06.png"]
       ]),
+      backgroundTypes: generateTypes([
+        images['window.png']
+      ])
     }
   };
   return createStore(
