@@ -1,8 +1,9 @@
 import R from 'ramda';
+import { randInRange } from '../utils';
 
 const makeObject = (world) => {
   const last = R.last(world.background.scenes);
-  const objectType = world.backgroundTypes[0];
+  const objectType = world.backgroundTypes[randInRange(0, world.backgroundTypes.length - 1)];
   let position = { x: 0, y : 0 };
 
   if (last) {

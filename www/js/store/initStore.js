@@ -4,7 +4,7 @@ import getInitialState from './initialState';
 
 import reducer from '../reducer';
 import { tick, ActionTypes } from '../actions';
-import { COLLISION_BOX_OFFSET, OBSTACLE_WIDTH } from '../constants';
+import { COLLISION_BOX_OFFSET, OBSTACLE_WIDTH, BG_SCENE_HEIGHT } from '../constants';
 import { getCollisionBounds } from '../physics';
 
 const middlewares = [];
@@ -33,6 +33,14 @@ const generateTypes = (images) => (
   images.map((img) => ({
     height: OBSTACLE_WIDTH,
     width: img.width * (OBSTACLE_WIDTH / img.height),
+    image: img
+  }))
+);
+
+const generateBGTypes = (images) => (
+  images.map((img) => ({
+    height: BG_SCENE_HEIGHT,
+    width: img.width * (BG_SCENE_HEIGHT / img.height),
     image: img
   }))
 );
@@ -67,8 +75,10 @@ export default function initStore({ images }) {
         images["obstacle03.png"], images["obstacle04.png"],
         images["obstacle05.png"], images["obstacle06.png"]
       ]),
-      backgroundTypes: generateTypes([
-        images['window.png']
+      backgroundTypes: generateBGTypes([
+        images['bg-scene-1.png'],
+        images['bg-scene-2.png'],
+        images['bg-scene-3.png']
       ])
     }
   };
