@@ -3,9 +3,12 @@ import { compose, curry } from 'ramda';
 import tickObjects from './tickObjects';
 import tickGround from './tickGround';
 import tickPlayer from './tickPlayer';
+import tickBackground from './tickBackground';
 import generateObstacles from './generateObstacles';
 import generateCollectables from './generateCollectables';
+import generateBackgroundScenes from './generateBackgroundScenes';
 import cleanUpObjects from './cleanUpObjects';
+import cleanUpBackgroundScenes from './cleanUpBackgroundScenes';
 import {
   calculateCollisions,
   updateCollisionObjects
@@ -46,9 +49,12 @@ export default function tickReducer(state, action) {
         updateScore,
         updateCollisionObjects,
         calculateCollisions,
+        cleanUpBackgroundScenes,
         cleanUpObjects,
+        generateBackgroundScenes,
         generateCollectables,
         generateObstacles,
+        tickBackground,
         tickObjects,
         tickGround,
         tickPlayer

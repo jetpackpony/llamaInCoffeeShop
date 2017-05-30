@@ -4,7 +4,7 @@ import getInitialState from './initialState';
 
 import reducer from '../reducer';
 import { tick, ActionTypes } from '../actions';
-import { COLLISION_BOX_OFFSET, OBSTACLE_WIDTH } from '../constants';
+import { COLLISION_BOX_OFFSET, OBSTACLE_WIDTH, BG_SCENE_HEIGHT } from '../constants';
 import { getCollisionBounds } from '../physics';
 
 const middlewares = [];
@@ -37,6 +37,22 @@ const generateTypes = (images) => (
   }))
 );
 
+const generateBGTypes = (images) => (
+  images.map((img) => ({
+    height: BG_SCENE_HEIGHT,
+    width: img.width * (BG_SCENE_HEIGHT / img.height),
+    image: img
+  }))
+);
+
+const initGround = (ground, image) => {
+  return {
+    ...ground,
+    tileHeight: image.height,
+    tileWidth: image.width
+  };
+};
+
 export default function initStore({ images }) {
   const initialState = getInitialState();
   const initValue = {
@@ -48,6 +64,7 @@ export default function initStore({ images }) {
     world: {
       ...initialState.world,
       player: initPlayer(initialState.world.player, images["llama01.png"]),
+      ground: initGround(initialState.world.ground, images['floorTile.png']),
       collectableTypes: generateTypes([
         images["collectable01.png"],
         images["collectable02.png"],
@@ -58,6 +75,11 @@ export default function initStore({ images }) {
         images["obstacle03.png"], images["obstacle04.png"],
         images["obstacle05.png"], images["obstacle06.png"]
       ]),
+      backgroundTypes: generateBGTypes([
+        images['bg-scene-1.png'],
+        images['bg-scene-2.png'],
+        images['bg-scene-3.png']
+      ])
     }
   };
   return createStore(

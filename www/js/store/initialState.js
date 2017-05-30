@@ -33,13 +33,14 @@ export default function getInitialState() {
       width: 0,
       height: CONST.WORLD_HEIGHT,
       groundHeight: CONST.GROUND_HEIGHT,
-      groundOffset: 30,
+      groundOffset: 140,
       worldSpeed: CONST.MIN_GROUND_SPEED,
       jumpVelocity: { x: 0, y: CONST.JUMP_VELOCITY_Y },
       newCollisions: [],
 
       obstacleTypes: [],
       collectableTypes: [],
+      backgroundTypes: [],
 
       player: {
         body: {
@@ -97,7 +98,21 @@ export default function getInitialState() {
         }
       }
       */
-      ]
+      ],
+      background: {
+        scenes: [
+          /*
+            {
+              id: `sceneType-${timestamp}`,
+              objectType: backgroundType,
+              body: {
+                position: { x: worldWidth + 1, y: groundHeight },
+                lastTick: timestamp
+              }
+            }
+           */
+        ]
+      }
     }
   };
 };
