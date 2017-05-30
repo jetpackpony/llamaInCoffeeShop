@@ -9,11 +9,6 @@ export default function tickPlayer(world) {
     newBody.position.y = world.groundHeight;
   }
 
-  let animation = world.player.currentAnimation;
-  if (newBody.position.y <= world.groundHeight) {
-    animation = 'running';
-  }
-
   return {
     ...world,
     player: {
@@ -23,18 +18,35 @@ export default function tickPlayer(world) {
         ...newBody,
         lastTick: world.timestamp
       },
-      currentAnimation: animation,
-      animation: (animation === 'jumping') ? updateAnimation(world.player.animation, world.timestamp) : world.player.animation
+      animation: updateAnimation(world, newBody)
     }
   };
 };
 
-const updateAnimation = (animation, time) => {
-  const timePerFrame = Math.ceil(animation.duration / animation.totalFrames);
-  const framesSinceStart = Math.floor((time - animation.start) / timePerFrame);
-  const newFrame = framesSinceStart % animation.totalFrames;
-  return {
-    ...animation,
-    currentFrame: newFrame
-  };
+const updateAnimation = (world, newBody) => {
+  let currentId = world.player.animation.id;
+  if (newBody.position.y <= world.groundHeight) {
+    currentId = 'running';
+  }
+
+  if (currentId === 'running') {
+    return {
+      ...world.player.animation,
+      id: 'running'
+    };
+  }
+
+  if (currentId === 'jumping') {
+    return {
+      ...world.player.animation,
+      id: 'jumping',
+      currentFrame: tickAnimation(world.playerAnimations['jumping'], world.player.animation.startedAt, world.timestamp)
+    };
+  }
+};
+
+const tickAnimation = (animation, startedAt, time) => {
+  const timePerFrame = Math.ceil(animation.duration / animation.frames.length);
+  const framesSinceStart = Math.floor((time - startedAt) / timePerFrame);
+  return framesSinceStart % animation.frames.length;
 };

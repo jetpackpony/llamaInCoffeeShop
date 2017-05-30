@@ -18,11 +18,9 @@ export default (state, action) => {
       ...state.world,
       player: {
         ...state.world.player,
-        currentAnimation: 'jumping',
         animation: {
-          start: state.world.timestamp,
-          duration: 200,
-          totalFrames: 6,
+          id: 'jumping',
+          startedAt: state.world.timestamp,
           currentFrame: 0
         },
         body: {

@@ -41,6 +41,17 @@ export default function getInitialState() {
       obstacleTypes: [],
       collectableTypes: [],
       backgroundTypes: [],
+      playerAnimations: {
+        /*
+         runnning: {
+           id: 'running',
+           type: 'automated|manual',
+           speed: 0.5,
+           frames: [ textures ],
+           duration: 200,
+         }
+        */
+      },
 
       player: {
         body: {
@@ -52,11 +63,9 @@ export default function getInitialState() {
         collisionBounds: [{x: 0, y:0}, {x:0, y:0}],
         height: CONST.PLAYER_WIDTH,
         width: CONST.PLAYER_WIDTH,
-        currentAnimation: 'running',
         animation: {
-          start: 0,
-          duration: 200,
-          totalFrames: 6,
+          id: 'running',
+          startedAt: 0,
           currentFrame: 0
         }
       },
