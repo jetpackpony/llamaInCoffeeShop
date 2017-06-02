@@ -16,7 +16,7 @@ export default function getInitialState() {
     },
 
     world: {
-      gameState: 'playing',
+      gameState: 'playing', // playing, loosing, lost
       score: {
         coffees: 0,
         tables: 0,
