@@ -17,7 +17,10 @@ export default (state, action) => {
           currentFrame: 0
         }
       },
-      ground: state.world.ground,
+      ground: {
+        ...state.world.ground,
+        body: initialState.world.ground.body
+      },
       obstacleTypes: state.world.obstacleTypes,
       collectableTypes: state.world.collectableTypes,
       backgroundTypes: state.world.backgroundTypes

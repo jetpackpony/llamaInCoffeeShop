@@ -25,7 +25,7 @@ export const updateBody = R.curry(function updateBody(timeDiff, body) {
   }
 
   const velocity = calcVelocity(body.velocity, body.acceleration, timeDiff);
-  const position = calcPosition(body.position, velocity, timeDiff);
+  const position = calcPosition(body.position, body.velocity, timeDiff);
 
   return {
     ...body,
