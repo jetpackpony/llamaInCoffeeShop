@@ -25,8 +25,22 @@ export default function tickPlayer(world) {
 
 const updateAnimation = (world, newBody) => {
   let currentId = world.player.animation.id;
-  if (newBody.position.y <= world.groundHeight) {
+  if (currentId === 'jumping' && newBody.position.y <= world.groundHeight) {
     currentId = 'running';
+  }
+
+  if (currentId === 'colliding' && animationFinished(world)) {
+    currentId = 'running';
+  }
+
+  if (currentId !== 'colliding') {
+    if (world.newCollisions.find(obj => obj.type === 'obstacle')) {
+      return {
+        id: 'colliding',
+        startedAt: world.timestamp,
+        currentFrame: 0
+      };
+    }
   }
 
   if (currentId === 'running') {
@@ -43,10 +57,23 @@ const updateAnimation = (world, newBody) => {
       currentFrame: tickAnimation(world.playerAnimations['jumping'], world.player.animation.startedAt, world.timestamp)
     };
   }
+
+  if (currentId === 'colliding') {
+    return {
+      ...world.player.animation,
+      id: 'colliding',
+      currentFrame: tickAnimation(world.playerAnimations['colliding'], world.player.animation.startedAt, world.timestamp)
+    };
+  }
 };
 
 const tickAnimation = (animation, startedAt, time) => {
   const timePerFrame = Math.ceil(animation.duration / animation.frames.length);
   const framesSinceStart = Math.floor((time - startedAt) / timePerFrame);
   return framesSinceStart % animation.frames.length;
+};
+
+const animationFinished = (world) => {
+  const anim = world.player.animation;
+  return anim.startedAt + world.playerAnimations[anim.id].duration <= world.timestamp;
 };

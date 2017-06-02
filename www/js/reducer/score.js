@@ -6,17 +6,19 @@ const calcXDiff = (oldPos, newPos, tileWidth) => {
 };
 
 export const updateScore = curry(( collectableBonus, obstacleDamage, world) => {
-  const newScore = world.newCollisions.reduce((score, collision) => {
-    if (collision.type === 'collectable') {
-      score.coffees++;
-      score.energy += collectableBonus;
-    }
-    if (collision.type === 'obstacle') {
-      score.tables++;
-      score.energy += obstacleDamage;
-    }
-    return score;
-  }, { ...world.score });
+  const newScore = (world.player.animation.id === 'colliding')
+    ? world.score
+    : world.newCollisions.reduce((score, collision) => {
+      if (collision.type === 'collectable') {
+        score.coffees++;
+        score.energy += collectableBonus;
+      }
+      if (collision.type === 'obstacle') {
+        score.tables++;
+        score.energy += obstacleDamage;
+      }
+      return score;
+    }, { ...world.score });
 
   if (newScore.energy > 100) newScore.energy = 100;
   if (newScore.energy < 0) newScore.energy = 0;
