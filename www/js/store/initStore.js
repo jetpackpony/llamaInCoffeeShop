@@ -74,6 +74,12 @@ const generateAnimations = (images) => {
       type: 'manual',
       frames: Object.values(R.pick(R.times((i) => (`llama-collision0${i + 1}.png`), 6), images)),
       duration: 1000
+    },
+    fallingAsleep: {
+      id: 'fallingAsleep',
+      type: 'manual',
+      frames: Object.values(R.pick(R.times((i) => (`llama-falling-asleep0${i + 1}.png`), 6), images)),
+      duration: 1000
     }
   };
 };

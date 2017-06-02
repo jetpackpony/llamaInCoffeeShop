@@ -117,7 +117,7 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":300,"h":157},
 			"sourceSize": {"w":300,"h":157}
 		},
-		"llama-jump05.png":
+		"llama02.png":
 		{
 			"frame": {"x":1791,"y":350,"w":73,"h":109},
 			"rotated": false,
@@ -125,7 +125,7 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":73,"h":109},
 			"sourceSize": {"w":73,"h":109}
 		},
-		"llama02.png":
+		"llama05.png":
 		{
 			"frame": {"x":1864,"y":350,"w":73,"h":109},
 			"rotated": false,
@@ -133,15 +133,15 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":73,"h":109},
 			"sourceSize": {"w":73,"h":109}
 		},
-		"llama-collision06.png":
+		"llama-jump02.png":
 		{
-			"frame": {"x":780,"y":1055,"w":108,"h":74},
+			"frame": {"x":1791,"y":459,"w":73,"h":109},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":108,"h":74},
-			"sourceSize": {"w":108,"h":74}
+			"spriteSourceSize": {"x":0,"y":0,"w":73,"h":109},
+			"sourceSize": {"w":73,"h":109}
 		},
-		"llama-jump02.png":
+		"llama-jump05.png":
 		{
 			"frame": {"x":1864,"y":459,"w":73,"h":109},
 			"rotated": false,
@@ -149,7 +149,7 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":73,"h":109},
 			"sourceSize": {"w":73,"h":109}
 		},
-		"llama-collision05.png":
+		"llama-falling-asleep05.png":
 		{
 			"frame": {"x":1681,"y":700,"w":109,"h":73},
 			"rotated": false,
@@ -157,15 +157,31 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":109,"h":73},
 			"sourceSize": {"w":109,"h":73}
 		},
+		"llama-falling-asleep06.png":
+		{
+			"frame": {"x":1280,"y":1055,"w":108,"h":74},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":108,"h":74},
+			"sourceSize": {"w":108,"h":74}
+		},
 		"llama-collision02.png":
 		{
-			"frame": {"x":1790,"y":700,"w":109,"h":73},
+			"frame": {"x":1681,"y":773,"w":109,"h":73},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":109,"h":73},
 			"sourceSize": {"w":109,"h":73}
 		},
-		"llama-jump01.png":
+		"llama-falling-asleep02.png":
+		{
+			"frame": {"x":1790,"y":773,"w":109,"h":73},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":109,"h":73},
+			"sourceSize": {"w":109,"h":73}
+		},
+		"llama-jump04.png":
 		{
 			"frame": {"x":1381,"y":857,"w":75,"h":108},
 			"rotated": false,
@@ -173,7 +189,7 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":75,"h":108},
 			"sourceSize": {"w":75,"h":108}
 		},
-		"llama03.png":
+		"llama04.png":
 		{
 			"frame": {"x":1456,"y":857,"w":75,"h":108},
 			"rotated": false,
@@ -181,7 +197,7 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":75,"h":108},
 			"sourceSize": {"w":75,"h":108}
 		},
-		"llama04.png":
+		"llama03.png":
 		{
 			"frame": {"x":1531,"y":857,"w":75,"h":108},
 			"rotated": false,
@@ -189,7 +205,7 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":75,"h":108},
 			"sourceSize": {"w":75,"h":108}
 		},
-		"llama-jump04.png":
+		"llama01.png":
 		{
 			"frame": {"x":1606,"y":857,"w":75,"h":108},
 			"rotated": false,
@@ -197,7 +213,7 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":75,"h":108},
 			"sourceSize": {"w":75,"h":108}
 		},
-		"llama-jump03.png":
+		"llama-jump01.png":
 		{
 			"frame": {"x":1681,"y":857,"w":75,"h":108},
 			"rotated": false,
@@ -205,7 +221,7 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":75,"h":108},
 			"sourceSize": {"w":75,"h":108}
 		},
-		"llama01.png":
+		"llama-jump03.png":
 		{
 			"frame": {"x":1756,"y":857,"w":75,"h":108},
 			"rotated": false,
@@ -213,23 +229,7 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":75,"h":108},
 			"sourceSize": {"w":75,"h":108}
 		},
-		"llama-collision04.png":
-		{
-			"frame": {"x":1681,"y":773,"w":108,"h":75},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":108,"h":75},
-			"sourceSize": {"w":108,"h":75}
-		},
-		"llama-collision03.png":
-		{
-			"frame": {"x":1789,"y":773,"w":108,"h":75},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":108,"h":75},
-			"sourceSize": {"w":108,"h":75}
-		},
-		"llama-collision01.png":
+		"llama-falling-asleep01.png":
 		{
 			"frame": {"x":1831,"y":857,"w":108,"h":75},
 			"rotated": false,
@@ -237,9 +237,49 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":108,"h":75},
 			"sourceSize": {"w":108,"h":75}
 		},
+		"llama-falling-asleep04.png":
+		{
+			"frame": {"x":632,"y":1055,"w":108,"h":75},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":108,"h":75},
+			"sourceSize": {"w":108,"h":75}
+		},
+		"llama-collision01.png":
+		{
+			"frame": {"x":740,"y":1055,"w":108,"h":75},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":108,"h":75},
+			"sourceSize": {"w":108,"h":75}
+		},
+		"llama-falling-asleep03.png":
+		{
+			"frame": {"x":848,"y":1055,"w":108,"h":75},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":108,"h":75},
+			"sourceSize": {"w":108,"h":75}
+		},
+		"llama-collision03.png":
+		{
+			"frame": {"x":956,"y":1055,"w":108,"h":75},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":108,"h":75},
+			"sourceSize": {"w":108,"h":75}
+		},
+		"llama-collision04.png":
+		{
+			"frame": {"x":1064,"y":1055,"w":108,"h":75},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":108,"h":75},
+			"sourceSize": {"w":108,"h":75}
+		},
 		"llama06.png":
 		{
-			"frame": {"x":632,"y":1055,"w":74,"h":108},
+			"frame": {"x":805,"y":1200,"w":74,"h":108},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":74,"h":108},
@@ -247,19 +287,27 @@
 		},
 		"llama-jump06.png":
 		{
-			"frame": {"x":706,"y":1055,"w":74,"h":108},
+			"frame": {"x":879,"y":1200,"w":74,"h":108},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":74,"h":108},
 			"sourceSize": {"w":74,"h":108}
 		},
-		"llama05.png":
+		"llama-collision06.png":
 		{
-			"frame": {"x":1791,"y":459,"w":73,"h":109},
+			"frame": {"x":1172,"y":1055,"w":108,"h":74},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":73,"h":109},
-			"sourceSize": {"w":73,"h":109}
+			"spriteSourceSize": {"x":0,"y":0,"w":108,"h":74},
+			"sourceSize": {"w":108,"h":74}
+		},
+		"llama-collision05.png":
+		{
+			"frame": {"x":1790,"y":700,"w":109,"h":73},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":109,"h":73},
+			"sourceSize": {"w":109,"h":73}
 		}
 	}
 }
