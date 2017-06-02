@@ -7,6 +7,7 @@ export default (state, action) => {
     assets: state.assets,
     world: {
       ...initialState.world,
+      playerAnimations: state.world.playerAnimations,
       width: state.world.width,
       player: state.world.player,
       ground: state.world.ground,
