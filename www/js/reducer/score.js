@@ -37,6 +37,14 @@ export const updateScore = curry(( collectableBonus, obstacleDamage, world) => {
 export const updateGameState = (world) => {
   return {
     ...world,
-    gameState: (world.score.energy <= 0) ? 'loosing' : world.gameState
+    gameState: newGameState(world)
   }
 };
+
+const newGameState = (world) => {
+  if (world.gameState === 'playing') {
+    return (world.score.energy <= 0) ? 'loosing' : 'playing';
+  } else {
+    return (world.ground.body.velocity.x >= -10) ? 'lost' : 'loosing';
+  }
+}

@@ -11,8 +11,9 @@ import WorldObjects from './WorldObjects';
 import { jump, restartGame } from '../actions';
 import EnergyBar from './EnergyBar';
 import Restart from './Restart';
+import Menu from './Menu';
 
-const Game = ({ width, height, resolution, scale, onTouch }) => {
+const Game = ({ width, height, resolution, scale, onTouch, gameState }) => {
   return (
     <Stage
       width={width}
@@ -37,6 +38,7 @@ const Game = ({ width, height, resolution, scale, onTouch }) => {
       <FPSCounter/>
       <EnergyBar/>
       <Restart/>
+      {(gameState === 'lost') ? <Menu/> : null}
     </Stage>
   );
 };
@@ -45,7 +47,8 @@ const mapStateToProps = (state) => ({
   width: state.assets.sceneWidth,
   height: state.assets.sceneHeight,
   resolution: state.assets.dpr,
-  scale: state.assets.scale
+  scale: state.assets.scale,
+  gameState: state.world.gameState
 });
 
 const mapDispatchToProps = { jump, restartGame };
