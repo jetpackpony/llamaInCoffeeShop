@@ -12,6 +12,10 @@ export default (state, action) => {
     return state;
   }
 
+  if (state.world.player.animation.id === 'colliding') {
+    return state;
+  }
+
   return {
     ...state,
     world: {
