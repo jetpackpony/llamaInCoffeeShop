@@ -9,7 +9,14 @@ export default (state, action) => {
       ...initialState.world,
       playerAnimations: state.world.playerAnimations,
       width: state.world.width,
-      player: state.world.player,
+      player: {
+        ...state.world.player,
+        animation: {
+          id: 'running',
+          startedAt: 0,
+          currentFrame: 0
+        }
+      },
       ground: state.world.ground,
       obstacleTypes: state.world.obstacleTypes,
       collectableTypes: state.world.collectableTypes,
