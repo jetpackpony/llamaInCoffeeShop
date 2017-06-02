@@ -25,6 +25,15 @@ export default function tickPlayer(world) {
 
 const updateAnimation = (world, newBody) => {
   let currentId = world.player.animation.id;
+
+  if (world.gameState === 'loosing' && currentId !== 'fallingAsleep') {
+    return {
+      id: 'fallingAsleep',
+      startedAt: world.timestamp,
+      currentFrame: 0
+    };
+  }
+
   if (currentId === 'jumping' && newBody.position.y <= world.groundHeight) {
     currentId = 'running';
   }
@@ -33,7 +42,7 @@ const updateAnimation = (world, newBody) => {
     currentId = 'running';
   }
 
-  if (currentId !== 'colliding') {
+  if (currentId !== 'colliding' && currentId !== 'fallingAsleep') {
     if (world.newCollisions.find(obj => obj.type === 'obstacle')) {
       return {
         id: 'colliding',
@@ -63,6 +72,14 @@ const updateAnimation = (world, newBody) => {
       ...world.player.animation,
       id: 'colliding',
       currentFrame: tickAnimation(world.playerAnimations['colliding'], world.player.animation.startedAt, world.timestamp)
+    };
+  }
+
+  if (currentId === 'fallingAsleep') {
+    return {
+      ...world.player.animation,
+      id: 'fallingAsleep',
+      currentFrame: tickAnimation(world.playerAnimations['fallingAsleep'], world.player.animation.startedAt, world.timestamp)
     };
   }
 };
