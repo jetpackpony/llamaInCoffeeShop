@@ -1,3 +1,5 @@
+import R from 'ramda';
+
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import getInitialState from './initialState';
@@ -53,6 +55,35 @@ const initGround = (ground, image) => {
   };
 };
 
+const generateAnimations = (images) => {
+  return {
+    running: {
+      id: 'running',
+      type: 'automated',
+      speed: 0.5,
+      frames: Object.values(R.pick(R.times((i) => (`llama0${i + 1}.png`), 6), images))
+    },
+    jumping: {
+      id: 'jumping',
+      type: 'manual',
+      frames: Object.values(R.pick(R.times((i) => (`llama-jump0${i + 1}.png`), 6), images)),
+      duration: 200
+    },
+    colliding: {
+      id: 'colliding',
+      type: 'manual',
+      frames: Object.values(R.pick(R.times((i) => (`llama-collision0${i + 1}.png`), 6), images)),
+      duration: 1000
+    },
+    fallingAsleep: {
+      id: 'fallingAsleep',
+      type: 'manual',
+      frames: Object.values(R.pick(R.times((i) => (`llama-falling-asleep0${i + 1}.png`), 6), images)),
+      duration: 1000
+    }
+  };
+};
+
 export default function initStore({ images }) {
   const initialState = getInitialState();
   const initValue = {
@@ -79,7 +110,8 @@ export default function initStore({ images }) {
         images['bg-scene-1.png'],
         images['bg-scene-2.png'],
         images['bg-scene-3.png']
-      ])
+      ]),
+      playerAnimations: generateAnimations(images)
     }
   };
   return createStore(

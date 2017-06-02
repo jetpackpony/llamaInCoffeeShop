@@ -2,14 +2,14 @@ import R from 'ramda';
 import { clipValue } from  '../utils';
 import { calcVelocity, calcPosition, updateBody } from '../physics';
 import {
-  MIN_GROUND_SPEED, MAX_GROUND_SPEED, GROUND_ACCELERATION
+  MIN_GROUND_SPEED, MAX_GROUND_SPEED, GROUND_ACCELERATION, GROUND_LOOSING_ACCELERATION
 } from '../constants';
 
 const clipXPosition = R.curry((tileWidth, oldPos) => (
   oldPos % tileWidth
 ));
 const clipXVelocity = (oldVel) => (
-  clipValue(MIN_GROUND_SPEED, MAX_GROUND_SPEED, Math.abs(oldVel)) * -1
+  clipValue(0, MAX_GROUND_SPEED, Math.abs(oldVel)) * -1
 );
 const calcXAcceleration = R.curry((timeDiff, energy, oldAcc) => (
   Math.round(
@@ -28,7 +28,11 @@ export default (world) => {
         R.evolve({
           position: { x: clipXPosition(world.ground.tileWidth) },
           velocity: { x: clipXVelocity },
-          acceleration: { x: calcXAcceleration(timeDiff, world.score.energy) },
+          acceleration: {
+            x: ((world.gameState === 'loosing')
+              ? () => GROUND_LOOSING_ACCELERATION
+              : calcXAcceleration(timeDiff, world.score.energy))
+          },
           prevPositionX: () => world.ground.body.position.x,
           lastTick: () => world.timestamp
         }),

@@ -6,17 +6,19 @@ const calcXDiff = (oldPos, newPos, tileWidth) => {
 };
 
 export const updateScore = curry(( collectableBonus, obstacleDamage, world) => {
-  const newScore = world.newCollisions.reduce((score, collision) => {
-    if (collision.type === 'collectable') {
-      score.coffees++;
-      score.energy += collectableBonus;
-    }
-    if (collision.type === 'obstacle') {
-      score.tables++;
-      score.energy += obstacleDamage;
-    }
-    return score;
-  }, { ...world.score });
+  const newScore = (world.player.animation.id === 'colliding')
+    ? world.score
+    : world.newCollisions.reduce((score, collision) => {
+      if (collision.type === 'collectable') {
+        score.coffees++;
+        score.energy += collectableBonus;
+      }
+      if (collision.type === 'obstacle') {
+        score.tables++;
+        score.energy += obstacleDamage;
+      }
+      return score;
+    }, { ...world.score });
 
   if (newScore.energy > 100) newScore.energy = 100;
   if (newScore.energy < 0) newScore.energy = 0;
@@ -35,6 +37,14 @@ export const updateScore = curry(( collectableBonus, obstacleDamage, world) => {
 export const updateGameState = (world) => {
   return {
     ...world,
-    gameState: (world.score.energy <= 0) ? 'loosing' : world.gameState
+    gameState: newGameState(world)
   }
 };
+
+const newGameState = (world) => {
+  if (world.gameState === 'playing') {
+    return (world.score.energy <= 0) ? 'loosing' : 'playing';
+  } else {
+    return (world.ground.body.velocity.x >= -10) ? 'lost' : 'loosing';
+  }
+}

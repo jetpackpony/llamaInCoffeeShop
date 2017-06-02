@@ -10,9 +10,9 @@ import Background from './Background';
 import WorldObjects from './WorldObjects';
 import { jump, restartGame } from '../actions';
 import EnergyBar from './EnergyBar';
-import Restart from './Restart';
+import Menu from './Menu';
 
-const Game = ({ width, height, resolution, scale, onTouch }) => {
+const Game = ({ width, height, resolution, scale, jump, gameState }) => {
   return (
     <Stage
       width={width}
@@ -21,7 +21,7 @@ const Game = ({ width, height, resolution, scale, onTouch }) => {
       backgroundColor={0xFFFFFF}
       interactive={true}
       scale={scale}
-      touchstart={onTouch}
+      touchstart={jump}
       style={{
         position: "absolute",
         display: "block",
@@ -36,7 +36,11 @@ const Game = ({ width, height, resolution, scale, onTouch }) => {
       <Score/>
       <FPSCounter/>
       <EnergyBar/>
-      <Restart/>
+      {
+        (gameState === 'lost')
+          ? <Menu/>
+          : null
+      }
     </Stage>
   );
 };
@@ -45,23 +49,10 @@ const mapStateToProps = (state) => ({
   width: state.assets.sceneWidth,
   height: state.assets.sceneHeight,
   resolution: state.assets.dpr,
-  scale: state.assets.scale
+  scale: state.assets.scale,
+  gameState: state.world.gameState
 });
 
-const mapDispatchToProps = { jump, restartGame };
+const mapDispatchToProps = { jump };
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-  ...ownProps,
-  ...stateProps,
-  ...dispatchProps,
-  onTouch(e) {
-    const { x, y } = e.data.global;
-    if (x > stateProps.width - 50 && y < 50) {
-      dispatchProps.restartGame();
-    } else {
-      dispatchProps.jump();
-    }
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

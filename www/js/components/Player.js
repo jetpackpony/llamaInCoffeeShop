@@ -8,9 +8,7 @@ import { SHOW_COLLISION_BOXES } from '../constants';
 import CollisionBox from './CollisionBox';
 
 const Player = ({
-  x, y, height, width,
-  frames,
-  currentAnimation, animation,
+  x, y, height, width, animation, currentFrame,
   showCollisionBox, collisionBounds
 }) => {
   return (
@@ -20,17 +18,22 @@ const Player = ({
           ? <CollisionBox bounds={collisionBounds} color={0x9932CC} />
           : null
       }
-      <AnimatedSprite
-        textures={frames.running}
-        animationSpeed={0.5}
-        playing={true}
-        visible={(currentAnimation === 'running')}
-      />
-      <ManualAnimatedSprite
-        textures={frames.jumping}
-        currentFrame={animation.currentFrame}
-        visible={(currentAnimation === 'jumping')}
-      />
+      {
+        (animation.type === 'automated')
+          ? (
+            <AnimatedSprite
+              textures={animation.frames}
+              animationSpeed={animation.speed}
+              playing={true}
+            />
+          )
+          : (
+            <ManualAnimatedSprite
+              textures={animation.frames}
+              currentFrame={currentFrame}
+            />
+          )
+      }
     </DisplayObjectContainer>
   );
 };
@@ -40,20 +43,13 @@ const mapStateToProps = (state) => {
   const { width, height } = player;
   const x = player.body.position.x;
   const y = state.world.height - player.body.position.y - height;
-  const runImgNames = R.times((i) => (`llama0${i + 1}.png`), 6);
-  const jumpImgNames = R.times((i) => (`llama-jump0${i + 1}.png`), 6);
-  const frames = {
-    running: Object.values(R.pick(runImgNames, state.assets.images)),
-    jumping: Object.values(R.pick(jumpImgNames, state.assets.images))
-  }
   return {
     x: x,
     y: y,
     width: width,
     height: height,
-    frames,
-    currentAnimation: player.currentAnimation,
-    animation: player.animation,
+    animation: state.world.playerAnimations[player.animation.id],
+    currentFrame: player.animation.currentFrame,
     showCollisionBox: SHOW_COLLISION_BOXES,
     collisionBounds: player.collisionBounds
   }

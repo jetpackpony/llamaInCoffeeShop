@@ -36,10 +36,6 @@ const tickFPS = (fps, timestamp) => {
 };
 
 export default function tickReducer(state, action) {
-  if (state.world.gameState === 'loosing') {
-    return state;
-  }
-
   return {
     ...state,
     fps: tickFPS(state.fps, action.payload.timestamp),
