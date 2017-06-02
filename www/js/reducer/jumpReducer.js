@@ -8,6 +8,10 @@ const isPlayerNearTheGround = (world) => {
 };
 
 export default (state, action) => {
+  if (state.world.gameState !== 'playing'){
+    return state;
+  }
+
   if (!isPlayerNearTheGround(state.world)) {
     return state;
   }
