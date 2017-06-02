@@ -1,23 +1,49 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, DisplayObjectContainer } from 'react-pixi';
+import { Text, Sprite, DisplayObjectContainer } from 'react-pixi';
 import { restartGame } from '../actions';
 
-const Menu = ({ x }) => {
+const Menu = ({ x, y, width, height, blackboardImage, restartGame }) => {
   return (
-    <Text
-      x={200}
-      y={200}
-      style={{ fontSize: 50, fill: "black" }}
-      text="This menu"
-    />
+    <DisplayObjectContainer
+      x={x}
+      y={y}
+    >
+      <Sprite
+        texture={blackboardImage}
+        width={width}
+        height={height}
+      />
+      <Text
+        x={width / 2}
+        y={20}
+        anchor={{ x: 0.5, y: 0 }}
+        style={{ fontSize: 40, fill: "white" }}
+        text="You dead"
+      />
+      <Text
+        x={width / 2}
+        y={height / 2}
+        anchor={{ x: 0.5, y: 0.5 }}
+        style={{ fontSize: 40, fill: "white" }}
+        text="Try again"
+        touchstart={restartGame}
+        interactive={true}
+      />
+    </DisplayObjectContainer>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    x: state.world.width - 50,
+    x: 100,
+    y: 50,
+    width: state.world.width - 200,
+    height: state.world.height - 100,
+    blackboardImage: state.assets.images['blackboard.png']
   };
 };
 
-export default connect(mapStateToProps)(Menu);
+const mapDispatchToProps = { restartGame };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
