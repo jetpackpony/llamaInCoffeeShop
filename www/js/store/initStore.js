@@ -68,6 +68,12 @@ const generateAnimations = (images) => {
       type: 'manual',
       frames: Object.values(R.pick(R.times((i) => (`llama-jump0${i + 1}.png`), 6), images)),
       duration: 200
+    },
+    colliding: {
+      id: 'colliding',
+      type: 'manual',
+      frames: Object.values(R.pick(R.times((i) => (`llama-collision0${i + 1}.png`), 6), images)),
+      duration: 200
     }
   };
 };
