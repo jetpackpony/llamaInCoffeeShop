@@ -84,13 +84,14 @@ const generateAnimations = (images) => {
   };
 };
 
-export default function initStore({ images }) {
+export default function initStore({ images, sounds }) {
   const initialState = getInitialState();
   const initValue = {
     ...initialState,
     assets: {
       ...initialState.assets,
-      images
+      images,
+      sounds
     },
     world: {
       ...initialState.world,

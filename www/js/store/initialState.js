@@ -6,6 +6,7 @@ export default function getInitialState() {
       sceneWidth: 700,
       sceneHeight: 400,
       images: {},
+      sounds: {},
       scale: 1,
       dpr: 1
     },

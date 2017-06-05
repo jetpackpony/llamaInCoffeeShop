@@ -33,6 +33,8 @@ class App extends Component {
         isLoading: false
       });
 
+      store.getState().assets.sounds.play();
+
       requestAnimationFrame(this.loop);
     });
   }
