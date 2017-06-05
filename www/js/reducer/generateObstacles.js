@@ -1,5 +1,5 @@
 import { randInRange } from '../utils';
-import { MIN_GROUND_SPEED } from '../constants';
+import { MIN_GROUND_SPEED, TUTORIAL_STATES } from '../constants';
 import { COLLISION_BOX_OFFSET } from '../constants';
 import { getCollisionBounds } from '../physics';
 
@@ -60,18 +60,33 @@ const generatePattern = (world, pattern, spread) => {
 };
 
 export default function generateObstacles(world) {
-  return {
-    ...world,
-    objects: [
-      ...world.objects,
-      ...(shouldGenerateObjects(world.width, getLastObject(world)))
+  let objects = [ ...world.objects ];
+  if (world.tutorial === TUTORIAL_STATES.PASSED) {
+    objects = objects.concat(
+      (shouldGenerateObjects(world.width, getLastObject(world))
         ? generatePattern(
           world,
           obstaclePatterns[randInRange(0, obstaclePatterns.length - 1)],
           randInRange(world.minSpread, world.maxSpread)
         )
         : []
-    ]
+      )
+    );
+  } else {
+    objects = objects.concat(
+      world.objects.length === 0
+      ? generatePattern(
+        world,
+        [0],
+        randInRange(world.minSpread, world.maxSpread)
+      )
+      : []
+    );
+  }
+
+  return {
+    ...world,
+    objects
   };
 };
 

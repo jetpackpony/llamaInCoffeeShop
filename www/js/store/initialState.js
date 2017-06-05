@@ -17,6 +17,7 @@ export default function getInitialState() {
 
     world: {
       gameState: 'playing', // playing, loosing, lost
+      tutorial: CONST.TUTORIAL_STATES.OBSTACLE_RUNNING,
       score: {
         coffees: 0,
         tables: 0,

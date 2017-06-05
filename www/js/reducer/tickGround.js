@@ -2,7 +2,9 @@ import R from 'ramda';
 import { clipValue } from  '../utils';
 import { calcVelocity, calcPosition, updateBody } from '../physics';
 import {
-  MIN_GROUND_SPEED, MAX_GROUND_SPEED, GROUND_ACCELERATION, GROUND_LOOSING_ACCELERATION
+  MIN_GROUND_SPEED, MAX_GROUND_SPEED,
+  GROUND_ACCELERATION, GROUND_LOOSING_ACCELERATION,
+  TUTORIAL_STATES
 } from '../constants';
 
 const clipXPosition = R.curry((tileWidth, oldPos) => (
@@ -27,7 +29,9 @@ export default (world) => {
       body: R.compose(
         R.evolve({
           position: { x: clipXPosition(world.ground.tileWidth) },
-          velocity: { x: clipXVelocity },
+          velocity: {
+            x: (world.tutorial === TUTORIAL_STATES.OBSTACLE_PAUSED ? () => 0 : clipXVelocity)
+          },
           acceleration: {
             x: ((world.gameState === 'loosing')
               ? () => GROUND_LOOSING_ACCELERATION

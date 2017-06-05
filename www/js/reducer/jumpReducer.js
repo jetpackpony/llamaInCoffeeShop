@@ -1,4 +1,4 @@
-import { JUMP_MIN_HEIGHT } from '../constants';
+import { JUMP_MIN_HEIGHT, TUTORIAL_STATES } from '../constants';
 
 const isPlayerNearTheGround = (world) => {
   const playerPositionY = world.player.body.position.y;
@@ -20,10 +20,16 @@ export default (state, action) => {
     return state;
   }
 
+  let tutorial = state.world.tutorial;
+  if (tutorial === TUTORIAL_STATES.OBSTACLE_PAUSED) {
+    tutorial = TUTORIAL_STATES.OBSTACLE_RUNNING;
+  }
+
   return {
     ...state,
     world: {
       ...state.world,
+      tutorial,
       player: {
         ...state.world.player,
         animation: {

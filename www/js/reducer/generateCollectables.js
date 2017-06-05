@@ -1,6 +1,6 @@
 import { curry, last } from 'ramda';
 import { randInRange } from '../utils';
-import { COLLISION_BOX_OFFSET } from '../constants';
+import { COLLISION_BOX_OFFSET, TUTORIAL_STATES } from '../constants';
 import { getCollisionBounds } from '../physics';
 
 const getLastObjectByType = (type, objects) => (last(objects
@@ -30,6 +30,10 @@ const makeObject = (spread, world, collectableType) => ({
 });
 
 const shouldGenerateCollectable = (world) => {
+  if (world.tutorial !== TUTORIAL_STATES.PASSED) {
+    return false;
+  }
+
   const lastObstacle = getLastObstacle(world.objects);
   if (!lastObstacle) {
     return false;

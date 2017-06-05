@@ -15,6 +15,7 @@ import {
 } from './collisions';
 import * as ScoreUpdators from './score';
 import { COLLECTABLE_BONUS, OBSTACLE_DAMAGE } from '../constants';
+import { updateTutorialState } from './tutorial';
 
 const updateScore =
   ScoreUpdators.updateScore(COLLECTABLE_BONUS, OBSTACLE_DAMAGE);
@@ -41,6 +42,7 @@ export default function tickReducer(state, action) {
     fps: tickFPS(state.fps, action.payload.timestamp),
     world: {
       ...compose(
+        updateTutorialState,
         updateGameState,
         updateScore,
         updateCollisionObjects,
