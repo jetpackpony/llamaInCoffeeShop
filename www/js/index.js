@@ -33,7 +33,7 @@ class App extends Component {
         isLoading: false
       });
 
-      store.getState().assets.sounds.play();
+      store.getState().assets.sounds.play('bgMusic');
 
       requestAnimationFrame(this.loop);
     });
