@@ -6,6 +6,13 @@ import { resizeCanvas, tick } from './actions';
 import initGame from './initGame';
 import Game from './components/Game';
 
+const playSounds = ({ assets, world }) => {
+  world.newSounds.forEach((sound) => {
+    assets.sounds.stop(sound);
+    assets.sounds.play(sound);
+  });
+};
+
 class App extends Component {
   constructor(...args) {
     super(...args);
@@ -18,6 +25,7 @@ class App extends Component {
 
   loop(timestamp) {
     this.state.store.dispatch(tick(timestamp));
+    playSounds(this.state.store.getState());
     requestAnimationFrame(this.loop);
   }
 
