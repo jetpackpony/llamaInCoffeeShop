@@ -5,7 +5,10 @@ export default (world) => {
     ...world,
     newSounds: [
       ...world.newSounds,
-      ...R.uniq(world.newCollisions.map(obj => `collision.${obj.type}`))
+      ...((world.player.animation.id === 'colliding')
+        ? []
+        : R.uniq(world.newCollisions.map(obj => `collision.${obj.type}`))
+      )
     ]
   };
 };
