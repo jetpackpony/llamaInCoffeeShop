@@ -24,8 +24,8 @@ class App extends Component {
   }
 
   loop(timestamp) {
-    this.state.store.dispatch(tick(timestamp));
     playSounds(this.state.store.getState());
+    this.state.store.dispatch(tick(timestamp));
     requestAnimationFrame(this.loop);
   }
 

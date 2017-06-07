@@ -24,6 +24,7 @@ export default (state, action) => {
     ...state,
     world: {
       ...state.world,
+      newSounds: [ ...state.world.newSounds, 'jump' ],
       player: {
         ...state.world.player,
         animation: {
