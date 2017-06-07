@@ -1,0 +1,29 @@
+{
+  "urls": [
+    "sound/sound.mp3",
+    "sound/sound.ogg"
+  ],
+  "sprite": {
+    "bgMusic_full": [
+      0,
+      97233.58276643991
+    ],
+    "bgMusic": [
+      99000,
+      4960.453514739228,
+      true
+    ],
+    "collision.collectable": [
+      105000,
+      1768.0725623582703
+    ],
+    "collision.obstacle": [
+      108000,
+      747.2562358276633
+    ],
+    "jump": [
+      110000,
+      731.428571428566
+    ]
+  }
+}

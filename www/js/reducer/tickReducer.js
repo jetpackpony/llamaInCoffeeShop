@@ -15,6 +15,7 @@ import {
 } from './collisions';
 import * as ScoreUpdators from './score';
 import { COLLECTABLE_BONUS, OBSTACLE_DAMAGE } from '../constants';
+import createSounds from './createSounds';
 
 const updateScore =
   ScoreUpdators.updateScore(COLLECTABLE_BONUS, OBSTACLE_DAMAGE);
@@ -44,6 +45,7 @@ export default function tickReducer(state, action) {
         updateGameState,
         updateScore,
         updateCollisionObjects,
+        createSounds,
         calculateCollisions,
         cleanUpBackgroundScenes,
         cleanUpObjects,
@@ -56,6 +58,7 @@ export default function tickReducer(state, action) {
         tickPlayer
       )({
         ...state.world,
+        newSounds: [],
         timestamp: action.payload.timestamp
       })
     }

@@ -6,6 +6,7 @@ export default function getInitialState() {
       sceneWidth: 700,
       sceneHeight: 400,
       images: {},
+      sounds: {},
       scale: 1,
       dpr: 1
     },
@@ -37,6 +38,7 @@ export default function getInitialState() {
       worldSpeed: CONST.MIN_GROUND_SPEED,
       jumpVelocity: { x: 0, y: CONST.JUMP_VELOCITY_Y },
       newCollisions: [],
+      newSounds: [], // jump, collision.obstacle, collision.collectable
 
       obstacleTypes: [],
       collectableTypes: [],
