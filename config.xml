@@ -17,6 +17,8 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <hook src="android_before_build.sh" type="before_build" />
+        <hook src="android_before_build.sh" type="before_run" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
