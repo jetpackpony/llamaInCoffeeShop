@@ -1,4 +1,2 @@
 #!/bin/bash
-source ~/.gradle/gradle.properties
-cordova run android --release -- --keystore=platforms/android/my-release-key.keystore --alias=my-key-alias --storePassword=$MYAPP_RELEASE_STORE_PASSWORD --password=$MYAPP_RELEASE_KEY_PASSWORD
-
+cordova run android --release
